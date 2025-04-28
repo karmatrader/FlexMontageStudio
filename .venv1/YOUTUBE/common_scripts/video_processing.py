@@ -8,6 +8,7 @@ import cv2
 from tqdm import tqdm
 import shutil
 from utils import filter_hidden_files
+import re
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -16,6 +17,13 @@ BLUE = "\033[94m"
 YELLOW = "\033[93m"
 GREEN = "\033[92m"
 RESET = "\033[0m"
+
+# Функция для натуральной сортировки
+def natural_sort_key(s):
+    # Разбиваем строку на части: числа и не-числа
+    parts = re.split(r'(\d+)', s)
+    # Преобразуем числовые части в int для правильного сравнения
+    return [int(part) if part.isdigit() else part.lower() for part in parts]
 
 def get_video_duration(input_path):
     """Получить длительность видео с помощью ffprobe."""
@@ -31,6 +39,17 @@ def get_video_duration(input_path):
     except (subprocess.CalledProcessError, json.JSONDecodeError, KeyError) as e:
         print(f"{YELLOW}⚠️ Ошибка при получении длительности {input_path}: {e}{RESET}")
         return 0
+
+def has_audio_stream(input_path):
+    """Проверяет наличие аудиодорожки в видеофайле."""
+    try:
+        probe_cmd = ["ffprobe", "-v", "error", "-show_streams", "-select_streams", "a", "-of", "json", input_path]
+        probe_result = subprocess.run(probe_cmd, capture_output=True, text=True, check=True)
+        probe_data = json.loads(probe_result.stdout)
+        return len(probe_data.get("streams", [])) > 0
+    except (subprocess.CalledProcessError, json.JSONDecodeError) as e:
+        print(f"{YELLOW}⚠️ Ошибка при проверке аудиодорожки {input_path}: {e}{RESET}")
+        return False
 
 def check_video_params(input_path, target_resolution, target_fps, target_codec="h264", target_pix_fmt="yuv420p"):
     """Проверяет, соответствует ли видеофайл целевым параметрам, возвращает статус и причины несоответствия."""
@@ -87,14 +106,18 @@ def check_video_params(input_path, target_resolution, target_fps, target_codec="
         print(f"{YELLOW}⚠️ Ошибка при проверке параметров {input_path}: {str(e)}. Файл будет пропущен.{RESET}")
         return False, [f"error={str(e)}"]
 
-def reencode_video(input_path, output_path, video_resolution, frame_rate, video_crf, video_preset):
+def reencode_video(input_path, output_path, video_resolution, frame_rate, video_crf, video_preset, preserve_audio=False):
     """Перекодирует видео в целевой формат (libx264, yuv420p, указанное разрешение и fps)."""
     cmd = [
         "ffmpeg", "-reinit_filter", "0", "-i", input_path,
         "-vf", f"fps={frame_rate},format=yuv420p,scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2",
         "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
-        "-an", "-fps_mode", "passthrough", "-fflags", "+genpts", "-y", output_path
     ]
+    if preserve_audio:
+        cmd.extend(["-c:a", "aac", "-b:a", "128k"])
+    else:
+        cmd.append("-an")
+    cmd.extend(["-fps_mode", "passthrough", "-fflags", "+genpts", "-y", output_path])
     print(f"{BLUE}📹 Перекодируем видео: {' '.join(cmd)}{RESET}")
     try:
         result = subprocess.run(
@@ -156,26 +179,41 @@ def concat_photos_in_order(processed_photo_files, temp_folder, temp_audio_durati
     return concat_list_path
 
 def process_photos_and_videos(
-    photo_files, preprocessed_photo_folder, temp_folder, video_resolution, frame_rate, video_crf, video_preset, temp_audio_duration, adjust_videos_to_audio
+    photo_files, preprocessed_photo_folder, temp_folder, video_resolution, frame_rate, video_crf, video_preset, temp_audio_duration, adjust_videos_to_audio, preserve_clip_audio=False
 ):
     """Обрабатывает фото и видео, поддерживая два режима: масштабирование (True) или исходная длительность с обрезкой (False)."""
     processed_photo_files = []
     skipped_files = []
     total_duration = 0
+    clips_info = []
 
     if not photo_files:
         print(f"{YELLOW}⚠️ Нет доступных файлов для обработки!{RESET}")
-        return processed_photo_files, skipped_files
+        return processed_photo_files, skipped_files, clips_info
+
+    # Сортируем photo_files: сначала по наличию аудио, затем по имени с натуральной сортировкой
+    def has_audio_priority(file):
+        path = os.path.join(preprocessed_photo_folder, file)
+        ext = os.path.splitext(file)[1].lower()
+        return not (preserve_clip_audio and ext in ('.mp4', '.mov') and has_audio_stream(path))
+
+    # Сначала сортируем по имени с натуральной сортировкой
+    photo_files_sorted_by_name = sorted(photo_files, key=lambda x: natural_sort_key(os.path.splitext(x)[0]))
+    # Затем сортируем по приоритету аудио (файлы с аудио в начале)
+    sorted_photo_files = sorted(photo_files_sorted_by_name, key=has_audio_priority)
+    print(f"{BLUE}📹 Отсортированные файлы: {sorted_photo_files}{RESET}")
 
     if adjust_videos_to_audio:
-        # Режим True: масштабировать все клипы под аудио, использовать готовые видео без перекодирования
-        photo_duration = temp_audio_duration / len(photo_files) if photo_files else 0
-        print(f"{BLUE}📹 Режим масштабирования: длительность каждого клипа {photo_duration:.2f} сек (всего {len(photo_files)} клипов){RESET}")
+        # Режим True: масштабировать все клипы под аудио
+        photo_duration = temp_audio_duration / len(sorted_photo_files) if sorted_photo_files else 0
+        print(f"{BLUE}📹 Режим масштабирования: длительность каждого клипа {photo_duration:.2f} сек (всего {len(sorted_photo_files)} клипов){RESET}")
 
-        for photo in tqdm(photo_files, desc="🔧 Обрабатываем фото и видео"):
+        for idx, photo in enumerate(tqdm(sorted_photo_files, desc="🔧 Обрабатываем фото и видео")):
             input_path = os.path.join(preprocessed_photo_folder, photo)
             output_path = os.path.join(temp_folder, f"processed_{os.path.splitext(photo)[0]}.mp4")
             ext = os.path.splitext(photo)[1].lower()
+            has_audio = preserve_clip_audio and ext in ('.mp4', '.mov') and has_audio_stream(input_path)
+            print(f"{BLUE}📹 Клип {idx+1}: {photo}, has_audio={has_audio}, путь: {input_path}{RESET}")
 
             if ext in ('.mp4', '.mov'):
                 print(f"{BLUE}📹 Проверяем видео: {input_path}{RESET}")
@@ -188,8 +226,7 @@ def process_photos_and_videos(
                 )
                 temp_input_path = input_path
 
-                if is_match:
-                    # Видео соответствует параметрам, используем его с обрезкой длительности
+                if is_match and not has_audio:
                     print(f"{GREEN}✅ Видео {photo} уже соответствует параметрам, перекодирование не требуется{RESET}")
                     video_duration = get_video_duration(input_path)
                     print(f"{BLUE}📹 Исходная длительность видео {photo}: {video_duration:.2f} сек{RESET}")
@@ -214,28 +251,32 @@ def process_photos_and_videos(
                             skipped_files.append(photo)
                             continue
                 else:
-                    # Перекодируем видео в нужный формат
                     temp_reencode_path = os.path.join(temp_folder, f"reencoded_{os.path.splitext(photo)[0]}.mp4")
-                    if reencode_video(input_path, temp_reencode_path, video_resolution, frame_rate, video_crf, video_preset):
+                    if reencode_video(input_path, temp_reencode_path, video_resolution, frame_rate, video_crf, video_preset, preserve_audio=has_audio):
                         temp_input_path = temp_reencode_path
-                        print(f"{GREEN}✅ Видео {photo} перекодировано: {', '.join(reasons)} → libx264, yuv420p, {video_resolution}, {frame_rate} fps{RESET}")
+                        print(f"{GREEN}✅ Видео {photo} перекодировано: {', '.join(reasons)} → libx264, yuv420p, {video_resolution}, {frame_rate} fps{' с аудио' if has_audio else ''}{RESET}")
                     else:
                         print(f"{YELLOW}⚠️ Видео {photo} не удалось перекодировать и будет пропущено.{RESET}")
                         skipped_files.append(photo)
                         continue
 
-                    # Получаем исходную длительность видео
                     video_duration = get_video_duration(temp_input_path)
                     print(f"{BLUE}📹 Исходная длительность видео {photo}: {video_duration:.2f} сек{RESET}")
 
-                    # Масштабируем видео
-                    cmd = [
-                        "ffmpeg", "-reinit_filter", "0", "-i", temp_input_path,
-                        "-vf", f"fps={frame_rate},format=yuv420p,scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2",
-                        "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
-                        "-an", "-t", str(photo_duration), "-fps_mode", "passthrough",
-                        "-fflags", "+genpts", "-y", output_path
-                    ]
+                    if has_audio:
+                        cmd = [
+                            "ffmpeg", "-reinit_filter", "0", "-i", temp_input_path,
+                            "-c:v", "copy", "-c:a", "aac", "-b:a", "128k",
+                            "-y", output_path
+                        ]
+                    else:
+                        cmd = [
+                            "ffmpeg", "-reinit_filter", "0", "-i", temp_input_path,
+                            "-vf", f"fps={frame_rate},format=yuv420p,scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2",
+                            "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
+                            "-an", "-t", str(photo_duration), "-fps_mode", "passthrough",
+                            "-fflags", "+genpts", "-y", output_path
+                        ]
                     print(f"{BLUE}📹 Выполняем команду FFmpeg: {' '.join(cmd)}{RESET}")
                     try:
                         result = subprocess.run(
@@ -253,11 +294,11 @@ def process_photos_and_videos(
                     print(f"{YELLOW}⚠️ Обработанный файл {output_path} имеет недопустимую длительность{RESET}")
                     skipped_files.append(photo)
                     continue
-                print(f"{GREEN}✅ Видео {photo} обработано: длительность {processed_duration:.2f} сек (масштабировано до {photo_duration:.2f} сек){RESET}")
+                print(f"{GREEN}✅ Видео {photo} обработано: длительность {processed_duration:.2f} сек {'(с аудио)' if has_audio else '(масштабировано до ' + str(photo_duration) + ' сек)'}{RESET}")
                 processed_photo_files.append(output_path)
+                clips_info.append({"path": output_path, "duration": processed_duration, "has_audio": has_audio})
                 total_duration += processed_duration
             else:
-                # Обработка изображений
                 cmd = [
                     "ffmpeg", "-loop", "1", "-i", input_path,
                     "-vf",
@@ -281,154 +322,121 @@ def process_photos_and_videos(
                         continue
                     print(f"{GREEN}✅ Изображение {photo} обработано: длительность {processed_duration:.2f} сек{RESET}")
                     processed_photo_files.append(output_path)
+                    clips_info.append({"path": output_path, "duration": processed_duration, "has_audio": False})
                     total_duration += processed_duration
                 except subprocess.CalledProcessError as e:
                     print(f"{YELLOW}❌ Ошибка при обработке {input_path}: {e.stderr}{RESET}")
                     skipped_files.append(photo)
                     continue
-
     else:
-        # Режим False: исходная длительность, обрезать последний клип, повторять при нехватке
-        available_files = photo_files.copy()
+        # Режим False: исходная длительность, обрезать последний клип
+        available_files = sorted_photo_files.copy()
         random.shuffle(available_files)
         print(f"{BLUE}📹 Режим исходной длительности: обрезка последнего клипа под {temp_audio_duration:.2f} сек{RESET}")
 
-        while total_duration < temp_audio_duration and available_files:
-            for photo in available_files[:]:
-                input_path = os.path.join(preprocessed_photo_folder, photo)
-                output_path = os.path.join(temp_folder, f"processed_{len(processed_photo_files)}_{os.path.splitext(photo)[0]}.mp4")
-                ext = os.path.splitext(photo)[1].lower()
+        for idx, photo in enumerate(tqdm(available_files, desc="🔧 Обрабатываем фото и видео")):
+            input_path = os.path.join(preprocessed_photo_folder, photo)
+            output_path = os.path.join(temp_folder, f"processed_{len(processed_photo_files)}_{os.path.splitext(photo)[0]}.mp4")
+            ext = os.path.splitext(photo)[1].lower()
+            has_audio = preserve_clip_audio and ext in ('.mp4', '.mov') and has_audio_stream(input_path)
+            print(f"{BLUE}📹 Клип {idx+1}: {photo}, has_audio={has_audio}, путь: {input_path}{RESET}")
 
-                if ext in ('.mp4', '.mov'):
-                    print(f"{BLUE}📹 Проверяем видео: {input_path}{RESET}")
-                    is_match, reasons = check_video_params(
-                        input_path,
-                        target_resolution=video_resolution,
-                        target_fps=frame_rate,
-                        target_codec="h264",
-                        target_pix_fmt="yuv420p"
-                    )
+            if ext in ('.mp4', '.mov'):
+                print(f"{BLUE}📹 Проверяем видео: {input_path}{RESET}")
+                is_match, reasons = check_video_params(
+                    input_path,
+                    target_resolution=video_resolution,
+                    target_fps=frame_rate,
+                    target_codec="h264",
+                    target_pix_fmt="yuv420p"
+                )
 
-                    if is_match:
-                        # Видео соответствует параметрам, используем его с минимальной обработкой
-                        print(f"{GREEN}✅ Видео {photo} уже соответствует параметрам, перекодирование не требуется{RESET}")
-                        video_duration = get_video_duration(input_path)
-                        print(f"{BLUE}📹 Исходная длительность видео {photo}: {video_duration:.2f} сек{RESET}")
-                        is_last_clip = total_duration + video_duration >= temp_audio_duration
+                if is_match and not has_audio:
+                    print(f"{GREEN}✅ Видео {photo} уже соответствует параметрам, перекодирование не требуется{RESET}")
+                    video_duration = get_video_duration(input_path)
+                    print(f"{BLUE}📹 Исходная длительность видео {photo}: {video_duration:.2f} сек{RESET}")
+                    is_last_clip = total_duration + video_duration >= temp_audio_duration
 
-                        if is_last_clip:
-                            remaining_duration = temp_audio_duration - total_duration
-                            if remaining_duration <= 0:
-                                break
-                            cmd = [
-                                "ffmpeg", "-reinit_filter", "0", "-i", input_path,
-                                "-c:v", "copy", "-an", "-t", str(remaining_duration),
-                                "-y", output_path
-                            ]
-                        else:
-                            cmd = [
-                                "ffmpeg", "-reinit_filter", "0", "-i", input_path,
-                                "-c:v", "copy", "-an", "-y", output_path
-                            ]
-
-                        print(f"{BLUE}📹 Выполняем команду FFmpeg (копирование/обрезка): {' '.join(cmd)}{RESET}")
-                        try:
-                            result = subprocess.run(
-                                cmd, check=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True, encoding='utf-8', errors='replace'
-                            )
-                            print(f"{BLUE}📹 FFmpeg stdout: {result.stdout}{RESET}")
-                            print(f"{BLUE}📹 FFmpeg stderr: {result.stderr}{RESET}")
-                            processed_duration = get_video_duration(output_path)
-                            if processed_duration <= 0:
-                                print(f"{YELLOW}⚠️ Обработанный файл {output_path} имеет недопустимую длительность{RESET}")
-                                skipped_files.append(photo)
-                                available_files.remove(photo)
-                                continue
-                            print(f"{GREEN}✅ Видео {photo} обработано: длительность {processed_duration:.2f} сек {'(обрезано до ' + str(remaining_duration) + ' сек)' if is_last_clip else '(исходная)'}{RESET}")
-                            processed_photo_files.append(output_path)
-                            total_duration += processed_duration
-                            if is_last_clip:
-                                break
-                        except subprocess.CalledProcessError as e:
-                            print(f"{YELLOW}❌ Ошибка при обработке {input_path}: {e.stderr}{RESET}")
-                            skipped_files.append(photo)
-                            available_files.remove(photo)
-                            continue
+                    if is_last_clip:
+                        remaining_duration = temp_audio_duration - total_duration
+                        if remaining_duration <= 0:
+                            break
+                        cmd = [
+                            "ffmpeg", "-reinit_filter", "0", "-i", input_path,
+                            "-c:v", "copy", "-an", "-t", str(remaining_duration),
+                            "-y", output_path
+                        ]
                     else:
-                        # Видео не соответствует, используем текущую логику
-                        print(f"{YELLOW}⚠️ Видео {photo} не соответствует требованиям: {', '.join(reasons)}{RESET}")
-                        temp_reencode_path = os.path.join(temp_folder, f"reencoded_{os.path.splitext(photo)[0]}.mp4")
-                        if reencode_video(input_path, temp_reencode_path, video_resolution, frame_rate, video_crf, video_preset):
-                            input_path = temp_reencode_path
-                            print(f"{GREEN}✅ Видео {photo} перекодировано: {', '.join(reasons)} → libx264, yuv420p, {video_resolution}, {frame_rate} fps{RESET}")
-                        else:
-                            print(f"{YELLOW}⚠️ Видео {photo} не удалось перекодировать и будет пропущено{RESET}")
+                        cmd = [
+                            "ffmpeg", "-reinit_filter", "0", "-i", input_path,
+                            "-c:v", "copy", "-an", "-y", output_path
+                        ]
+
+                    print(f"{BLUE}📹 Выполняем команду FFmpeg (копирование/обрезка): {' '.join(cmd)}{RESET}")
+                    try:
+                        result = subprocess.run(
+                            cmd, check=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True, encoding='utf-8', errors='replace'
+                        )
+                        print(f"{BLUE}📹 FFmpeg stdout: {result.stdout}{RESET}")
+                        print(f"{BLUE}📹 FFmpeg stderr: {result.stderr}{RESET}")
+                        processed_duration = get_video_duration(output_path)
+                        if processed_duration <= 0:
+                            print(f"{YELLOW}⚠️ Обработанный файл {output_path} имеет недопустимую длительность{RESET}")
                             skipped_files.append(photo)
                             available_files.remove(photo)
                             continue
-
-                        # Получаем исходную длительность видео
-                        video_duration = get_video_duration(input_path)
-                        print(f"{BLUE}📹 Исходная длительность видео {photo}: {video_duration:.2f} сек{RESET}")
-
-                        # Проверяем, является ли это последним клипом
-                        is_last_clip = total_duration + video_duration >= temp_audio_duration
-
+                        print(f"{GREEN}✅ Видео {photo} обработано: длительность {processed_duration:.2f} сек {'(обрезано до ' + str(remaining_duration) + ' сек)' if is_last_clip else '(исходная)'}{RESET}")
+                        processed_photo_files.append(output_path)
+                        clips_info.append({"path": output_path, "duration": processed_duration, "has_audio": False})
+                        total_duration += processed_duration
                         if is_last_clip:
-                            remaining_duration = temp_audio_duration - total_duration
-                            if remaining_duration <= 0:
-                                break
-                            cmd = [
-                                "ffmpeg", "-reinit_filter", "0", "-i", input_path,
-                                "-vf", f"fps={frame_rate},format=yuv420p,scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2",
-                                "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
-                                "-an", "-t", str(remaining_duration),
-                                "-fps_mode", "passthrough", "-fflags", "+genpts", "-y", output_path
-                            ]
-                        else:
-                            cmd = [
-                                "ffmpeg", "-reinit_filter", "0", "-i", input_path,
-                                "-vf", f"fps={frame_rate},format=yuv420p,scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2",
-                                "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
-                                "-an", "-fps_mode", "passthrough", "-fflags", "+genpts", "-y", output_path
-                            ]
-
-                        print(f"{BLUE}📹 Выполняем команду FFmpeg: {' '.join(cmd)}{RESET}")
-                        try:
-                            result = subprocess.run(
-                                cmd, check=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True, encoding='utf-8', errors='replace'
-                            )
-                            print(f"{BLUE}📹 FFmpeg stdout: {result.stdout}{RESET}")
-                            print(f"{BLUE}📹 FFmpeg stderr: {result.stderr}{RESET}")
-                            processed_duration = get_video_duration(output_path)
-                            if processed_duration <= 0:
-                                print(f"{YELLOW}⚠️ Обработанный файл {output_path} имеет недопустимую длительность{RESET}")
-                                skipped_files.append(photo)
-                                available_files.remove(photo)
-                                continue
-                            print(f"{GREEN}✅ Видео {photo} обработано: длительность {processed_duration:.2f} сек {'(обрезано до ' + str(remaining_duration) + ' сек)' if is_last_clip else '(исходная)'}{RESET}")
-                            processed_photo_files.append(output_path)
-                            total_duration += processed_duration
-                            if is_last_clip:
-                                break
-                        except subprocess.CalledProcessError as e:
-                            print(f"{YELLOW}❌ Ошибка при обработке {input_path}: {e.stderr}{RESET}")
-                            skipped_files.append(photo)
-                            available_files.remove(photo)
-                            continue
+                            break
+                    except subprocess.CalledProcessError as e:
+                        print(f"{YELLOW}❌ Ошибка при обработке {input_path}: {e.stderr}{RESET}")
+                        skipped_files.append(photo)
+                        available_files.remove(photo)
+                        continue
                 else:
-                    # Обработка изображений
-                    is_last_clip = total_duration + temp_audio_duration >= temp_audio_duration
-                    duration = remaining_duration if is_last_clip else temp_audio_duration / len(photo_files)
-                    cmd = [
-                        "ffmpeg", "-loop", "1", "-i", input_path,
-                        "-vf",
-                        f"scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2,format=yuv420p",
-                        "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
-                        "-an", "-t", str(duration), "-r", str(frame_rate),
-                        "-map", "0:v:0", "-map", "-0:s", "-map", "-0:d",
-                        "-fflags", "+genpts", "-y", output_path
-                    ]
+                    temp_reencode_path = os.path.join(temp_folder, f"reencoded_{os.path.splitext(photo)[0]}.mp4")
+                    if reencode_video(input_path, temp_reencode_path, video_resolution, frame_rate, video_crf, video_preset, preserve_audio=has_audio):
+                        input_path = temp_reencode_path
+                        print(f"{GREEN}✅ Видео {photo} перекодировано: {', '.join(reasons)} → libx264, yuv420p, {video_resolution}, {frame_rate} fps{' с аудио' if has_audio else ''}{RESET}")
+                    else:
+                        print(f"{YELLOW}⚠️ Видео {photo} не удалось перекодировать и будет пропущено{RESET}")
+                        skipped_files.append(photo)
+                        available_files.remove(photo)
+                        continue
+
+                    video_duration = get_video_duration(input_path)
+                    print(f"{BLUE}📹 Исходная длительность видео {photo}: {video_duration:.2f} сек{RESET}")
+
+                    is_last_clip = total_duration + video_duration >= temp_audio_duration
+
+                    if has_audio:
+                        cmd = [
+                            "ffmpeg", "-reinit_filter", "0", "-i", input_path,
+                            "-c:v", "copy", "-c:a", "aac", "-b:a", "128k",
+                            "-y", output_path
+                        ]
+                    elif is_last_clip:
+                        remaining_duration = temp_audio_duration - total_duration
+                        if remaining_duration <= 0:
+                            break
+                        cmd = [
+                            "ffmpeg", "-reinit_filter", "0", "-i", input_path,
+                            "-vf", f"fps={frame_rate},format=yuv420p,scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2",
+                            "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
+                            "-an", "-t", str(remaining_duration),
+                            "-fps_mode", "passthrough", "-fflags", "+genpts", "-y", output_path
+                        ]
+                    else:
+                        cmd = [
+                            "ffmpeg", "-reinit_filter", "0", "-i", input_path,
+                            "-vf", f"fps={frame_rate},format=yuv420p,scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2",
+                            "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
+                            "-an", "-fps_mode", "passthrough", "-fflags", "+genpts", "-y", output_path
+                        ]
+
                     print(f"{BLUE}📹 Выполняем команду FFmpeg: {' '.join(cmd)}{RESET}")
                     try:
                         result = subprocess.run(
@@ -442,8 +450,9 @@ def process_photos_and_videos(
                             skipped_files.append(photo)
                             available_files.remove(photo)
                             continue
-                        print(f"{GREEN}✅ Изображение {photo} обработано: длительность {processed_duration:.2f} сек{RESET}")
+                        print(f"{GREEN}✅ Видео {photo} обработано: длительность {processed_duration:.2f} сек {'(с аудио)' if has_audio else '(обрезано до ' + str(remaining_duration) + ' сек)' if is_last_clip else '(исходная)'}{RESET}")
                         processed_photo_files.append(output_path)
+                        clips_info.append({"path": output_path, "duration": processed_duration, "has_audio": has_audio})
                         total_duration += processed_duration
                         if is_last_clip:
                             break
@@ -452,14 +461,51 @@ def process_photos_and_videos(
                         skipped_files.append(photo)
                         available_files.remove(photo)
                         continue
+            else:
+                is_last_clip = total_duration + temp_audio_duration >= temp_audio_duration
+                duration = remaining_duration if is_last_clip else temp_audio_duration / len(sorted_photo_files)
+                cmd = [
+                    "ffmpeg", "-loop", "1", "-i", input_path,
+                    "-vf",
+                    f"scale={video_resolution}:force_original_aspect_ratio=decrease,pad={video_resolution}:(ow-iw)/2:(oh-ih)/2,format=yuv420p",
+                    "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
+                    "-an", "-t", str(duration), "-r", str(frame_rate),
+                    "-map", "0:v:0", "-map", "-0:s", "-map", "-0:d",
+                    "-fflags", "+genpts", "-y", output_path
+                ]
+                print(f"{BLUE}📹 Выполняем команду FFmpeg: {' '.join(cmd)}{RESET}")
+                try:
+                    result = subprocess.run(
+                        cmd, check=True, stderr=subprocess.PIPE, stdout=subprocess.PIPE, text=True, encoding='utf-8', errors='replace'
+                    )
+                    print(f"{BLUE}📹 FFmpeg stdout: {result.stdout}{RESET}")
+                    print(f"{BLUE}📹 FFmpeg stderr: {result.stderr}{RESET}")
+                    processed_duration = get_video_duration(output_path)
+                    if processed_duration <= 0:
+                        print(f"{YELLOW}⚠️ Обработанный файл {output_path} имеет недопустимую длительность{RESET}")
+                        skipped_files.append(photo)
+                        available_files.remove(photo)
+                        continue
+                    print(f"{GREEN}✅ Изображение {photo} обработано: длительность {processed_duration:.2f} сек{RESET}")
+                    processed_photo_files.append(output_path)
+                    clips_info.append({"path": output_path, "duration": processed_duration, "has_audio": False})
+                    total_duration += processed_duration
+                    if is_last_clip:
+                        break
+                except subprocess.CalledProcessError as e:
+                    print(f"{YELLOW}❌ Ошибка при обработке {input_path}: {e.stderr}{RESET}")
+                    skipped_files.append(photo)
+                    available_files.remove(photo)
+                    continue
 
             if total_duration < temp_audio_duration and available_files:
                 print(f"{BLUE}📹 Недостаточно длительности ({total_duration:.2f}/{temp_audio_duration:.2f} сек), повторное использование клипов{RESET}")
-                available_files = photo_files.copy()
+                available_files = sorted_photo_files.copy()
                 random.shuffle(available_files)
 
     print(f"{GREEN}📹 Общая длительность видео: {total_duration:.2f} сек, аудио: {temp_audio_duration:.2f} сек{RESET}")
-    return processed_photo_files, skipped_files
+    print(f"{BLUE}📹 Итоговое clips_info: {clips_info}{RESET}")
+    return processed_photo_files, skipped_files, clips_info
 
 def preprocess_images(photo_folder_vid, preprocessed_photo_folder, bokeh_enabled, bokeh_image_size, bokeh_blur_kernel, bokeh_blur_sigma, video_resolution=None, frame_rate=None):
     """Предобработка изображений с эффектом боке, копирование видео только при необходимости."""

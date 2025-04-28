@@ -47,6 +47,7 @@ CHANNELS = {
         "logo_path": lambda c: glob.glob(f"{c['base_path']}/{c['channel_folder']}/Logo/*.png")[0] if glob.glob(f"{c['base_path']}/{c['channel_folder']}/Logo/*.png") else "",  # Путь к логотипу: берёт первый PNG-файл из папки Logo
         "subscribe_frames_folder": lambda c: f"{c['base_path']}/{c['channel_folder']}/Scene_logo",  # Папка с кадрами анимации кнопки "ПОДПИСАТЬСЯ"
 
+
         # Настройка громкости фоновой музыки
         "background_music_volume": 0.3,  # Громкость фоновой музыки (0.0–1.0)
 
@@ -590,10 +591,10 @@ CHANNELS = {
         "default_similarity": 1.0,  # Параметр схожести с оригинальным голосом (0.0–1.0), влияет на точность копирования
         "default_voice_speed": 1.0,  # Скорость речи (зарезервировано, пока не используется в API ElevenLabs)
         "default_voice_style": None,  # Стиль голоса (например, "excited", если доступно, иначе None)
-        "standard_voice_id": "FzF9ACIefsb6wbrYVjf1",  # ID стандартного голоса для генерации речи
+        "standard_voice_id": "zgqefOY5FPQ3bB7OZTVR",  # ID стандартного голоса для генерации речи
         "use_library_voice": True,  # Флаг, указывающий, использовать ли голос из библиотеки (True/False)
-        "original_voice_id": "FzF9ACIefsb6wbrYVjf1",  # ID оригинального голоса, который копируется из библиотеки
-        "public_owner_id": "4e120f88d43f125a4c1f56885db63990e17568c80c5cca2f9f3a6459230fbeb1",  # ID публичного владельца голоса для доступа к библиотеке голосов
+        "original_voice_id": "zgqefOY5FPQ3bB7OZTVR",  # ID оригинального голоса, который копируется из библиотеки
+        "public_owner_id": "f87f057c2250691953ac2e6227859706764bd08c88a055a18c74261957885a51",  # ID публичного владельца голоса для доступа к библиотеке голосов
 
         # --- Параметры для auto_montage.py (автоматический монтаж видео) ---
         # Пути к папкам и файлам

@@ -75,7 +75,8 @@ def process_auto_montage(channel_name, video_number=None):
     SUBTITLE_MAX_WORDS = config.get("subtitle_max_words", 3)
     SUBTITLE_TIME_OFFSET = config.get("subtitle_time_offset", -0.3)
     BACKGROUND_MUSIC_VOLUME = config.get("background_music_volume", 0.2)
-    ADJUST_VIDEOS_TO_AUDIO = config.get("adjust_videos_to_audio", True)  # Новая настройка
+    ADJUST_VIDEOS_TO_AUDIO = config.get("adjust_videos_to_audio", True)
+    PRESERVE_CLIP_AUDIO = config.get("preserve_clip_audio", False)
 
     # Проверяем пути
     required_paths = {
@@ -87,7 +88,8 @@ def process_auto_montage(channel_name, video_number=None):
     }
     for path_name, path_value in required_paths.items():
         if not isinstance(path_value, str):
-            print(f"{YELLOW}⚠️ Ошибка: '{path_name}' должен быть строкой, но получено: {type(path_value)} (значение: {path_value}).{RESET}")
+            print(
+                f"{YELLOW}⚠️ Ошибка: '{path_name}' должен быть строкой, но получено: {type(path_value)} (значение: {path_value}).{RESET}")
             return
         if not path_value:
             print(f"{YELLOW}⚠️ Ошибка: '{path_name}' не может быть пустым.{RESET}")
@@ -100,7 +102,8 @@ def process_auto_montage(channel_name, video_number=None):
         print(f"{BLUE}📷 Логотип найден: {LOGO_PATH}{RESET}")
 
     if not BACKGROUND_MUSIC_PATH or not os.path.isfile(BACKGROUND_MUSIC_PATH):
-        print(f"{YELLOW}⚠️ Фоновая музыка не найдена: {BACKGROUND_MUSIC_PATH}. Используется основная аудиодорожка.{RESET}")
+        print(
+            f"{YELLOW}⚠️ Фоновая музыка не найдена: {BACKGROUND_MUSIC_PATH}. Используется основная аудиодорожка.{RESET}")
         BACKGROUND_MUSIC_PATH = None
     else:
         print(f"{BLUE}🎵 Фоновая музыка найдена: {BACKGROUND_MUSIC_PATH}{RESET}")
@@ -115,13 +118,22 @@ def process_auto_montage(channel_name, video_number=None):
         OUTPUT_FOLDER_VID = os.path.join(OUTPUT_FOLDER, vid_num)
         os.makedirs(OUTPUT_FOLDER_VID, exist_ok=True)
 
-        print(f"{BLUE}📂 PHOTO_FOLDER: {PHOTO_FOLDER_VID}{RESET}")
-        print(f"{BLUE}📂 OUTPUT_DIRECTORY: {OUTPUT_DIRECTORY}{RESET}")
-        print(f"{BLUE}📂 OUTPUT_FOLDER: {OUTPUT_FOLDER_VID}{RESET}")
-        print(f"{BLUE}📂 SUBSCRIBE_FRAMES_FOLDER: {SUBSCRIBE_FRAMES_FOLDER}{RESET}")
-        print(f"{BLUE}📂 XLSX_FILE_PATH: {XLSX_FILE_PATH}{RESET}")
-        print(f"{BLUE}📂 LOGO_PATH: {LOGO_PATH or 'Отсутствует'}{RESET}")
-        print(f"{BLUE}📂 BACKGROUND_MUSIC_PATH: {BACKGROUND_MUSIC_PATH or 'Отсутствует'}{RESET}")
+        # Проверяем наличие готового видео
+        output_file = os.path.join(OUTPUT_FOLDER_VID, "final_video.mp4")
+        print(f"{BLUE}📂 Проверяемый путь к итоговому видео: {output_file}{RESET}")
+        if os.path.exists(output_file):
+            print(f"{GREEN}✅ Готовое видео уже существует: {output_file}. Пропускаем монтаж видео {vid_num}.{RESET}")
+            continue
+        else:
+            print(f"{BLUE}📂 Итоговое видео не найдено: {output_file}. Начинаем монтаж видео {vid_num}.{RESET}")
+
+        print(f"{BLUE}📂 Папка с фото/видео: {PHOTO_FOLDER_VID}{RESET}")
+        print(f"{BLUE}📂 Путь для сохранения сгенерированных аудиофайлов: {OUTPUT_DIRECTORY}{RESET}")
+        print(f"{BLUE}📂 Папка для сохранения финального видео: {OUTPUT_FOLDER_VID}{RESET}")
+        print(f"{BLUE}📂 Папка с кадрами анимации кнопки ПОДПИСАТЬСЯ: {SUBSCRIBE_FRAMES_FOLDER}{RESET}")
+        print(f"{BLUE}📂 Путь к Excel-файлу со сценарием (Сценарий.xlsx): {XLSX_FILE_PATH}{RESET}")
+        print(f"{BLUE}📂 Путь к логотипу: {LOGO_PATH or 'Отсутствует'}{RESET}")
+        print(f"{BLUE}📂 Путь к фоновой музыки: {BACKGROUND_MUSIC_PATH or 'Отсутствует'}{RESET}")
 
         if not os.path.exists(PHOTO_FOLDER_VID):
             print(f"{YELLOW}⚠️ Папка не найдена: {PHOTO_FOLDER_VID}. Пропускаем видео {vid_num}.{RESET}")
@@ -168,7 +180,8 @@ def process_auto_montage(channel_name, video_number=None):
             print(f"{YELLOW}⚠️ Ошибка обработки аудио для видео {vid_num}! Пропускаем.{RESET}")
             continue
 
-        print(f"{BLUE}🎵 Длительность аудио: {int(temp_audio_duration // 60)}:{int(temp_audio_duration % 60):02d}{RESET}")
+        print(
+            f"{BLUE}🎵 Длительность аудио: {int(temp_audio_duration // 60)}:{int(temp_audio_duration % 60):02d}{RESET}")
 
         # Шаг 1.1: Добавление фоновой музыки
         final_audio_with_music_path = add_background_music(
@@ -179,7 +192,8 @@ def process_auto_montage(channel_name, video_number=None):
         # Шаг 2: Предобработка изображений
         print(f"{GREEN}=== 🖼️ Предобработка изображений ==={RESET}")
         if BOKEH_ENABLED:
-            preprocess_images(PHOTO_FOLDER_VID, PREPROCESSED_PHOTO_FOLDER, BOKEH_ENABLED, BOKEH_IMAGE_SIZE, BOKEH_BLUR_KERNEL, BOKEH_BLUR_SIGMA)
+            preprocess_images(PHOTO_FOLDER_VID, PREPROCESSED_PHOTO_FOLDER, BOKEH_ENABLED, BOKEH_IMAGE_SIZE,
+                              BOKEH_BLUR_KERNEL, BOKEH_BLUR_SIGMA)
         else:
             for image_filename in os.listdir(PHOTO_FOLDER_VID):
                 if image_filename.lower().endswith(('.png', '.jpg', '.jpeg', '.mp4', '.mov')):
@@ -188,12 +202,13 @@ def process_auto_montage(channel_name, video_number=None):
 
         # Шаг 3: Обработка фото и видео
         print(f"{GREEN}=== 🎬 Обработка фото и видео ==={RESET}")
-        photo_files = sorted([f for f in os.listdir(PREPROCESSED_PHOTO_FOLDER) if f.endswith(('.jpg', '.jpeg', '.png', '.mp4', '.mov'))])
+        photo_files = sorted(
+            [f for f in os.listdir(PREPROCESSED_PHOTO_FOLDER) if f.endswith(('.jpg', '.jpeg', '.png', '.mp4', '.mov'))])
         if not photo_files:
             print(f"{YELLOW}⚠️ Нет фото/видео для видео {vid_num}! Пропускаем.{RESET}")
             continue
 
-        processed_photo_files, skipped_files = process_photos_and_videos(
+        processed_photo_files, skipped_files, clips_info = process_photos_and_videos(
             photo_files=photo_files,
             preprocessed_photo_folder=PREPROCESSED_PHOTO_FOLDER,
             temp_folder=TEMP_FOLDER,
@@ -202,7 +217,8 @@ def process_auto_montage(channel_name, video_number=None):
             video_crf=VIDEO_CRF,
             video_preset=VIDEO_PRESET,
             temp_audio_duration=temp_audio_duration,
-            adjust_videos_to_audio=ADJUST_VIDEOS_TO_AUDIO  # Передаём новую настройку
+            adjust_videos_to_audio=ADJUST_VIDEOS_TO_AUDIO,
+            preserve_clip_audio=PRESERVE_CLIP_AUDIO
         )
         if not processed_photo_files:
             print(f"{YELLOW}⚠️ Не удалось обработать фото/видео для видео {vid_num}! Пропускаем.{RESET}")
@@ -245,9 +261,20 @@ def process_auto_montage(channel_name, video_number=None):
         subtitles_path = None
         if SUBTITLES_ENABLED:
             print(f"{GREEN}=== 📝 Генерация субтитров ==={RESET}")
+            # Вычисляем audio_offset как длительность первого клипа с аудио
+            audio_offset = 0
+            for clip in clips_info:
+                if clip.get("has_audio", False):
+                    audio_offset = clip["duration"]
+                    print(
+                        f"{BLUE}📝 Первый клип с аудио для субтитров: {clip['path']}, audio_offset: {audio_offset:.2f} сек{RESET}")
+                    break
+            print(f"{BLUE}📝 Используемый audio_offset для субтитров: {audio_offset:.2f} сек{RESET}")
+
             subtitles_path = generate_subtitles(
                 final_audio_with_music_path, TEMP_FOLDER, SUBTITLE_MODEL, SUBTITLE_LANGUAGE, SUBTITLE_MAX_WORDS,
-                SUBTITLE_TIME_OFFSET, temp_audio_duration, SUBTITLE_FONTSIZE, SUBTITLE_FONT_COLOR, SUBTITLE_USE_BACKDROP,
+                SUBTITLE_TIME_OFFSET + audio_offset, temp_audio_duration, SUBTITLE_FONTSIZE, SUBTITLE_FONT_COLOR,
+                SUBTITLE_USE_BACKDROP,
                 SUBTITLE_BACK_COLOR, SUBTITLE_OUTLINE_THICKNESS, SUBTITLE_OUTLINE_COLOR, SUBTITLE_SHADOW_THICKNESS,
                 SUBTITLE_SHADOW_COLOR, SUBTITLE_SHADOW_ALPHA, SUBTITLE_SHADOW_OFFSET_X, SUBTITLE_SHADOW_OFFSET_Y,
                 SUBTITLE_MARGIN_L, SUBTITLE_MARGIN_R, SUBTITLE_MARGIN_V
@@ -257,12 +284,12 @@ def process_auto_montage(channel_name, video_number=None):
 
         # Шаг 7: Финальная сборка
         print(f"{MAGENTA}=== 🏗️ Финальная сборка ==={RESET}")
-        output_file = os.path.join(OUTPUT_FOLDER_VID, "final_video.mp4")
         final_video_path = final_assembly(
             temp_video_path, final_audio_with_music_path, output_file, TEMP_FOLDER, frame_list_path, num_frames,
             LOGO_PATH, subtitles_path, VIDEO_RESOLUTION, FRAME_RATE, VIDEO_CRF, VIDEO_PRESET, temp_audio_duration,
             LOGO_WIDTH, LOGO_POSITION_X, LOGO_POSITION_Y, LOGO_DURATION, SUBSCRIBE_WIDTH, SUBSCRIBE_POSITION_X,
-            SUBSCRIBE_POSITION_Y, SUBSCRIBE_DISPLAY_DURATION, SUBSCRIBE_INTERVAL_GAP, SUBTITLES_ENABLED
+            SUBSCRIBE_POSITION_Y, SUBSCRIBE_DISPLAY_DURATION, SUBSCRIBE_INTERVAL_GAP, SUBTITLES_ENABLED,
+            clips_info=clips_info
         )
         if not final_video_path:
             print(f"{YELLOW}❌ Ошибка финальной сборки для видео {vid_num}!{RESET}")
@@ -278,15 +305,19 @@ def process_auto_montage(channel_name, video_number=None):
             print(f"{YELLOW}❌ Ошибка при разборе длительности финального видео: {str(e)}{RESET}")
             continue
 
-        print(f"{GREEN}🎥 Длительность видео: {int(final_video_duration // 60)}:{int(final_video_duration % 60):02d}{RESET}")
+        print(
+            f"{GREEN}🎥 Длительность видео: {int(final_video_duration // 60)}:{int(final_video_duration % 60):02d}{RESET}")
         if abs(final_video_duration - temp_audio_duration) > 0.1:
-            print(f"{YELLOW}⚠️ Длительность видео не совпадает с аудио: {final_video_duration:.2f} против {temp_audio_duration:.2f}!{RESET}")
+            print(
+                f"{YELLOW}⚠️ Длительность видео не совпадает с аудио: {final_video_duration:.2f} против {temp_audio_duration:.2f}!{RESET}")
 
         print(f"{GREEN}=== ✅ Монтаж видео {vid_num} завершён! Видео: {output_file} ==={RESET}")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Скрипт автоматического монтажа видео.')
     parser.add_argument('--channel', type=str, required=True, help='Название канала для монтажа')
-    parser.add_argument('--video_number', type=str, default=None, help='Номер видео (если не указан, обрабатываются все видео)')
+    parser.add_argument('--video_number', type=str, default=None,
+                        help='Номер видео (если не указан, обрабатываются все видео)')
     args = parser.parse_args()
     process_auto_montage(args.channel, args.video_number)
