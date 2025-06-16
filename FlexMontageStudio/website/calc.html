@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Path Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        label, input, textarea { display: block; margin: 10px 0; }
+        textarea { width: 100%; height: 100px; }
+        #output { margin-top: 20px; }
+        svg { border: 1px solid #ccc; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>SVG Path Calculator</h2>
+    <label for="points">Enter points (x,y pairs, space-separated, e.g., "0,3 28,85 57,86"):</label>
+    <textarea id="points" placeholder="0,3 28,85 57,86 85,87"></textarea>
+    <label for="yMax">Enter y_max for area fill (e.g., 110):</label>
+    <input type="number" id="yMax" value="110">
+    <button onclick="generatePaths()">Generate Paths</button>
+    <div id="output"></div>
+    <svg id="preview" width="800" height="150"></svg>
+
+    <script>
+        function generatePaths() {
+            const pointsInput = document.getElementById('points').value;
+            const yMax = parseFloat(document.getElementById('yMax').value) || 110;
+            const points = pointsInput.trim().split(/\s+/).map(p => {
+                const [x, y] = p.split(',').map(Number);
+                return { x, y };
+            });
+
+            // Generate line-series path
+            const linePath = points.length > 0 ? `M${points[0].x},${points[0].y}` + points.slice(1).map(p => `L${p.x},${p.y}`).join('') : '';
+
+            // Generate area path
+            let areaPath = linePath;
+            if (points.length > 0) {
+                const lastPoint = points[points.length - 1];
+                areaPath += `L${lastPoint.x},${yMax}`;
+                for (let i = points.length - 2; i >= 0; i--) {
+                    areaPath += `L${points[i].x},${yMax}`;
+                }
+                areaPath += `L${points[0].x},${yMax}Z`;
+            }
+
+            // Output paths
+            const output = `
+                <h3>Generated Paths:</h3>
+                <p><strong>Line Path (line-series):</strong><br>
+                &lt;path class="line-series style-scope yta-line-chart-base" fill="none" stroke="rgba(65, 180, 217, 1)" stroke-width="2" d="${linePath}" clip-path="url(#lineclip5)"&gt;&lt;/path&gt;</p>
+                <p><strong>Area Path (area):</strong><br>
+                &lt;path class="area style-scope yta-line-chart-base" stroke-width="0" fill="rgba(65, 180, 217, 0.1)" d="${areaPath}" clip-path="url(#lineclip6)"&gt;&lt;/path&gt;</p>
+            `;
+            document.getElementById('output').innerHTML = output;
+
+            // Preview SVG
+            const svg = document.getElementById('preview');
+            svg.innerHTML = `
+                <path class="area" stroke-width="0" fill="rgba(65, 180, 217, 0.1)" d="${areaPath}"></path>
+                <path class="line-series" fill="none" stroke="rgba(65, 180, 217, 1)" stroke-width="2" d="${linePath}"></path>
+            `;
+        }
+    </script>
+</body>
+</html>

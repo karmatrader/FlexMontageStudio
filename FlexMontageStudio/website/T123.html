@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexMontage Studio - YouTube Завод по Производству Денег 24/7</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: #303030;
+            color: #B8B8B8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #303030 0%, #454545 100%);
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="2" fill="%2366FF33" opacity="0.1"/><circle cx="75" cy="75" r="3" fill="%2366FF33" opacity="0.05"/><circle cx="50" cy="10" r="1" fill="%2366FF33" opacity="0.15"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #66FF33;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .urgent-banner {
+            background: linear-gradient(45deg, #FF4444, #FF6666);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* CTA Buttons */
+        .cta-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 18px 35px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #66FF33, #5AE02A);
+            color: #000000;
+            box-shadow: 0 5px 15px rgba(102, 255, 51, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 255, 51, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #454545, #555555);
+            color: #FFFFFF;
+            border: 2px solid #66FF33;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(45deg, #555555, #666666);
+            transform: translateY(-2px);
+        }
+
+        /* Live Stats Widget */
+        .live-stats {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #404040;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #66FF33;
+            z-index: 9999;
+            max-width: 200px;
+        }
+
+        .live-stats-title {
+            color: #66FF33;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .live-stats-content {
+            color: #B8B8B8;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        /* Spots Progress */
+        .spots-widget {
+            background: #404040;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+            border: 2px solid #FF4444;
+        }
+
+        .spots-warning {
+            color: #FF4444;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .spots-progress-bar {
+            background: #353535;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+            position: relative;
+        }
+
+        .spots-progress-fill {
+            background: linear-gradient(45deg, #FF4444, #FF6666);
+            height: 100%;
+            width: 60%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .spots-progress-fill::after {
+            content: '60%';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Enhanced Calculator */
+        .savings-calculator {
+            background: linear-gradient(135deg, #404040 0%, #353535 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border: 2px solid #66FF33;
+            box-shadow: 0 10px 30px rgba(102, 255, 51, 0.1);
+        }
+
+        .calculator-title {
+            color: #66FF33;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-label {
+            color: #B8B8B8;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .calculator-input {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #353535 0%, #454545 100%);
+            border: 2px solid #555;
+            border-radius: 8px;
+            color: #FFF;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .calculator-input:focus {
+            border-color: #66FF33;
+            box-shadow: 0 0 15px rgba(102, 255, 51, 0.3);
+            outline: none;
+        }
+
+        .calculator-result {
+            text-align: center;
+            background: linear-gradient(135deg, #353535 0%, #303030 100%);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #666;
+        }
+
+        .result-item {
+            margin: 15px 0;
+        }
+
+        .result-danger {
+            color: #FF4444;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .result-success {
+            color: #66FF33;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .result-info {
+            color: #B8B8B8;
+            margin-top: 15px;
+        }
+
+        .result-highlight {
+            color: #66FF33;
+            font-weight: bold;
+        }
+
+        /* Social Proof Ticker */
+        .social-ticker {
+            background: linear-gradient(90deg, #353535 0%, #404040 50%, #353535 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ticker-title {
+            color: #66FF33;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: ticker 25s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-item {
+            min-width: 400px;
+            margin-right: 50px;
+            padding: 10px 15px;
+            background: #454545;
+            border-radius: 6px;
+            border-left: 3px solid #66FF33;
+            flex-shrink: 0;
+        }
+
+        .ticker-name {
+            color: #66FF33;
+            font-weight: bold;
+        }
+
+        .ticker-achievement {
+            color: #B8B8B8;
+            font-size: 0.9rem;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Interactive Demo */
+        .demo-section {
+            background: #303030;
+            padding: 60px 0;
+        }
+
+        .demo-container {
+            background: linear-gradient(135deg, #404040 0%, #353535 100%);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 700px;
+            margin: 0 auto;
+            border: 2px solid #66FF33;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .demo-title {
+            color: #FFFFFF;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .demo-subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #66FF33;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .demo-steps {
+            margin: 30px 0;
+        }
+
+        .demo-step {
+            padding: 15px 20px;
+            background: #353535;
+            border-radius: 8px;
+            margin: 12px 0;
+            border-left: 4px solid #666;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .demo-step.active {
+            border-left-color: #66FF33;
+            opacity: 1;
+            background: #454545;
+            transform: translateX(5px);
+        }
+
+        .demo-step.completed {
+            border-left-color: #66FF33;
+            opacity: 1;
+            background: #404040;
+        }
+
+        .demo-step.completed::after {
+            content: '✓';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #66FF33;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .step-title {
+            color: #888;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .demo-step.active .step-title,
+        .demo-step.completed .step-title {
+            color: #66FF33;
+        }
+
+        .demo-button {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 30px auto;
+            padding: 18px 30px;
+            background: linear-gradient(45deg, #66FF33, #5AE02A);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 255, 51, 0.4);
+        }
+
+        .demo-result {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(45deg, #66FF33, #5AE02A);
+            color: #000;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            animation: resultAppear 0.5s ease-out;
+        }
+
+        @keyframes resultAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Notifications */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10001;
+            max-width: 350px;
+        }
+
+        .notification {
+            background: #404040;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #66FF33;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .notification-title {
+            color: #66FF33;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .notification-text {
+            color: #B8B8B8;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .notification-time {
+            color: #888;
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 80px 0;
+            background: #353535;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #FFFFFF;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: bold;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .problem-card {
+            background: #404040;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #FF4444;
+            transition: transform 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .problem-card h3 {
+            color: #FF4444;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Solution Section */
+        .solution {
+            padding: 80px 0;
+            background: #303030;
+        }
+
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 40px;
+            align-items: center;
+            margin: 50px 0;
+        }
+
+        .before, .after {
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .before {
+            background: #454545;
+            border: 2px solid #FF4444;
+        }
+
+        .after {
+            background: #404040;
+            border: 2px solid #66FF33;
+        }
+
+        .vs-arrow {
+            font-size: 3rem;
+            color: #66FF33;
+            font-weight: bold;
+        }
+
+        .metric {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .before .metric {
+            color: #FF4444;
+        }
+
+        .after .metric {
+            color: #66FF33;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: #353535;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #404040;
+            padding: 30px;
+            border-radius: 12px;
+            border-top: 4px solid #66FF33;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 255, 51, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #FFFFFF;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 0;
+            background: #303030;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .pricing-card {
+            background: #404040;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+            border: 2px solid #454545;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid #66FF33;
+            transform: scale(1.05);
+            background: #454545;
+        }
+
+        .pricing-card.featured::before {
+            content: '⭐ ЛУЧШИЙ ВЫБОР';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #66FF33;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            color: #66FF33;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .old-price {
+            font-size: 1.5rem;
+            color: #888;
+            text-decoration: line-through;
+            margin-bottom: 10px;
+        }
+
+        .price-note {
+            color: #FF4444;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: #353535;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial {
+            background: #404040;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid #66FF33;
+        }
+
+        .testimonial-author {
+            color: #66FF33;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .testimonial-metrics {
+            color: #FFFFFF;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Guarantees */
+        .guarantees {
+            padding: 80px 0;
+            background: #303030;
+        }
+
+        .guarantee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .guarantee-card {
+            background: #404040;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #66FF33;
+        }
+
+        .guarantee-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 0;
+            background: #353535;
+        }
+
+        .faq-item {
+            background: #404040;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: #454545;
+            cursor: pointer;
+            color: #FFFFFF;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            padding: 20px;
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #303030 0%, #454545 100%);
+            text-align: center;
+        }
+
+        .timer {
+            background: #FF4444;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .before-after {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .vs-arrow {
+                transform: rotate(90deg);
+            }
+
+            .cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .calculator-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .live-stats {
+                position: relative;
+                margin: 20px auto;
+                bottom: auto;
+                left: auto;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Live Stats Widget -->
+    <div class="live-stats">
+        <div class="live-stats-title"> &#128293; Прямо сейчас:</div>
+        <div class="live-stats-content">
+             &#128101; Смотрят: <span id="viewers-count">23</span> человека<br>
+             &#128179; Куплено сегодня: <span id="sales-count">7</span> лицензий
+        </div>
+    </div>
+
+    <!-- Purchase Notifications -->
+    <div class="notification-container" id="notification-container">
+        <!-- Динамически заполняется -->
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <div class="urgent-banner">
+                    ⚡ АКЦИЯ ЗАКАНЧИВАЕТСЯ! Цена растёт каждую неделю: 39,500₽ → 49,500₽ → 59,500₽ → 89,500₽
+                </div>
+
+                <h1>FlexMontage Studio</h1>
+                <div class="hero-subtitle">Твой личный YouTube-завод по производству денег 24/7</div>
+                <div class="hero-description">
+                    Создавай 100 роликов в день вместо одного. Экономь 575,000₽ в месяц на фрилансерах.
+                    Зарабатывай от 100,000₽ уже в первый месяц с помощью ИИ-автоматизации.
+                </div>
+
+                <div class="cta-group">
+                    <a href="#pricing" class="btn btn-primary">
+                        &#128640; КУПИТЬ СТУДИЮ (39,500₽)
+                    </a>
+                    <a href="#club" class="btn btn-secondary">
+                        &#128100; &#128272; ВОЙТИ В ЗАКРЫТЫЙ КЛУБ (3,900₽/мес)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spots Progress Widget -->
+    <section style="background: #303030; padding: 40px 0;">
+        <div class="container">
+            <div class="spots-widget scroll-reveal">
+                <div class="spots-warning">
+                    ⚠️ Осталось мест по акционной цене: <span id="spots-left">3</span> из 5
+                </div>
+
+                <div class="spots-progress-bar">
+                    <div class="spots-progress-fill" id="spots-progress"></div>
+                </div>
+
+                <div style="color: #888; font-size: 0.9rem;">
+                    После заполнения цена поднимается до 49,500₽
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Почему 95% YouTube-каналов не зарабатывают?</h2>
+
+            <div class="problem-grid">
+                <div class="problem-card scroll-reveal">
+                    <h3>&#128547; Катастрофическая нехватка времени</h3>
+                    <p>Один ролик = 6 часов работы. За месяц успеваешь сделать максимум 30 роликов. YouTube алгоритм требует МИНИМУМ 100 роликов для серьёзного роста.</p>
+                </div>
+
+                <div class="problem-card scroll-reveal">
+                    <h3>&#128184; Фрилансеры съедают всю прибыль</h3>
+                    <p>Озвучка: 25,000₽/мес + Монтаж: 40,000₽/мес + Субтитры: 8,000₽/мес = 73,000₽ КАЖДЫЙ месяц. Окупаемость стремится к нулю.</p>
+                </div>
+
+                <div class="problem-card scroll-reveal">
+                    <h3>&#128295; Сложность профессиональных программ</h3>
+                    <p>Premiere Pro, After Effects - месяцы обучения. Куча настроек, плагинов, рендеров. 90% функций вообще не нужны для YouTube.</p>
+                </div>
+
+                <div class="problem-card scroll-reveal">
+                    <h3> &#127919; Невозможность масштабирования</h3>
+                    <p>Физически невозможно делать больше 2-3 качественных роликов в день. Рост канала упирается в твои личные ресурсы.</p>
+                </div>
+            </div>
+
+            <div class="before-after scroll-reveal">
+                <div class="before">
+                    <div class="metric">73,000₽</div>
+                    <p>Ежемесячные траты на фрилансеров</p>
+                </div>
+
+                <div class="vs-arrow">→</div>
+
+                <div class="after">
+                    <div class="metric">39,500₽</div>
+                    <p>Разовая покупка FlexMontage Studio</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Solution Section -->
+<section class="solution">
+   <div class="container">
+       <h2 class="section-title scroll-reveal">Честно про цифры: ДО и ПОСЛЕ FlexMontage Studio</h2>
+
+       <div class="before-after scroll-reveal">
+           <div class="before">
+               <h3>БЫЛО (обычный монтаж)</h3>
+               <div class="metric">6 часов</div>
+               <p>на 1 ролик</p>
+               <div class="metric">2-3 ролика</div>
+               <p>в неделю максимум</p>
+               <div class="metric">575 часов</div>
+               <p>в месяц на монтаж</p>
+           </div>
+
+           <div class="vs-arrow">→</div>
+
+           <div class="after">
+               <h3>СТАЛО (FlexMontage Studio)</h3>
+               <div class="metric">15 минут</div>
+               <p>на 1 ролик</p>
+               <div class="metric">100 роликов</div>
+               <p>в день</p>
+               <div class="metric">25 часов</div>
+               <p>в месяц на монтаж</p>
+           </div>
+       </div>
+
+       <!-- Enhanced Calculator -->
+       <div class="savings-calculator scroll-reveal">
+           <h3 class="calculator-title">Калькулятор экономии</h3>
+
+           <div class="calculator-inputs">
+               <div class="input-group">
+                   <label class="input-label">Роликов в месяц:</label>
+                   <input type="number" class="calculator-input" id="videos-per-month" value="100" min="1" max="3000">
+               </div>
+               <div class="input-group">
+                   <label class="input-label">Стоимость фрилансера за ролик:</label>
+                   <input type="number" class="calculator-input" id="freelancer-cost" value="730" min="100" max="5000">
+               </div>
+           </div>
+
+           <div class="calculator-result">
+               <div class="result-item">
+                   <div class="result-danger">
+                       Траты без FlexMontage: <span id="monthly-cost">73,000₽</span>/мес
+                   </div>
+               </div>
+               <div class="result-item">
+                   <div class="result-success">
+                       Экономия в год: <span id="yearly-savings">876,000₽</span>
+                   </div>
+               </div>
+               <div class="result-info">
+                   FlexMontage окупается за <span id="payback-days" class="result-highlight">1.6</span> дня
+               </div>
+           </div>
+       </div>
+
+       <div class="text-center scroll-reveal">
+           <h3 style="color: #66FF33; font-size: 2rem; margin: 40px 0;">
+               Экономия времени: 550 часов = 72 рабочих дня в месяц!
+           </h3>
+           <p style="font-size: 1.2rem;">
+               Стоимость твоего времени: 1,000₽/час × 550 часов = <strong style="color: #66FF33;">550,000₽ экономии каждый месяц</strong>
+           </p>
+       </div>
+   </div>
+</section>
+
+<!-- Social Proof Ticker -->
+<section style="background: #353535; padding: 40px 0;">
+   <div class="container">
+       <div class="social-ticker scroll-reveal">
+           <div class="ticker-title">Последние результаты учеников:</div>
+           <div class="ticker-content">
+               <div class="ticker-item">
+                   <div class="ticker-name">Алексей К.</div>
+                   <div class="ticker-achievement">заработал 120,000₽ за месяц • 2 часа назад</div>
+               </div>
+               <div class="ticker-item">
+                   <div class="ticker-name">Мария Д.</div>
+                   <div class="ticker-achievement">создала 500 роликов за неделю • 4 часа назад</div>
+               </div>
+               <div class="ticker-item">
+                   <div class="ticker-name">Дмитрий П.</div>
+                   <div class="ticker-achievement">набрал 50K подписчиков • 6 часов назад</div>
+               </div>
+               <div class="ticker-item">
+                   <div class="ticker-name">Анна С.</div>
+                   <div class="ticker-achievement">запустила 5 каналов одновременно • 1 час назад</div>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+   <div class="container">
+       <h2 class="section-title scroll-reveal">Что под капотом FlexMontage Studio?</h2>
+
+       <div class="features-grid">
+           <div class="feature-card scroll-reveal">
+               <div class="feature-icon"> &#127897; </div>
+               <h3> ИИ-озвучка через ElevenLabs</h3>
+               <p>Библиотека из 100+ реалистичных голосов. Клонирование любого голоса. Качество неотличимое от живого человека. Поддержка 99+ языков.</p>
+           </div>
+
+           <div class="feature-card scroll-reveal">
+               <div class="feature-icon"> &#127916; </div>
+               <h3> Автоматическая обработка видео</h3>
+               <p>Эффект боке, масштабирование, цветокоррекция. Поддержка всех форматов. Профессиональное качество без навыков монтажа.</p>
+           </div>
+
+           <div class="feature-card scroll-reveal">
+               <div class="feature-icon"> &#128221; </div>
+               <h3> Автогенерация субтитров</h3>
+               <p>Whisper AI с точностью 99.5%. Красивое оформление субтитров. Автоматическая синхронизация. Поддержка ASS и SRT форматов.</p>
+           </div>
+
+           <div class="feature-card scroll-reveal">
+               <div class="feature-icon"> &#9889; </div>
+               <h3> Батчевая обработка</h3>
+               <p>Создавай сразу 10, 50, 100 роликов одновременно. Настраиваемые шаблоны для разных ниш. Мультиканальность.</p>
+           </div>
+
+           <div class="feature-card scroll-reveal">
+               <div class="feature-icon"> &#127912; </div>
+               <h3> Визуальные эффекты</h3>
+               <p>Наложение логотипов, кнопки подписки, анимированные переходы. Всё настраивается в пару кликов.</p>
+           </div>
+
+           <div class="feature-card scroll-reveal">
+               <div class="feature-icon"> &#128295; ️</div>
+               <h3> Простота использования</h3>
+               <p>Интуитивный интерфейс. Никаких танцев с бубном. Нажал пару кнопок — готово. GUI и CLI интерфейсы.</p>
+           </div>
+       </div>
+   </div>
+</section>
+
+<!-- Interactive Demo -->
+<section class="demo-section">
+   <div class="container">
+       <h2 class="section-title scroll-reveal">Попробуй прямо сейчас!</h2>
+
+       <div class="demo-container scroll-reveal">
+           <div class="demo-title">Симулятор создания ролика</div>
+           <div class="demo-subtitle">Посмотри, как быстро работает FlexMontage Studio</div>
+
+           <div class="demo-steps" id="demo-steps">
+               <div class="demo-step active" id="step-1">
+                   <div class="step-title">Шаг 1:</div> Загружаем изображение...
+               </div>
+               <div class="demo-step" id="step-2">
+                   <div class="step-title">Шаг 2:</div> Добавляем текст сценария...
+               </div>
+               <div class="demo-step" id="step-3">
+                   <div class="step-title">Шаг 3:</div> Выбираем голос для озвучки...
+               </div>
+               <div class="demo-step" id="step-4">
+                   <div class="step-title">Шаг 4:</div> Генерируем видео...
+               </div>
+           </div>
+
+           <button class="demo-button" id="start-demo" onclick="startDemo()">
+               ▶️ ЗАПУСТИТЬ ДЕМО
+           </button>
+
+           <div class="demo-result" id="demo-result">
+               <div style="font-size: 1.3rem; margin-bottom: 10px;">Готово! Ролик создан за 45 секунд!</div>
+               <div style="font-size: 1rem;">Обычно на это уходит 6 часов</div>
+           </div>
+       </div>
+   </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing" id="pricing">
+   <div class="container">
+       <h2 class="section-title scroll-reveal">Выбери свой путь к YouTube империи</h2>
+
+       <div class="pricing-grid">
+           <div class="pricing-card scroll-reveal">
+               <h3 style="color: #FFFFFF; font-size: 1.5rem;">Закрытый клуб</h3>
+               <div class="price">3,900₽<span style="font-size: 1rem;">/мес</span></div>
+               <ul style="text-align: left; margin: 20px 0;">
+                   <li>&#9989; Еженедельные гайды по трендовым нишам</li>
+                   <li>&#9989; Разборы успешных каналов</li>
+                   <li>&#9989; Готовые шаблоны и сценарии</li>
+                   <li>&#9989; Персональные консультации</li>
+                   <li>&#9989; Приоритетная техподдержка</li>
+                   <li>&#9989; Доступ к бета-функциям</li>
+               </ul>
+               <a href="#club" class="btn btn-secondary" style="width: 100%;"> &#128100; Войти в клуб</a>
+               <div style="margin-top: 15px; color: #888; font-size: 0.9rem;">
+                   * Прогрейся в сообществе перед покупкой
+               </div>
+           </div>
+
+           <div class="pricing-card featured scroll-reveal">
+               <h3 style="color: #FFFFFF; font-size: 1.5rem;">FlexMontage Studio + Курс</h3>
+               <div class="old-price">89,500₽</div>
+               <div class="price">39,500₽</div>
+               <div class="price-note">Цена растёт каждую неделю!</div>
+               <ul style="text-align: left; margin: 20px 0;">
+                   <li>&#9989; Полная лицензия FlexMontage Studio (лайфтайм)</li>
+                   <li>&#9989; YouTube Империя - полный курс</li>
+                   <li>&#9989; БЕСПЛАТНЫЙ вход в закрытый клуб</li>
+                   <li>&#9989; Персональная настройка под твои цели</li>
+                   <li>&#9989; Прямая линия со мной в течение месяца</li>
+                   <li>&#9989; Все обновления бесплатно навсегда</li>
+                   <li>&#9989; Google таблица для рерайта сценариев</li>
+               </ul>
+               <a href="#buy" class="btn btn-primary" style="width: 100%;"> &#128640; Купить сейчас</a>
+               <div style="margin-top: 15px; color: #66FF33; font-size: 0.9rem;">
+                   ⚡ Окупается за 2 недели
+               </div>
+           </div>
+       </div>
+
+       <div class="text-center scroll-reveal" style="margin-top: 50px;">
+           <h3 style="color: #66FF33; margin-bottom: 20px;">Сравни с альтернативами:</h3>
+           <div style="background: #404040; padding: 30px; border-radius: 12px; margin: 20px 0;">
+               <h4 style="color: #FF4444;">Открыть YouTube-канал с нуля:</h4>
+               <p>Камера: 50,000₽ + Освещение: 30,000₽ + Микрофон: 15,000₽ + Обучение монтажу: 25,000₽ + Фрилансеры первые 3 месяца: 150,000₽</p>
+               <div style="color: #FF4444; font-size: 1.5rem; font-weight: bold;">ИТОГО: 270,000₽</div>
+           </div>
+           <div style="background: #404040; padding: 30px; border-radius: 12px;">
+               <h4 style="color: #66FF33;">FlexMontage Studio: 39,500₽</h4>
+               <div style="color: #66FF33; font-size: 1.5rem; font-weight: bold;">ЭКОНОМИЯ: 230,500₽</div>
+           </div>
+       </div>
+   </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+   <div class="container">
+       <h2 class="section-title scroll-reveal">Что говорят ученики (вставь сюда реальные скриншоты)</h2>
+
+       <div class="testimonial-grid">
+           <div class="testimonial scroll-reveal">
+               <p>"За месяц мой канал вырос с 1К до 50К подписчиков благодаря количеству качественного контента. FlexMontage Studio — это читерство какое-то!"</p>
+               <div class="testimonial-author">Алексей К.</div>
+               <div class="testimonial-metrics"> &#128200; 50K подписчиков за месяц</div>
+           </div>
+
+           <div class="testimonial scroll-reveal">
+               <p>"Раньше тратил 73,000₽ в месяц на фрилансеров. Теперь делаю всё сам за 15 минут на ролик. Окупилось за первую неделю использования."</p>
+               <div class="testimonial-author">Мария Д.</div>
+               <div class="testimonial-metrics"> &#128176; Экономия 73,000₽/мес</div>
+           </div>
+
+           <div class="testimonial scroll-reveal">
+               <p>"Зарабатываю 150К в месяц с сетки каналов. До FlexMontage было максимум 30К. Качество контента даже выросло!"</p>
+               <div class="testimonial-author">Дмитрий П.</div>
+               <div class="testimonial-metrics"> &#128640; 150,000₽/месяц дохода</div>
+           </div>
+       </div>
+
+       <div class="text-center scroll-reveal" style="margin-top: 50px; background: #404040; padding: 30px; border-radius: 12px;">
+           <h3 style="color: #66FF33;">Реальный кейс:</h3>
+           <p style="font-size: 1.2rem;">
+               Один пользователь создал 3,000 роликов за месяц. При средних 10,000 просмотров на ролик = доход 1,500,000₽/месяц
+           </p>
+           <div style="color: #66FF33; font-size: 1.5rem; font-weight: bold; margin-top: 15px;">
+               Окупаемость: за 1 день использования
+           </div>
+       </div>
+   </div>
+</section>
+
+<!-- Guarantees -->
+<section class="guarantees">
+   <div class="container">
+       <h2 class="section-title scroll-reveal">Мои железные гарантии</h2>
+
+       <div class="guarantee-grid">
+           <div class="guarantee-card scroll-reveal">
+               <div class="guarantee-icon"> &#127919; </div>
+               <h3>Гарантия результата</h3>
+               <p>Если за 60 дней не создашь хотя бы 100 качественных роликов — вернём 100% денег без вопросов.</p>
+           </div>
+
+           <div class="guarantee-card scroll-reveal">
+               <div class="guarantee-icon"> &#128176; </div>
+               <h3>Гарантия окупаемости</h3>
+               <p>Если FlexMontage Studio не окупится за первые 90 дней использования — возвращаем полную стоимость.</p>
+           </div>
+
+           <div class="guarantee-card scroll-reveal">
+               <div class="guarantee-icon"> &#128736; </div>
+               <h3>Техническая гарантия</h3>
+               <p>Если студия не работает на твоём компьютере — бесплатно настроим или вернём деньги в течение 30 дней.</p>
+           </div>
+
+           <div class="guarantee-card scroll-reveal">
+               <div class="guarantee-icon"> &#128640; </div>
+               <h3>Гарантия поддержки</h3>
+               <p>Личная поддержка от меня в течение всего первого месяца. Отвечаю на все вопросы в течение 24 часов.</p>
+           </div>
+       </div>
+
+       <div class="text-center scroll-reveal" style="margin-top: 50px; background: #66FF33; color: #000; padding: 30px; border-radius: 12px;">
+           <h3 style="margin-bottom: 15px;">Почему я даю такие гарантии?</h3>
+           <p style="font-size: 1.2rem;">
+               Потому что я сам зарабатываю 500,000₽ в месяц этим методом. Я уверен в продукте на 1000%.
+               Если не сработает у тебя — значит я где-то накосячил, и честно верну деньги.
+           </p>
+       </div>
+   </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+   <div class="container">
+       <h2 class="section-title scroll-reveal">Частые вопросы</h2>
+
+       <div class="faq-item scroll-reveal">
+           <div class="faq-question" onclick="toggleFaq(this)">
+               Слишком дорого для программы
+               <span>+</span>
+           </div>
+           <div class="faq-answer">
+               Дорого не купить, а не заработать. Один успешный канал окупает софт за неделю. Фрилансер озвучивания берёт 30₽/мин × 1000 минут = 30,000₽/месяц. Монтажер: 500₽/ролик × 100 роликов = 50,000₽/месяц. Экономия уже в первый месяц: 80,000₽.
+           </div>
+       </div>
+
+       <div class="faq-item scroll-reveal">
+           <div class="faq-question" onclick="toggleFaq(this)">
+               А если у меня не получится?
+               <span>+</span>
+           </div>
+           <div class="faq-answer">
+               У тебя есть я, VIP-канал и комьюнити. Плюс я сам зарабатываю 500К в месяц этим методом. Даю 4 вида гарантий, включая полный возврат денег, если не получится.
+           </div>
+       </div>
+
+       <div class="faq-item scroll-reveal">
+           <div class="faq-question" onclick="toggleFaq(this)">
+               Зачем абонплата за клуб?
+               <span>+</span>
+           </div>
+           <div class="faq-answer">
+               YouTube меняется каждый день. Без актуальных гайдов и обновлений через месяц останешься с устаревшим инструментом. В клубе — всегда свежие ниши, тренды и инсайды от работающих каналов.
+           </div>
+       </div>
+
+       <div class="faq-item scroll-reveal">
+           <div class="faq-question" onclick="toggleFaq(this)">
+               Будет ли работать из России?
+               <span>+</span>
+           </div>
+           <div class="faq-answer">
+               Да, включены все инструкции по обходу блокировок, настройке VPN и работе с зарубежными счетами. Весь курс адаптирован под российские реалии.
+           </div>
+       </div>
+
+       <div class="faq-item scroll-reveal">
+           <div class="faq-question" onclick="toggleFaq(this)">
+               Подойдёт ли новичку?
+               <span>+</span>
+           </div>
+           <div class="faq-answer">
+               Абсолютно! Моя мама освоила за вечер. Интерфейс интуитивный, все процессы автоматизированы. В курсе есть пошаговые инструкции от создания канала до получения первых денег.
+           </div>
+       </div>
+
+       <div class="faq-item scroll-reveal">
+           <div class="faq-question" onclick="toggleFaq(this)">
+               Это легально?
+               <span>+</span>
+           </div>
+           <div class="faq-answer">
+               Полностью! FlexMontage Studio — это инструмент автоматизации, как Photoshop или Premiere Pro. Все голоса лицензированные, контент создаётся из твоих материалов. Никаких нарушений правил YouTube.
+           </div>
+       </div>
+   </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+   <div class="container">
+       <div class="timer scroll-reveal">
+           ⏰ ВНИМАНИЕ! Цена поднимается через:
+           <span id="countdown">2д 14ч 32м</span>
+       </div>
+
+       <h2 style="color: #FFFFFF; margin-bottom: 30px;">Последний шанс войти по минимальной цене</h2>
+
+       <div style="background: #404040; padding: 40px; border-radius: 12px; margin: 40px 0; max-width: 600px; margin-left: auto; margin-right: auto;">
+           <h3 style="color: #66FF33; margin-bottom: 20px;">Честно про цены</h3>
+           <p style="margin-bottom: 15px;"><strong>Мой знакомый тратит на фрилансеров:</strong></p>
+           <p>• Озвучка: 25,000₽/месяц</p>
+           <p>• Монтаж: 40,000₽/месяц</p>
+           <p>• Субтитры: 8,000₽/месяц</p>
+           <p style="color: #FF4444; font-weight: bold; margin: 15px 0;">ИТОГО: 73,000₽ КАЖДЫЙ месяц</p>
+           <p style="color: #66FF33; font-weight: bold;">FlexMontage окупается за 2 недели.</p>
+           <p style="color: #66FF33; font-weight: bold;">Остальное — чистая экономия.</p>
+           <p style="margin-top: 20px;">Плюс я зарабатываю 500,000₽/месяц с помощью софта.</p>
+           <p><strong>Инвестиция в 39,500₽ выглядит смешно &#128522;</strong></p>
+       </div>
+
+       <div class="cta-group">
+           <a href="#buy-now" class="btn btn-primary" style="font-size: 1.3rem; padding: 25px 45px;">
+               &#128640; КУПИТЬ СТУДИЮ ЗА 39,500₽
+           </a>
+           <a href="#join-club" class="btn btn-secondary" style="font-size: 1.1rem;">
+               &#128100; &#128272; ВОЙТИ В КЛУБ ЗА 3,900₽/МЕС
+           </a>
+       </div>
+
+       <div style="margin-top: 40px; color: #888; font-size: 0.9rem;">
+           P.S. Цена растёт каждую неделю.<br>
+           Сейчас самое время войти.
+       </div>
+   </div>
+</section>
+
+<!-- Scripts -->
+<script>
+   // Smooth scrolling for anchor links
+   document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+       anchor.addEventListener('click', function (e) {
+           e.preventDefault();
+           const target = document.querySelector(this.getAttribute('href'));
+           if (target) {
+               target.scrollIntoView({
+                   behavior: 'smooth',
+                   block: 'start'
+               });
+           }
+       });
+   });
+
+   // FAQ Toggle
+   function toggleFaq(element) {
+       const answer = element.nextElementSibling;
+       const icon = element.querySelector('span');
+
+       if (answer.classList.contains('active')) {
+           answer.classList.remove('active');
+           icon.textContent = '+';
+       } else {
+           // Close all other FAQ items
+           document.querySelectorAll('.faq-answer').forEach(function(item) {
+               item.classList.remove('active');
+           });
+           document.querySelectorAll('.faq-question span').forEach(function(span) {
+               span.textContent = '+';
+           });
+
+           answer.classList.add('active');
+           icon.textContent = '-';
+       }
+   }
+
+   // Scroll reveal animation
+   const observerOptions = {
+       threshold: 0.1,
+       rootMargin: '0px 0px -50px 0px'
+   };
+
+   const observer = new IntersectionObserver(function(entries) {
+       entries.forEach(function(entry) {
+           if (entry.isIntersecting) {
+               entry.target.classList.add('revealed');
+           }
+       });
+   }, observerOptions);
+
+   document.querySelectorAll('.scroll-reveal').forEach(function(el) {
+       observer.observe(el);
+   });
+
+   // Working countdown timer
+   function initCountdownTimer() {
+       const endDate = new Date();
+       endDate.setDate(endDate.getDate() + 3);
+       endDate.setHours(23, 59, 59, 999);
+
+       function updateTimer() {
+           const now = new Date().getTime();
+           const timeLeft = endDate.getTime() - now;
+
+           if (timeLeft > 0) {
+               const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+               const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+               const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+               const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+               const timerElement = document.getElementById('countdown');
+               if (timerElement) {
+                   timerElement.innerHTML = days + 'д ' + hours + 'ч ' + minutes + 'м ' + seconds + 'с';
+               }
+           } else {
+               const timerElement = document.getElementById('countdown');
+               if (timerElement) {
+                   timerElement.innerHTML = 'АКЦИЯ ЗАВЕРШЕНА!';
+                   timerElement.style.color = '#FF4444';
+               }
+           }
+       }
+
+       updateTimer();
+       setInterval(updateTimer, 1000);
+   }
+
+   // Live stats updates
+   function updateLiveStats() {
+       const viewers = document.getElementById('viewers-count');
+       const sales = document.getElementById('sales-count');
+
+       if (viewers && sales) {
+           const baseViewers = 23;
+           const baseSales = 7;
+           viewers.textContent = baseViewers + Math.floor(Math.random() * 10);
+           sales.textContent = baseSales + Math.floor(Math.random() * 3);
+       }
+   }
+
+   // Purchase notifications
+   function showPurchaseNotification() {
+       const names = ['Алексей К.', 'Мария Д.', 'Дмитрий П.', 'Анна С.', 'Игорь В.'];
+       const cities = ['Москва', 'СПб', 'Казань', 'Екатеринбург', 'Новосибирск'];
+
+       const name = names[Math.floor(Math.random() * names.length)];
+       const city = cities[Math.floor(Math.random() * cities.length)];
+
+       const notification = document.createElement('div');
+       notification.className = 'notification';
+       notification.innerHTML = '<div class="notification-title">&#127881; Новая покупка!</div><div class="notification-text">' + name + ' из ' + city + ' купил FlexMontage Studio</div><div class="notification-time">2 минуты назад</div>';
+
+       const container = document.getElementById('notification-container');
+       container.appendChild(notification);
+
+       // Удалить через 5 секунд
+       setTimeout(function() {
+           notification.style.animation = 'slideOut 0.5s ease-in';
+           setTimeout(function() {
+               if (notification.parentNode) {
+                   notification.parentNode.removeChild(notification);
+               }
+           }, 500);
+       }, 5000);
+   }
+
+   // Calculator updates
+   function updateSavingsCalculator() {
+       const videosInput = document.getElementById('videos-per-month');
+       const costInput = document.getElementById('freelancer-cost');
+       const monthlyCost = document.getElementById('monthly-cost');
+       const yearlySavings = document.getElementById('yearly-savings');
+       const paybackDays = document.getElementById('payback-days');
+
+       if (videosInput && costInput) {
+           const videos = parseInt(videosInput.value) || 100;
+           const cost = parseInt(costInput.value) || 730;
+
+           const monthly = videos * cost;
+           const yearly = monthly * 12;
+           const payback = Math.round((39500 / monthly) * 30 * 10) / 10;
+
+           if (monthlyCost) monthlyCost.textContent = monthly.toLocaleString() + '₽';
+           if (yearlySavings) yearlySavings.textContent = yearly.toLocaleString() + '₽';
+           if (paybackDays) paybackDays.textContent = payback;
+       }
+   }
+
+   // Update spots progress
+   function updateSpotsProgress() {
+       const spotsLeft = Math.max(1, Math.floor(Math.random() * 4));
+       const progress = ((5 - spotsLeft) / 5) * 100;
+
+       const spotsElement = document.getElementById('spots-left');
+       const progressBar = document.getElementById('spots-progress');
+
+       if (spotsElement) spotsElement.textContent = spotsLeft;
+       if (progressBar) {
+           progressBar.style.width = progress + '%';
+       }
+   }
+
+   // Demo simulation
+   function startDemo() {
+       const steps = document.querySelectorAll('.demo-step');
+       const button = document.getElementById('start-demo');
+       const result = document.getElementById('demo-result');
+
+       button.disabled = true;
+       button.textContent = 'Генерируем...';
+
+       steps.forEach(function(step) {
+           step.classList.remove('active', 'completed');
+       });
+
+       // Animation sequence
+       steps.forEach(function(step, index) {
+           setTimeout(function() {
+               step.classList.add('active');
+
+               if (index > 0) {
+                   steps[index - 1].classList.remove('active');
+                   steps[index - 1].classList.add('completed');
+               }
+
+               if (index === steps.length - 1) {
+                   setTimeout(function() {
+                       step.classList.add('completed');
+                       result.style.display = 'block';
+                       button.disabled = false;
+                       button.textContent = ' ✅ ЗАПУСТИТЬ ЕЩЁ РАЗ';
+                   }, 1000);
+               }
+           }, (index + 1) * 1500);
+       });
+   }
+
+   // Initialize everything
+   document.addEventListener('DOMContentLoaded', function() {
+       initCountdownTimer();
+
+       // Update live stats every 10 seconds
+       updateLiveStats();
+       setInterval(updateLiveStats, 10000);
+
+       // Show notifications every 15-30 seconds
+       setTimeout(showPurchaseNotification, 10000);
+       setInterval(function() {
+           showPurchaseNotification();
+       }, Math.random() * 15000 + 15000);
+
+       // Calculator updates
+       const calculatorInputs = document.querySelectorAll('#videos-per-month, #freelancer-cost');
+       calculatorInputs.forEach(function(input) {
+           input.addEventListener('input', updateSavingsCalculator);
+       });
+       updateSavingsCalculator();
+
+       // Update spots progress every 2 minutes
+       updateSpotsProgress();
+       setInterval(updateSpotsProgress, 120000);
+
+       // Entrance animations
+       const fadeElements = document.querySelectorAll('.fade-in');
+       fadeElements.forEach(function(el, index) {
+           el.style.animationDelay = (index * 0.2) + 's';
+       });
+   });
+
+   // Button tracking
+   document.querySelectorAll('.btn').forEach(function(button) {
+       button.addEventListener('click', function(e) {
+           console.log('Button clicked:', this.textContent);
+       });
+   });
+
+   // Add slideOut animation
+   const style = document.createElement('style');
+   style.textContent = '@keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }';
+   document.head.appendChild(style);
+</script>
+</body>
+</html>

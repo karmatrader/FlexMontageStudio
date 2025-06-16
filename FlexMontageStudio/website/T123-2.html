@@ -1,0 +1,363 @@
+<style>
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-overlay.show {
+    display: flex;
+}
+
+.popup-content {
+    background: #303030;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    border: 2px solid #66FF33;
+    animation: popupAppear 0.3s ease-out;
+}
+
+@keyframes popupAppear {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #B8B8B8;
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.popup-close:hover {
+    color: #FF4444;
+}
+
+.popup-title {
+    color: #FFFFFF;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.popup-price {
+    color: #66FF33;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.popup-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.popup-benefits li {
+    color: #B8B8B8;
+    margin: 10px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.popup-benefits li::before {
+    content: '✓';
+    color: #66FF33;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.popup-form {
+    margin-top: 30px;
+}
+
+.popup-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #454545;
+    border: 1px solid #666;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.popup-input:focus {
+    border-color: #66FF33;
+    outline: none;
+}
+
+.popup-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #66FF33, #5AE02A);
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.popup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 255, 51, 0.4);
+}
+
+.popup-guarantee {
+    background: #404040;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+    color: #66FF33;
+    font-size: 0.9rem;
+}
+</style>
+
+<!-- Попап для покупки студии -->
+<div id="popup-studio" class="popup-overlay">
+    <div class="popup-content">
+        <span class="popup-close" onclick="closePopup('popup-studio')">&times;</span>
+
+        <h3 class="popup-title">FlexMontage Studio + YouTube Империя</h3>
+
+        <div class="popup-price">39,500₽</div>
+
+        <ul class="popup-benefits">
+            <li>Полная лицензия FlexMontage Studio (лайфтайм)</li>
+            <li>YouTube Империя - полный курс</li>
+            <li>БЕСПЛАТНЫЙ вход в закрытый клуб</li>
+            <li>Персональная настройка под ваши цели</li>
+            <li>Прямая линия со мной месяц</li>
+            <li>Все обновления бесплатно навсегда</li>
+            <li>Google таблица для рерайта сценариев</li>
+        </ul>
+
+        <form class="popup-form" id="studio-form">
+            <input type="text" class="popup-input" placeholder="Ваше имя" name="name" required>
+            <input type="email" class="popup-input" placeholder="Email" name="email" required>
+            <input type="tel" class="popup-input" placeholder="Телефон" name="phone" required>
+            <input type="hidden" name="product" value="FlexMontage Studio">
+            <input type="hidden" name="price" value="39500">
+
+            <button type="submit" class="popup-btn">
+                ???? КУПИТЬ СЕЙЧАС ЗА 39,500₽
+            </button>
+        </form>
+
+        <div class="popup-guarantee">
+            ???? Гарантия возврата денег 60 дней
+        </div>
+    </div>
+</div>
+
+<!-- Попап для вступления в клуб -->
+<div id="popup-club" class="popup-overlay">
+    <div class="popup-content">
+        <span class="popup-close" onclick="closePopup('popup-club')">&times;</span>
+
+        <h3 class="popup-title">Закрытый клуб YouTube Империя</h3>
+
+        <div class="popup-price">3,900₽<span style="font-size: 1rem; color: #B8B8B8;">/мес</span></div>
+
+        <ul class="popup-benefits">
+            <li>Еженедельные гайды по трендовым нишам</li>
+            <li>Разборы успешных каналов</li>
+            <li>Готовые шаблоны и сценарии</li>
+            <li>Персональные консультации (2 часа/мес)</li>
+            <li>Приоритетная техподдержка</li>
+            <li>Доступ к бета-функциям</li>
+        </ul>
+
+        <form class="popup-form" id="club-form">
+            <input type="text" class="popup-input" placeholder="Ваше имя" name="name" required>
+            <input type="email" class="popup-input" placeholder="Email" name="email" required>
+            <input type="tel" class="popup-input" placeholder="Телефон" name="phone" required>
+            <input type="hidden" name="product" value="YouTube Club">
+            <input type="hidden" name="price" value="3900">
+
+            <button type="submit" class="popup-btn">
+                ???? ВОЙТИ В КЛУБ ЗА 3,900₽/МЕС
+            </button>
+        </form>
+
+        <div class="popup-guarantee">
+            ???? Можно отменить подписку в любой момент
+        </div>
+    </div>
+</div>
+
+<script>
+// Открытие попапов
+function openPopup(popupId) {
+    document.getElementById(popupId).classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+// Закрытие попапов
+function closePopup(popupId) {
+    document.getElementById(popupId).classList.remove('show');
+    document.body.style.overflow = 'auto';
+}
+
+// Закрытие по клику вне попапа
+document.querySelectorAll('.popup-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closePopup(this.id);
+        }
+    });
+});
+
+// Привязка кнопок к попапам при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // Первоначальная привязка
+    bindPopupButtons();
+
+    // Периодическая проверка новых кнопок (для динамически загружаемого контента)
+    setInterval(bindPopupButtons, 2000);
+
+    // Также привязка при изменении DOM
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                bindPopupButtons();
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+});
+
+function bindPopupButtons() {
+    // Кнопки покупки студии - расширенный поиск
+    const studioSelectors = [
+        'a[href="#buy"]',
+        'a[href="#buy-now"]',
+        'a[href="#pricing"]',
+        'a[href*="39"]',
+        '.btn-primary',
+        '[class*="btn"][class*="primary"]'
+    ];
+
+    studioSelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(btn => {
+            if (!btn.dataset.popupBound &&
+                (btn.textContent.includes('СТУДИЮ') ||
+                 btn.textContent.includes('КУПИТЬ') ||
+                 btn.textContent.includes('39,500') ||
+                 btn.textContent.includes('????'))) {
+
+                btn.dataset.popupBound = 'true';
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openPopup('popup-studio');
+                });
+            }
+        });
+    });
+
+    // Кнопки вступления в клуб - расширенный поиск
+    const clubSelectors = [
+        'a[href="#club"]',
+        'a[href="#join-club"]',
+        'a[href*="3900"]',
+        '.btn-secondary',
+        '[class*="btn"][class*="secondary"]'
+    ];
+
+    clubSelectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(btn => {
+            if (!btn.dataset.popupBound &&
+                (btn.textContent.includes('КЛУБ') ||
+                 btn.textContent.includes('ВОЙТИ') ||
+                 btn.textContent.includes('3,900') ||
+                 btn.textContent.includes('????'))) {
+                
+                btn.dataset.popupBound = 'true';
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openPopup('popup-club');
+                });
+            }
+        });
+    });
+}
+
+// Обработка отправки форм
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('studio-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+
+        // Здесь вызываем функцию оплаты
+        processStudioPayment(data);
+    });
+
+    document.getElementById('club-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+
+        // Для клуба - перенаправляем в Telegram бот
+        processClubJoin(data);
+    });
+});
+
+// Функции для обработки платежей
+function processStudioPayment(data) {
+    console.log('Обработка покупки студии:', data);
+
+    // ЗАМЕНИТЕ НА ВАШУ ПЛАТЕЖНУЮ СИСТЕМУ
+    // Пример для YooKassa:
+    // window.location.href = `https://yookassa.ru/checkout?amount=${data.price}&description=${encodeURIComponent(data.product)}&email=${data.email}`;
+
+    // Или для Robokassa:
+    // window.location.href = `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=ВАША_ГРУППА&OutSum=${data.price}&Description=${encodeURIComponent(data.product)}`;
+
+    alert('Переадресация на оплату...');
+    closePopup('popup-studio');
+}
+
+function processClubJoin(data) {
+    console.log('Вступление в клуб:', data);
+
+    // ЗАМЕНИТЕ НА ВАШЕГО БОТА
+    const botUrl = 'https://t.me/YourBotName?start=join_club';
+    window.open(botUrl, '_blank');
+
+    closePopup('popup-club');
+}
+</script>

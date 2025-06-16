@@ -1,0 +1,201 @@
+🐍 Python режим - лог файл: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/FlexMontageStudio_session.log
+✅ Создан файл лога: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/FlexMontageStudio_session.log
+2025-06-14 07:01:26,707 - __main__ - INFO - setup_logging:111 - === Система логирования инициализирована ===
+2025-06-14 07:01:26,707 - __main__ - INFO - setup_logging:112 - Лог файл: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/FlexMontageStudio_session.log
+2025-06-14 07:01:26,707 - __main__ - INFO - setup_logging:113 - Директория лога: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-06-14 07:01:26,707 - __main__ - INFO - setup_logging:114 - Python версия: 3.10.11 (v3.10.11:7d4cc5aa85, Apr  4 2023, 19:05:19) [Clang 13.0.0 (clang-1300.0.29.30)]
+2025-06-14 07:01:26,707 - __main__ - INFO - setup_logging:115 - Платформа: darwin
+2025-06-14 07:01:26,707 - __main__ - INFO - setup_logging:116 - Запущено из .app: False
+2025-06-14 07:01:26,708 - __main__ - INFO - main:235 - === Запуск FlexMontage Studio ===
+2025-06-14 07:01:26,821 - __main__ - WARNING - main:259 - PyObjC недоступен, используем стандартную активацию Qt
+2025-06-14 07:01:26,822 - root - INFO - load_styles:150 - 🎨 Поиск стилей в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/styles.qss
+2025-06-14 07:01:26,822 - root - INFO - load_styles:155 - ✅ Стили успешно загружены
+2025-06-14 07:01:26,822 - root - INFO - check_application_license:187 - 🔑 Поиск лицензий в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/licenses.json
+2025-06-14 07:01:26,823 - core.license_manager - INFO - check_license:170 - Проверка лицензии: ybjL-nS2S-dTim-Xwf4
+2025-06-14 07:01:26,823 - core.license_manager - INFO - load_license_from_db:47 - Лицензия найдена в базе данных: ybjL-nS2S-dTim-Xwf4
+2025-06-14 07:01:26,826 - core.license_manager - INFO - validate_license_data:151 - Лицензия действительна до 2026-05-24
+2025-06-14 07:01:26,827 - root - INFO - check_application_license:215 - Лицензия проверена успешно
+Could not parse application stylesheet
+2025-06-14 07:01:26,880 - core.config_manager - INFO - _find_config_file:126 - 🔍 Поиск channels.json в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-06-14 07:01:26,880 - core.config_manager - INFO - _find_config_file:127 -    Существует: ✅
+2025-06-14 07:01:27,123 - voice_library_manager - INFO - _load_cache:232 - Загружен кэш голосов: 30 голосов
+2025-06-14 07:01:27,398 - core.config_manager - INFO - load_config:137 - Конфигурация загружена из /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-06-14 07:01:27,399 - ui.main_window - INFO - load_initial_config:291 - Загружено каналов: 5
+2025-06-14 07:01:27,413 - __main__ - INFO - main:300 - Главное окно отображено, запуск цикла событий
+2025-06-14 07:01:34,224 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:01:34,225 - core.config_manager - DEBUG - get_channel_config:194 - Загружена конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:01:34,225 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:01:34,372 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:01:34,372 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:01:34,379 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:01:43,168 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:01:43,168 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:01:43,235 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:01:43,235 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:01:43,241 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:01:43,708 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:01:43,708 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:01:43,709 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:01:43,710 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:01:43,711 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:01:43,711 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:01:43,716 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:01:43,722 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:01:43,723 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:01:43,727 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:02:07,331 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:02:07,331 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:02:07,331 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:02:07,332 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:02:07,370 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:02:07,370 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:02:07,373 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:02:07,380 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:02:07,381 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:02:07,384 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:02:16,218 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:02:16,219 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:02:16,219 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:02:16,221 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:02:16,289 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:02:16,289 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:02:16,294 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:02:16,305 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:02:16,306 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:02:16,310 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:02:21,550 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:02:21,551 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:02:21,551 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:02:21,551 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:02:21,590 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:02:21,590 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:02:21,593 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:02:21,602 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:02:21,602 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:02:21,605 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:02:48,488 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo1 загружен: /Users/mikman/Youtube/Структура/1 ЗВЁЗДНЫЕ ТАЙНЫ TV/Logo/1звездныетайны.png
+2025-06-14 07:03:16,694 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:03:16,694 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:03:16,694 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:03:16,695 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:03:16,734 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:16,734 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:03:16,737 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:16,747 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:16,747 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:03:16,750 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:19,596 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:03:19,596 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:03:19,597 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:03:19,597 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:03:19,635 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:19,635 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:03:19,642 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:19,651 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:19,651 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:03:19,654 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:21,475 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:03:21,475 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:03:21,475 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:03:21,476 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:03:21,514 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:21,514 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:03:21,517 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:21,529 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:21,530 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:03:21,532 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:22,768 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 3 ЗВЕЗДЫ В ШОКЕ! TV
+2025-06-14 07:03:22,769 - ui.worker_threads - INFO - run:45 - Конфигурация канала 3 ЗВЕЗДЫ В ШОКЕ! TV успешно загружена
+2025-06-14 07:03:22,769 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 3 ЗВЕЗДЫ В ШОКЕ! TV
+2025-06-14 07:03:22,769 - ui.worker_threads - INFO - run:45 - Конфигурация канала 3 ЗВЕЗДЫ В ШОКЕ! TV успешно загружена
+2025-06-14 07:03:22,799 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:22,799 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE3.csv
+2025-06-14 07:03:22,803 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:22,815 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:22,816 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE3.csv
+2025-06-14 07:03:22,818 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:24,366 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 7 КИНО-СЕКРЕТЫ TV
+2025-06-14 07:03:24,366 - ui.worker_threads - INFO - run:45 - Конфигурация канала 7 КИНО-СЕКРЕТЫ TV успешно загружена
+2025-06-14 07:03:24,367 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 7 КИНО-СЕКРЕТЫ TV
+2025-06-14 07:03:24,367 - ui.worker_threads - INFO - run:45 - Конфигурация канала 7 КИНО-СЕКРЕТЫ TV успешно загружена
+2025-06-14 07:03:24,410 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:24,410 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE4.csv
+2025-06-14 07:03:24,413 - voice_library_manager - INFO - get_api_key:71 - Ключи старше месяца не найдены, ищу любой доступный...
+2025-06-14 07:03:24,415 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:24,421 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo1 загружен: /Users/mikman/Youtube/Структура/7 КИНО-СЕКРЕТЫ TV/Logo/1киносекреты.png
+2025-06-14 07:03:24,425 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo2 загружен: /Users/mikman/Youtube/Структура/7 КИНО-СЕКРЕТЫ TV/Logo/2like.png
+2025-06-14 07:03:24,442 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип subscribe загружен: /Users/mikman/Youtube/Структура/7 КИНО-СЕКРЕТЫ TV/Scene_logo/Scene_06_00036.png
+2025-06-14 07:03:24,464 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:24,465 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE4.csv
+2025-06-14 07:03:24,466 - voice_library_manager - INFO - get_api_key:71 - Ключи старше месяца не найдены, ищу любой доступный...
+2025-06-14 07:03:24,468 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:24,472 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo1 загружен: /Users/mikman/Youtube/Структура/7 КИНО-СЕКРЕТЫ TV/Logo/1киносекреты.png
+2025-06-14 07:03:24,475 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo2 загружен: /Users/mikman/Youtube/Структура/7 КИНО-СЕКРЕТЫ TV/Logo/2like.png
+2025-06-14 07:03:24,487 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип subscribe загружен: /Users/mikman/Youtube/Структура/7 КИНО-СЕКРЕТЫ TV/Scene_logo/Scene_06_00036.png
+2025-06-14 07:03:26,267 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 9 КИНОТАЙНА ТВ
+2025-06-14 07:03:26,276 - ui.worker_threads - INFO - run:45 - Конфигурация канала 9 КИНОТАЙНА ТВ успешно загружена
+2025-06-14 07:03:26,276 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 9 КИНОТАЙНА ТВ
+2025-06-14 07:03:26,277 - ui.worker_threads - INFO - run:45 - Конфигурация канала 9 КИНОТАЙНА ТВ успешно загружена
+2025-06-14 07:03:26,293 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:26,293 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE4.csv
+2025-06-14 07:03:26,295 - voice_library_manager - INFO - get_api_key:71 - Ключи старше месяца не найдены, ищу любой доступный...
+2025-06-14 07:03:26,296 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:26,305 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo1 загружен: /Users/mikman/Youtube/Структура/9 КИНОТАЙНА ТВ/Logo/1кинотайна.png
+2025-06-14 07:03:26,308 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo2 загружен: /Users/mikman/Youtube/Структура/9 КИНОТАЙНА ТВ/Logo/2like.png
+2025-06-14 07:03:26,321 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип subscribe загружен: /Users/mikman/Youtube/Структура/9 КИНОТАЙНА ТВ/Scene_logo/Scene_06_00036.png
+2025-06-14 07:03:26,343 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:26,343 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE4.csv
+2025-06-14 07:03:26,345 - voice_library_manager - INFO - get_api_key:71 - Ключи старше месяца не найдены, ищу любой доступный...
+2025-06-14 07:03:26,347 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:26,355 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo1 загружен: /Users/mikman/Youtube/Структура/9 КИНОТАЙНА ТВ/Logo/1кинотайна.png
+2025-06-14 07:03:26,359 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип logo2 загружен: /Users/mikman/Youtube/Структура/9 КИНОТАЙНА ТВ/Logo/2like.png
+2025-06-14 07:03:26,373 - ui.logo_position_editor - INFO - set_logo_image:335 - Логотип subscribe загружен: /Users/mikman/Youtube/Структура/9 КИНОТАЙНА ТВ/Scene_logo/Scene_06_00036.png
+2025-06-14 07:03:27,966 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 7 КИНО-СЕКРЕТЫ TV
+2025-06-14 07:03:27,967 - ui.worker_threads - INFO - run:45 - Конфигурация канала 7 КИНО-СЕКРЕТЫ TV успешно загружена
+2025-06-14 07:03:27,967 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 7 КИНО-СЕКРЕТЫ TV
+2025-06-14 07:03:27,969 - ui.worker_threads - INFO - run:45 - Конфигурация канала 7 КИНО-СЕКРЕТЫ TV успешно загружена
+2025-06-14 07:03:27,996 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:27,997 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE4.csv
+2025-06-14 07:03:28,000 - voice_library_manager - INFO - get_api_key:71 - Ключи старше месяца не найдены, ищу любой доступный...
+2025-06-14 07:03:28,005 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:28,046 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:28,046 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE4.csv
+2025-06-14 07:03:28,049 - voice_library_manager - INFO - get_api_key:71 - Ключи старше месяца не найдены, ищу любой доступный...
+2025-06-14 07:03:28,052 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:30,452 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:03:30,452 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:03:30,453 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:03:30,453 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:03:30,517 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:30,518 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:03:30,520 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:30,543 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:30,543 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:03:30,546 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:31,745 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:03:31,746 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:03:31,746 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:03:31,747 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:03:31,785 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:31,785 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:03:31,789 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:31,805 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:31,805 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:03:31,808 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:33,770 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 1 ЗВЁЗДНЫЕ ТАЙНЫ TV
+2025-06-14 07:03:33,771 - ui.worker_threads - INFO - run:45 - Конфигурация канала 1 ЗВЁЗДНЫЕ ТАЙНЫ TV успешно загружена
+2025-06-14 07:03:33,772 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:33,772 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE1.csv
+2025-06-14 07:03:33,775 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:34,783 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:03:34,784 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:03:34,784 - ui.worker_threads - INFO - run:32 - Загрузка конфигурации для канала: 2 ЗВЁЗДЫ TV
+2025-06-14 07:03:34,785 - ui.worker_threads - INFO - run:45 - Конфигурация канала 2 ЗВЁЗДЫ TV успешно загружена
+2025-06-14 07:03:34,822 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:34,822 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:03:34,825 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:34,854 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-06-14 07:03:34,855 - voice_library_manager - INFO - get_api_key:36 - Получение API ключа из /Users/mikman/Youtube/BASE2.csv
+2025-06-14 07:03:34,859 - voice_library_manager - INFO - get_api_key:91 - API ключ успешно получен
+2025-06-14 07:03:42,633 - __main__ - INFO - main:305 - Приложение завершено с кодом: 0
+2025-06-14 07:03:42,634 - __main__ - INFO - main:309 - Начало процедуры завершения приложения

@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module subtitles_processing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>subtitles_processing</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/mikman/PycharmProjects/PythonProject/.venv2/FlexMontage%20Studio/subtitles_processing.py">/Users/mikman/PycharmProjects/PythonProject/.venv2/FlexMontage Studio/subtitles_processing.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="logging.html">logging</a><br>
+</td><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top><a href="warnings.html">warnings</a><br>
+</td><td width="25%" valign=top><a href="whisper.html">whisper</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#Exception">builtins.Exception</a>(<a href="builtins.html#BaseException">builtins.BaseException</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="subtitles_processing.html#SubtitleError">SubtitleError</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="subtitles_processing.html#SubtitleGenerationError">SubtitleGenerationError</a>
+</font></dt><dt><font face="helvetica, arial"><a href="subtitles_processing.html#WhisperError">WhisperError</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="subtitles_processing.html#ASSSubtitleWriter">ASSSubtitleWriter</a>
+</font></dt><dt><font face="helvetica, arial"><a href="subtitles_processing.html#SubtitleConfig">SubtitleConfig</a>
+</font></dt><dt><font face="helvetica, arial"><a href="subtitles_processing.html#SubtitleGenerator">SubtitleGenerator</a>
+</font></dt><dt><font face="helvetica, arial"><a href="subtitles_processing.html#SubtitleSegment">SubtitleSegment</a>
+</font></dt><dt><font face="helvetica, arial"><a href="subtitles_processing.html#SubtitleSegmentProcessor">SubtitleSegmentProcessor</a>
+</font></dt><dt><font face="helvetica, arial"><a href="subtitles_processing.html#WhisperTranscriber">WhisperTranscriber</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="ASSSubtitleWriter">class <strong>ASSSubtitleWriter</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#ASSSubtitleWriter">ASSSubtitleWriter</a>(config:&nbsp;subtitles_processing.<a href="#SubtitleConfig">SubtitleConfig</a>)<br>
+&nbsp;<br>
+Класс&nbsp;для&nbsp;записи&nbsp;субтитров&nbsp;в&nbsp;формате&nbsp;ASS<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="ASSSubtitleWriter-__init__"><strong>__init__</strong></a>(self, config: subtitles_processing.SubtitleConfig)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="ASSSubtitleWriter-write_subtitles"><strong>write_subtitles</strong></a>(self, segments: List[subtitles_processing.SubtitleSegment], output_path: str) -&gt; bool</dt><dd><tt>Запись&nbsp;субтитров&nbsp;в&nbsp;файл&nbsp;ASS<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;segments:&nbsp;Список&nbsp;сегментов&nbsp;субтитров<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output_path:&nbsp;Путь&nbsp;для&nbsp;сохранения&nbsp;файла<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool:&nbsp;Успешность&nbsp;операции</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SubtitleConfig">class <strong>SubtitleConfig</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#SubtitleConfig">SubtitleConfig</a>(model_name:&nbsp;str&nbsp;=&nbsp;'medium',&nbsp;language:&nbsp;str&nbsp;=&nbsp;'ru',&nbsp;max_words:&nbsp;int&nbsp;=&nbsp;3,&nbsp;time_offset:&nbsp;float&nbsp;=&nbsp;-0.3,&nbsp;fontsize:&nbsp;int&nbsp;=&nbsp;110,&nbsp;font_color:&nbsp;str&nbsp;=&nbsp;'&amp;amp;HFFFFFF',&nbsp;outline_thickness:&nbsp;int&nbsp;=&nbsp;4,&nbsp;outline_color:&nbsp;str&nbsp;=&nbsp;'&amp;amp;H000000',&nbsp;shadow_thickness:&nbsp;int&nbsp;=&nbsp;1,&nbsp;shadow_color:&nbsp;str&nbsp;=&nbsp;'&amp;amp;H333333',&nbsp;shadow_alpha:&nbsp;int&nbsp;=&nbsp;50,&nbsp;shadow_offset_x:&nbsp;int&nbsp;=&nbsp;2,&nbsp;shadow_offset_y:&nbsp;int&nbsp;=&nbsp;2,&nbsp;use_backdrop:&nbsp;bool&nbsp;=&nbsp;False,&nbsp;back_color:&nbsp;str&nbsp;=&nbsp;'&amp;amp;HFFFFFF',&nbsp;margin_left:&nbsp;int&nbsp;=&nbsp;10,&nbsp;margin_right:&nbsp;int&nbsp;=&nbsp;10,&nbsp;margin_vertical:&nbsp;int&nbsp;=&nbsp;20,&nbsp;video_width:&nbsp;int&nbsp;=&nbsp;1920,&nbsp;video_height:&nbsp;int&nbsp;=&nbsp;1080,&nbsp;encoding:&nbsp;int&nbsp;=&nbsp;1)&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+Конфигурация&nbsp;для&nbsp;генерации&nbsp;субтитров<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SubtitleConfig-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><tt>Return&nbsp;self==value.</tt></dd></dl>
+
+<dl><dt><a name="SubtitleConfig-__init__"><strong>__init__</strong></a>(self, model_name: str = 'medium', language: str = 'ru', max_words: int = 3, time_offset: float = -0.3, fontsize: int = 110, font_color: str = '&amp;HFFFFFF', outline_thickness: int = 4, outline_color: str = '&amp;H000000', shadow_thickness: int = 1, shadow_color: str = '&amp;H333333', shadow_alpha: int = 50, shadow_offset_x: int = 2, shadow_offset_y: int = 2, use_backdrop: bool = False, back_color: str = '&amp;HFFFFFF', margin_left: int = 10, margin_right: int = 10, margin_vertical: int = 20, video_width: int = 1920, video_height: int = 1080, encoding: int = 1) -&gt; None</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="SubtitleConfig-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'back_color': &lt;class 'str'&gt;, 'encoding': &lt;class 'int'&gt;, 'font_color': &lt;class 'str'&gt;, 'fontsize': &lt;class 'int'&gt;, 'language': &lt;class 'str'&gt;, 'margin_left': &lt;class 'int'&gt;, 'margin_right': &lt;class 'int'&gt;, 'margin_vertical': &lt;class 'int'&gt;, 'max_words': &lt;class 'int'&gt;, 'model_name': &lt;class 'str'&gt;, ...}</dl>
+
+<dl><dt><strong>__dataclass_fields__</strong> = {'back_color': Field(name='back_color',type=&lt;class 'str'&gt;,defau...appingproxy({}),kw_only=False,_field_type=_FIELD), 'encoding': Field(name='encoding',type=&lt;class 'int'&gt;,default...appingproxy({}),kw_only=False,_field_type=_FIELD), 'font_color': Field(name='font_color',type=&lt;class 'str'&gt;,defau...appingproxy({}),kw_only=False,_field_type=_FIELD), 'fontsize': Field(name='fontsize',type=&lt;class 'int'&gt;,default...appingproxy({}),kw_only=False,_field_type=_FIELD), 'language': Field(name='language',type=&lt;class 'str'&gt;,default...appingproxy({}),kw_only=False,_field_type=_FIELD), 'margin_left': Field(name='margin_left',type=&lt;class 'int'&gt;,defa...appingproxy({}),kw_only=False,_field_type=_FIELD), 'margin_right': Field(name='margin_right',type=&lt;class 'int'&gt;,def...appingproxy({}),kw_only=False,_field_type=_FIELD), 'margin_vertical': Field(name='margin_vertical',type=&lt;class 'int'&gt;,...appingproxy({}),kw_only=False,_field_type=_FIELD), 'max_words': Field(name='max_words',type=&lt;class 'int'&gt;,defaul...appingproxy({}),kw_only=False,_field_type=_FIELD), 'model_name': Field(name='model_name',type=&lt;class 'str'&gt;,defau...appingproxy({}),kw_only=False,_field_type=_FIELD), ...}</dl>
+
+<dl><dt><strong>__dataclass_params__</strong> = _DataclassParams(init=True,repr=True,eq=True,order=False,unsafe_hash=False,frozen=False)</dl>
+
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+<dl><dt><strong>__match_args__</strong> = ('model_name', 'language', 'max_words', 'time_offset', 'fontsize', 'font_color', 'outline_thickness', 'outline_color', 'shadow_thickness', 'shadow_color', 'shadow_alpha', 'shadow_offset_x', 'shadow_offset_y', 'use_backdrop', 'back_color', 'margin_left', 'margin_right', 'margin_vertical', 'video_width', 'video_height', ...)</dl>
+
+<dl><dt><strong>back_color</strong> = '&amp;HFFFFFF'</dl>
+
+<dl><dt><strong>encoding</strong> = 1</dl>
+
+<dl><dt><strong>font_color</strong> = '&amp;HFFFFFF'</dl>
+
+<dl><dt><strong>fontsize</strong> = 110</dl>
+
+<dl><dt><strong>language</strong> = 'ru'</dl>
+
+<dl><dt><strong>margin_left</strong> = 10</dl>
+
+<dl><dt><strong>margin_right</strong> = 10</dl>
+
+<dl><dt><strong>margin_vertical</strong> = 20</dl>
+
+<dl><dt><strong>max_words</strong> = 3</dl>
+
+<dl><dt><strong>model_name</strong> = 'medium'</dl>
+
+<dl><dt><strong>outline_color</strong> = '&amp;H000000'</dl>
+
+<dl><dt><strong>outline_thickness</strong> = 4</dl>
+
+<dl><dt><strong>shadow_alpha</strong> = 50</dl>
+
+<dl><dt><strong>shadow_color</strong> = '&amp;H333333'</dl>
+
+<dl><dt><strong>shadow_offset_x</strong> = 2</dl>
+
+<dl><dt><strong>shadow_offset_y</strong> = 2</dl>
+
+<dl><dt><strong>shadow_thickness</strong> = 1</dl>
+
+<dl><dt><strong>time_offset</strong> = -0.3</dl>
+
+<dl><dt><strong>use_backdrop</strong> = False</dl>
+
+<dl><dt><strong>video_height</strong> = 1080</dl>
+
+<dl><dt><strong>video_width</strong> = 1920</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SubtitleError">class <strong>SubtitleError</strong></a>(<a href="builtins.html#Exception">builtins.Exception</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Базовое&nbsp;исключение&nbsp;для&nbsp;ошибок&nbsp;субтитров<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="subtitles_processing.html#SubtitleError">SubtitleError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="SubtitleError-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Static methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="SubtitleError-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><a name="SubtitleError-__delattr__"><strong>__delattr__</strong></a>(self, name, /)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleError-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleError-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>Helper&nbsp;for&nbsp;pickle.</tt></dd></dl>
+
+<dl><dt><a name="SubtitleError-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleError-__setattr__"><strong>__setattr__</strong></a>(self, name, value, /)</dt><dd><tt>Implement&nbsp;setattr(self,&nbsp;name,&nbsp;value).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="SubtitleError-__str__"><strong>__str__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;str(self).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt><a href="builtins.html#Exception">Exception</a>.<a href="#SubtitleError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__suppress_context__</strong></dt>
+</dl>
+<dl><dt><strong>__traceback__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SubtitleGenerationError">class <strong>SubtitleGenerationError</strong></a>(<a href="subtitles_processing.html#SubtitleError">SubtitleError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Ошибки&nbsp;генерации&nbsp;субтитров<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="subtitles_processing.html#SubtitleGenerationError">SubtitleGenerationError</a></dd>
+<dd><a href="subtitles_processing.html#SubtitleError">SubtitleError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="subtitles_processing.html#SubtitleError">SubtitleError</a>:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="SubtitleGenerationError-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Static methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="SubtitleGenerationError-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><a name="SubtitleGenerationError-__delattr__"><strong>__delattr__</strong></a>(self, name, /)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleGenerationError-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleGenerationError-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>Helper&nbsp;for&nbsp;pickle.</tt></dd></dl>
+
+<dl><dt><a name="SubtitleGenerationError-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleGenerationError-__setattr__"><strong>__setattr__</strong></a>(self, name, value, /)</dt><dd><tt>Implement&nbsp;setattr(self,&nbsp;name,&nbsp;value).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleGenerationError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="SubtitleGenerationError-__str__"><strong>__str__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;str(self).</tt></dd></dl>
+
+<dl><dt><a name="SubtitleGenerationError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt><a href="builtins.html#Exception">Exception</a>.<a href="#SubtitleGenerationError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__suppress_context__</strong></dt>
+</dl>
+<dl><dt><strong>__traceback__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SubtitleGenerator">class <strong>SubtitleGenerator</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#SubtitleGenerator">SubtitleGenerator</a>(config:&nbsp;subtitles_processing.<a href="#SubtitleConfig">SubtitleConfig</a>)<br>
+&nbsp;<br>
+Основной&nbsp;класс&nbsp;для&nbsp;генерации&nbsp;субтитров<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SubtitleGenerator-__init__"><strong>__init__</strong></a>(self, config: subtitles_processing.SubtitleConfig)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="SubtitleGenerator-generate_subtitles"><strong>generate_subtitles</strong></a>(self, audio_path: str, output_folder: str, max_duration: float) -&gt; Optional[str]</dt><dd><tt>Полная&nbsp;генерация&nbsp;субтитров&nbsp;из&nbsp;аудио<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;audio_path:&nbsp;Путь&nbsp;к&nbsp;аудиофайлу<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output_folder:&nbsp;Папка&nbsp;для&nbsp;сохранения<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_duration:&nbsp;Максимальная&nbsp;длительность&nbsp;видео<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Optional[str]:&nbsp;Путь&nbsp;к&nbsp;файлу&nbsp;субтитров&nbsp;или&nbsp;None&nbsp;при&nbsp;ошибке</tt></dd></dl>
+
+<dl><dt><a name="SubtitleGenerator-get_config_info"><strong>get_config_info</strong></a>(self) -&gt; Dict[str, Any]</dt><dd><tt>Получение&nbsp;информации&nbsp;о&nbsp;текущей&nbsp;конфигурации</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SubtitleSegment">class <strong>SubtitleSegment</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#SubtitleSegment">SubtitleSegment</a>(start:&nbsp;float,&nbsp;end:&nbsp;float,&nbsp;text:&nbsp;str)&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+Класс&nbsp;для&nbsp;представления&nbsp;сегмента&nbsp;субтитров<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SubtitleSegment-__eq__"><strong>__eq__</strong></a>(self, other)</dt><dd><tt>Return&nbsp;self==value.</tt></dd></dl>
+
+<dl><dt><a name="SubtitleSegment-__init__"><strong>__init__</strong></a>(self, start: float, end: float, text: str) -&gt; None</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="SubtitleSegment-__post_init__"><strong>__post_init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="SubtitleSegment-__repr__"><strong>__repr__</strong></a>(self)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'end': &lt;class 'float'&gt;, 'start': &lt;class 'float'&gt;, 'text': &lt;class 'str'&gt;}</dl>
+
+<dl><dt><strong>__dataclass_fields__</strong> = {'end': Field(name='end',type=&lt;class 'float'&gt;,default=&lt;d...appingproxy({}),kw_only=False,_field_type=_FIELD), 'start': Field(name='start',type=&lt;class 'float'&gt;,default=...appingproxy({}),kw_only=False,_field_type=_FIELD), 'text': Field(name='text',type=&lt;class 'str'&gt;,default=&lt;da...appingproxy({}),kw_only=False,_field_type=_FIELD)}</dl>
+
+<dl><dt><strong>__dataclass_params__</strong> = _DataclassParams(init=True,repr=True,eq=True,order=False,unsafe_hash=False,frozen=False)</dl>
+
+<dl><dt><strong>__hash__</strong> = None</dl>
+
+<dl><dt><strong>__match_args__</strong> = ('start', 'end', 'text')</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SubtitleSegmentProcessor">class <strong>SubtitleSegmentProcessor</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Класс&nbsp;для&nbsp;обработки&nbsp;сегментов&nbsp;субтитров<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Static methods defined here:<br>
+<dl><dt><a name="SubtitleSegmentProcessor-process_whisper_segments"><strong>process_whisper_segments</strong></a>(whisper_result: Dict[str, Any], max_words: int, time_offset: float, max_duration: float) -&gt; List[subtitles_processing.SubtitleSegment]</dt><dd><tt>Обработка&nbsp;всех&nbsp;сегментов&nbsp;от&nbsp;Whisper<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;whisper_result:&nbsp;Результат&nbsp;от&nbsp;Whisper<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_words:&nbsp;Максимум&nbsp;слов&nbsp;в&nbsp;сегменте<br>
+&nbsp;&nbsp;&nbsp;&nbsp;time_offset:&nbsp;Смещение&nbsp;времени<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_duration:&nbsp;Максимальная&nbsp;длительность<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List[<a href="#SubtitleSegment">SubtitleSegment</a>]:&nbsp;Обработанные&nbsp;сегменты</tt></dd></dl>
+
+<dl><dt><a name="SubtitleSegmentProcessor-split_segment"><strong>split_segment</strong></a>(segment: Dict[str, Any], max_words: int, time_offset: float, max_duration: float) -&gt; List[subtitles_processing.SubtitleSegment]</dt><dd><tt>Разбивает&nbsp;сегмент&nbsp;на&nbsp;подсегменты&nbsp;с&nbsp;ограничением&nbsp;по&nbsp;словам<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;segment:&nbsp;Исходный&nbsp;сегмент&nbsp;от&nbsp;Whisper<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_words:&nbsp;Максимальное&nbsp;количество&nbsp;слов&nbsp;в&nbsp;подсегменте<br>
+&nbsp;&nbsp;&nbsp;&nbsp;time_offset:&nbsp;Смещение&nbsp;времени<br>
+&nbsp;&nbsp;&nbsp;&nbsp;max_duration:&nbsp;Максимальная&nbsp;длительность&nbsp;аудио<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;List[<a href="#SubtitleSegment">SubtitleSegment</a>]:&nbsp;Список&nbsp;обработанных&nbsp;сегментов</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="WhisperError">class <strong>WhisperError</strong></a>(<a href="subtitles_processing.html#SubtitleError">SubtitleError</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Ошибки&nbsp;Whisper<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="subtitles_processing.html#WhisperError">WhisperError</a></dd>
+<dd><a href="subtitles_processing.html#SubtitleError">SubtitleError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="subtitles_processing.html#SubtitleError">SubtitleError</a>:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="WhisperError-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Static methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="WhisperError-__new__"><strong>__new__</strong></a>(*args, **kwargs)<font color="#909090"><font face="helvetica, arial"> from <a href="builtins.html#type">builtins.type</a></font></font></dt><dd><tt>Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><a name="WhisperError-__delattr__"><strong>__delattr__</strong></a>(self, name, /)</dt><dd><tt>Implement&nbsp;delattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="WhisperError-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><tt>Return&nbsp;getattr(self,&nbsp;name).</tt></dd></dl>
+
+<dl><dt><a name="WhisperError-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>Helper&nbsp;for&nbsp;pickle.</tt></dd></dl>
+
+<dl><dt><a name="WhisperError-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;repr(self).</tt></dd></dl>
+
+<dl><dt><a name="WhisperError-__setattr__"><strong>__setattr__</strong></a>(self, name, value, /)</dt><dd><tt>Implement&nbsp;setattr(self,&nbsp;name,&nbsp;value).</tt></dd></dl>
+
+<dl><dt><a name="WhisperError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="WhisperError-__str__"><strong>__str__</strong></a>(self, /)</dt><dd><tt>Return&nbsp;str(self).</tt></dd></dl>
+
+<dl><dt><a name="WhisperError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><tt><a href="builtins.html#Exception">Exception</a>.<a href="#WhisperError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><tt>exception&nbsp;cause</tt></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><tt>exception&nbsp;context</tt></dd>
+</dl>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__suppress_context__</strong></dt>
+</dl>
+<dl><dt><strong>__traceback__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="WhisperTranscriber">class <strong>WhisperTranscriber</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#WhisperTranscriber">WhisperTranscriber</a>(model_name:&nbsp;str&nbsp;=&nbsp;'medium')<br>
+&nbsp;<br>
+Класс&nbsp;для&nbsp;транскрипции&nbsp;аудио&nbsp;с&nbsp;помощью&nbsp;Whisper<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="WhisperTranscriber-__init__"><strong>__init__</strong></a>(self, model_name: str = 'medium')</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="WhisperTranscriber-get_model_info"><strong>get_model_info</strong></a>(self) -&gt; Dict[str, str]</dt><dd><tt>Получение&nbsp;информации&nbsp;о&nbsp;модели</tt></dd></dl>
+
+<dl><dt><a name="WhisperTranscriber-transcribe_audio"><strong>transcribe_audio</strong></a>(self, audio_path: str, language: str = 'ru') -&gt; Dict[str, Any]</dt><dd><tt>Транскрипция&nbsp;аудиофайла<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;audio_path:&nbsp;Путь&nbsp;к&nbsp;аудиофайлу<br>
+&nbsp;&nbsp;&nbsp;&nbsp;language:&nbsp;Язык&nbsp;для&nbsp;распознавания<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dict&nbsp;с&nbsp;результатами&nbsp;транскрипции</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-create_subtitle_config"><strong>create_subtitle_config</strong></a>(**kwargs) -&gt; subtitles_processing.SubtitleConfig</dt><dd><tt>Создание&nbsp;конфигурации&nbsp;субтитров&nbsp;с&nbsp;проверкой&nbsp;параметров</tt></dd></dl>
+ <dl><dt><a name="-generate_subtitles"><strong>generate_subtitles</strong></a>(audio_path: str, temp_folder: str, subtitle_model: str, subtitle_language: str, subtitle_max_words: int, subtitle_time_offset: float, temp_audio_duration: float, subtitle_fontsize: int, subtitle_font_color: str, subtitle_use_backdrop: bool, subtitle_back_color: str, subtitle_outline_thickness: int, subtitle_outline_color: str, subtitle_shadow_thickness: int, subtitle_shadow_color: str, subtitle_shadow_alpha: int, subtitle_shadow_offset_x: int, subtitle_shadow_offset_y: int, subtitle_margin_l: int, subtitle_margin_r: int, subtitle_margin_v: int) -&gt; Optional[str]</dt><dd><tt>Обратная&nbsp;совместимость:&nbsp;генерация&nbsp;субтитров&nbsp;с&nbsp;оригинальными&nbsp;параметрами</tt></dd></dl>
+ <dl><dt><a name="-quick_generate_subtitles"><strong>quick_generate_subtitles</strong></a>(audio_path: str, output_folder: str, duration: float, model: str = 'medium', language: str = 'ru') -&gt; Optional[str]</dt><dd><tt>Быстрая&nbsp;генерация&nbsp;субтитров&nbsp;с&nbsp;минимальными&nbsp;параметрами</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>Any</strong> = typing.Any<br>
+<strong>Dict</strong> = typing.Dict<br>
+<strong>List</strong> = typing.List<br>
+<strong>Optional</strong> = typing.Optional<br>
+<strong>Union</strong> = typing.Union<br>
+<strong>logger</strong> = &lt;Logger subtitles_processing (INFO)&gt;</td></tr></table>
+</body></html>
