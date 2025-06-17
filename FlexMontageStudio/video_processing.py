@@ -330,7 +330,7 @@ class VideoEffectsProcessor:
         return ",".join(filters) if filters else ""
 
     def _get_zoom_filter(self, clip_index: int, duration: float) -> str:
-        """ИСПРАВЛЕННАЯ РЕАЛИЗАЦИЯ ZOOM масштабированного под длительность клипа"""
+        """ПЛАВНЫЙ ZOOM без дрожания на основе zoom+step"""
         if self.config.zoom_effect == "none":
             return ""
 
@@ -343,24 +343,24 @@ class VideoEffectsProcessor:
         # Параметры для плавного зума
         zoom_intensity = max(1.01, min(self.config.zoom_intensity, 1.3))
         fps = 30  # Фиксированный FPS
-
-        # КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: используем time-based формулы для обоих направлений зума
-        zoom_range = zoom_intensity - 1.0  # Диапазон изменения зума
-
-        # Рассчитываем коэффициент масштабирования времени на основе длительности клипа
-        time_scale = zoom_range / duration if duration > 0 else 0.001
+        
+        # Рассчитываем количество кадров для длительности
+        total_frames = int(duration * fps)
+        
+        # КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ: используем маленький шаг для плавности
+        zoom_range = zoom_intensity - 1.0
+        # Маленький шаг для плавности, независимо от длительности
+        zoom_step = min(0.001, zoom_range / 200)  # Ограничиваем максимальным шагом
 
         logger.info(
-            f"🔍 ZOOM клип {clip_index}: длительность={duration:.2f}с, time_scale={time_scale:.6f}, zoom_range={zoom_range:.3f}")
+            f"🔍 SMOOTH ZOOM клип {clip_index}: длительность={duration:.2f}с, zoom_step={zoom_step:.6f}, max_zoom={zoom_intensity}")
 
         if zoom_type == "zoom_in":
-            # Zoom In: от 1.0 до zoom_intensity за всю длительность клипа
-            # Используем time-based формулу: 1.0 + (zoom_range * t / duration)
-            return f"scale=4000:-1,zoompan=z='min(1.0+{time_scale:.6f}*t,{zoom_intensity})':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1920x1080:fps={fps}"
+            # Плавный Zoom In: используем zoom+step для плавности
+            return f"scale=4000:-1,zoompan=z='min(zoom+{zoom_step:.6f},{zoom_intensity})':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=1920x1080:fps={fps}"
         elif zoom_type == "zoom_out":
-            # Zoom Out: от zoom_intensity к 1.0 за всю длительность клипа
-            # Используем time-based формулу: zoom_intensity - (zoom_range * t / duration)
-            return f"scale=4000:-1,zoompan=z='max({zoom_intensity:.3f}-{time_scale:.6f}*t,1.0)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1920x1080:fps={fps}"
+            # Плавный Zoom Out: начинаем с большого зума и уменьшаем
+            return f"scale=4000:-1,zoompan=z='if(lte(zoom,1.0),{zoom_intensity},max(1.001,zoom-{zoom_step:.6f}))':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=1920x1080:fps={fps}"
 
         return ""
 
@@ -377,10 +377,11 @@ class VideoEffectsProcessor:
         angle_rad = round(math.radians(angle_deg), 4)
 
         if self.config.rotation_effect == "sway":
-            # Динамическое покачивание: упрощенная формула без кавычек
+            # Динамическое покачивание: используем числовое значение PI
             sway_frequency = 2.0  # Частота покачивания (циклов за duration)
             freq_calc = round(sway_frequency / duration, 4)
-            return f"rotate={angle_rad}*sin(2*PI*t*{freq_calc}):bilinear=0"
+            pi_value = 3.14159265359
+            return f"rotate={angle_rad}*sin(2*{pi_value}*t*{freq_calc}):bilinear=0"
         elif self.config.rotation_effect == "rotate_left":
             # Постоянное вращение влево
             rotation_speed = round(angle_rad / duration, 4)  # Скорость вращения
@@ -578,18 +579,19 @@ class VideoProcessor:
         # Получаем фильтры эффектов
         effects_filter = self.effects_processor.get_video_effects_filter(clip_index, total_duration)
 
-        # Оптимизированный порядок фильтров для лучшей производительности
-        base_filters = [
-            f"fps={self.config.frame_rate}",
-            f"format={self.config.pixel_format}"
-        ]
+        # Правильный порядок фильтров для zoompan
+        base_filters = []
 
         # Добавляем все эффекты (zoom, rotation, color, filter)
         if effects_filter:
             base_filters.append(effects_filter)
+            # После zoompan добавляем format
+            base_filters.append(f"format={self.config.pixel_format}")
         else:
             # Если нет эффектов, добавляем стандартное масштабирование
             base_filters.extend([
+                f"fps={self.config.frame_rate}",
+                f"format={self.config.pixel_format}",
                 f"scale={self.config.resolution}:force_original_aspect_ratio=decrease",
                 f"pad={self.config.resolution}:(ow-iw)/2:(oh-ih)/2"
             ])
