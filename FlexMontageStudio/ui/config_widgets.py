@@ -180,6 +180,7 @@ class ConfigTabsWidget(QWidget):
             "subscribe_position_y": "Позиция кнопки подписки по оси Y.",
             "subscribe_display_duration": "Длительность отображения кнопки подписки (в секундах).",
             "subscribe_interval_gap": "Интервал между появлениями кнопки подписки (в секундах).",
+            "subscribe_duration": "Общее время показа кнопки подписки ('all' для всего видео или число секунд).",
             "subtitles_enabled": "Если включено, добавляются субтитры к видео.",
             "subtitle_language": "Язык субтитров (например, ru для русского).",
             "subtitle_model": "Модель субтитров (например, medium).",
@@ -449,7 +450,8 @@ class ConfigTabsWidget(QWidget):
                     ("subscribe_position_x", "Позиция кнопки X"),
                     ("subscribe_position_y", "Позиция кнопки Y"),
                     ("subscribe_display_duration", "Длительность показа кнопки"),
-                    ("subscribe_interval_gap", "Интервал появления кнопки")
+                    ("subscribe_interval_gap", "Интервал появления кнопки"),
+                    ("subscribe_duration", "Общее время показа кнопки")
                 ]
             },
             "Субтитры": {
