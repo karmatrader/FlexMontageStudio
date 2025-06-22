@@ -11,7 +11,7 @@ from PySide6.QtWidgets import (
     QMessageBox, QGridLayout, QLineEdit, QCheckBox, QFrame,
     QFileDialog
 )
-from PySide6.QtCore import QSettings, Qt, Signal, QObject
+from PySide6.QtCore import QSettings, Qt, Signal, QObject, QTimer
 from PySide6.QtGui import QStandardItemModel, QStandardItem
 
 from core.config_manager import ConfigManager
@@ -133,6 +133,12 @@ class MainWindow(QMainWindow):
         self.voice_selector_widget: Optional[VoiceSelectorWidget] = None
         self.voice_settings_widget: Optional[VoiceSettingsWidget] = None
         self.logo_position_editor: Optional[LogoPositionEditor] = None
+        
+        # Таймер для дебаунсинга обновлений субтитров
+        self.subtitle_update_timer = QTimer()
+        self.subtitle_update_timer.setSingleShot(True)
+        self.subtitle_update_timer.timeout.connect(self._delayed_subtitle_update)
+        self.subtitle_update_timer.setInterval(300)  # 300ms задержка
 
         # Инициализация интерфейса
         self.setup_ui()
@@ -310,6 +316,13 @@ class MainWindow(QMainWindow):
             for subgroup_name, params in subgroups.items():
                 subgroup_label = QLabel(subgroup_name)
                 subgroup_label.setObjectName("subgroup")
+                
+                # Подтягиваем настройки ближе к визуальным редакторам
+                if subgroup_name == "Пути к файлам логотипов":
+                    subgroup_label.setStyleSheet("margin-top: 0px;")  # Отрицательный отступ для логотипов
+                elif subgroup_name == "Основные настройки субтитров":
+                    subgroup_label.setStyleSheet("margin-top: 0px;")  # Минимальный отступ для субтитров
+                
                 main_layout.addWidget(subgroup_label)
 
                 # Специальная обработка для виджета выбора голоса
@@ -400,7 +413,8 @@ class MainWindow(QMainWindow):
             scroll_area.setWidget(scroll_widget)
             scroll_area.setWidgetResizable(True)  # Позволяем resize для правильной центровки
             scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # Убираем горизонтальную прокрутку
-            scroll_widget.setMinimumHeight(self.calculate_content_height(subgroups))
+            # Убираем принудительную установку высоты - пусть виджет сам определяет нужную высоту
+            # scroll_widget.setMinimumHeight(self.calculate_content_height(subgroups))
             
             # Принудительно убираем все отступы у QScrollArea
             scroll_area.setContentsMargins(0, 0, 0, 0)
@@ -456,7 +470,8 @@ class MainWindow(QMainWindow):
                 subtitle_params = [
                     'subtitle_fontsize', 'subtitle_use_backdrop', 'subtitle_outline_thickness',
                     'subtitle_shadow_thickness', 'subtitle_shadow_alpha', 'subtitle_shadow_offset_x',
-                    'subtitle_shadow_offset_y', 'subtitle_margin_v'
+                    'subtitle_shadow_offset_y', 'subtitle_margin_v', 'subtitle_margin_l', 
+                    'subtitle_margin_r', 'subtitle_line_spacing'
                 ]
                 for param in subtitle_params:
                     if param in self.param_entries:
@@ -468,9 +483,120 @@ class MainWindow(QMainWindow):
                 # Обновляем предпросмотр
                 self.subtitle_preview_widget.update_subtitle_preview(subtitle_config)
                 
+                # Принудительно очищаем визуальные артефакты после смены цвета
+                self.subtitle_preview_widget.force_clear_artifacts()
+                
             logger.debug(f"Цвет субтитров изменен: {color}")
         except Exception as e:
             logger.error(f"Ошибка изменения цвета субтитров: {e}")
+
+    def on_subtitle_font_changed(self, font_name: str):
+        """Обработка изменения шрифта субтитров"""
+        try:
+            # Автоматически сохраняем настройки при изменении шрифта
+            self.auto_save_parameters()
+            
+            # Обновляем предпросмотр субтитров если он доступен
+            if hasattr(self, 'subtitle_preview_widget') and self.subtitle_preview_widget:
+                # Собираем все настройки субтитров
+                subtitle_config = {}
+                
+                # Добавляем шрифт
+                subtitle_config['subtitle_font_family'] = font_name
+                
+                # Собираем цветовые параметры
+                color_fields = self.get_color_fields()
+                for field in color_fields:
+                    if field in self.param_entries:
+                        if hasattr(self.param_entries[field], 'get_color'):
+                            subtitle_config[field] = self.param_entries[field].get_color()
+                        elif hasattr(self.param_entries[field], 'text'):
+                            subtitle_config[field] = self.param_entries[field].text()
+                
+                # Добавляем другие параметры субтитров
+                subtitle_params = [
+                    'subtitle_fontsize', 'subtitle_use_backdrop', 'subtitle_outline_thickness',
+                    'subtitle_shadow_thickness', 'subtitle_shadow_alpha', 'subtitle_shadow_offset_x',
+                    'subtitle_shadow_offset_y', 'subtitle_margin_v', 'subtitle_margin_l', 
+                    'subtitle_margin_r', 'subtitle_line_spacing'
+                ]
+                for param in subtitle_params:
+                    if param in self.param_entries:
+                        if hasattr(self.param_entries[param], 'isChecked'):
+                            subtitle_config[param] = self.param_entries[param].isChecked()
+                        elif hasattr(self.param_entries[param], 'value'):
+                            raw_value = self.param_entries[param].value()
+                            # Специальная обработка для межстрочного интервала
+                            if param == 'subtitle_line_spacing':
+                                subtitle_config[param] = raw_value / 10.0  # Преобразуем из диапазона 5-30 в 0.5-3.0
+                            else:
+                                subtitle_config[param] = raw_value
+                        elif hasattr(self.param_entries[param], 'text'):
+                            subtitle_config[param] = self.param_entries[param].text()
+                
+                # Обновляем предпросмотр
+                self.subtitle_preview_widget.update_subtitle_preview(subtitle_config)
+                
+                # Принудительно очищаем визуальные артефакты после смены шрифта
+                self.subtitle_preview_widget.force_clear_artifacts()
+                
+            logger.debug(f"Шрифт субтитров изменен: {font_name}")
+        except Exception as e:
+            logger.error(f"Ошибка изменения шрифта субтитров: {e}")
+
+    def on_subtitle_setting_changed(self):
+        """Обработка изменения настроек субтитров через слайдеры"""
+        try:
+            # Автоматически сохраняем настройки
+            self.auto_save_parameters()
+            
+            # Обновляем предпросмотр субтитров если он доступен
+            if hasattr(self, 'subtitle_preview_widget') and self.subtitle_preview_widget:
+                # Собираем все настройки субтитров
+                subtitle_config = {}
+                
+                # Собираем цветовые параметры
+                color_fields = self.get_color_fields()
+                for field in color_fields:
+                    if field in self.param_entries:
+                        if hasattr(self.param_entries[field], 'get_color'):
+                            subtitle_config[field] = self.param_entries[field].get_color()
+                        elif hasattr(self.param_entries[field], 'text'):
+                            subtitle_config[field] = self.param_entries[field].text()
+                
+                # Собираем параметры слайдеров и другие
+                subtitle_params = [
+                    'subtitle_font_family', 'subtitle_fontsize', 'subtitle_use_backdrop', 
+                    'subtitle_outline_thickness', 'subtitle_shadow_thickness', 'subtitle_shadow_alpha', 
+                    'subtitle_shadow_offset_x', 'subtitle_shadow_offset_y', 'subtitle_margin_v',
+                    'subtitle_margin_l', 'subtitle_margin_r', 'subtitle_line_spacing'
+                ]
+                for param in subtitle_params:
+                    if param in self.param_entries:
+                        if hasattr(self.param_entries[param], 'isChecked'):
+                            subtitle_config[param] = self.param_entries[param].isChecked()
+                        elif hasattr(self.param_entries[param], 'currentText'):
+                            subtitle_config[param] = self.param_entries[param].currentText()
+                        elif hasattr(self.param_entries[param], 'text'):
+                            subtitle_config[param] = self.param_entries[param].text()
+                        elif hasattr(self.param_entries[param], 'value'):
+                            raw_value = self.param_entries[param].value()
+                            # Специальная обработка для межстрочного интервала
+                            if param == 'subtitle_line_spacing':
+                                subtitle_config[param] = raw_value / 10.0  # Преобразуем из диапазона 5-30 в 0.5-3.0
+                            else:
+                                subtitle_config[param] = raw_value
+                
+                # Обновляем предпросмотр
+                self.subtitle_preview_widget.update_subtitle_preview(subtitle_config)
+                
+            logger.debug("Настройки субтитров обновлены через слайдеры")
+        except Exception as e:
+            logger.error(f"Ошибка изменения настроек субтитров: {e}")
+
+    def _delayed_subtitle_update(self):
+        """Отложенное обновление субтитров с дебаунсингом"""
+        self.on_subtitle_setting_changed()
 
     def on_logo_position_changed(self, logo_id: str, x: int, y: int, width: int):
         """Обработка изменения позиции логотипа в визуальном редакторе"""
@@ -1899,6 +2025,34 @@ class MainWindow(QMainWindow):
                     ("audio_channels", "Количество каналов"),
                     ("silence_duration", "Длительность тишины"),
                     ("background_music_volume", "Громкость фоновой музыки")
+                ],
+                "Нормализация и лимитирование": [
+                    ("audio_normalize_method", "Метод нормализации"),
+                    ("audio_peak_limiting", "Пиковое ограничение (лимитер)"),
+                    ("audio_peak_limit_db", "Порог лимитера (дБ)"),
+                    ("audio_loudness_matching", "Выравнивание громкости по LUFS"),
+                    ("audio_lufs_target", "Целевой уровень LUFS")
+                ],
+                "Компрессор": [
+                    ("audio_compressor_type", "Тип компрессора"),
+                    ("audio_compressor_attack", "Атака компрессора (мс)"),
+                    ("audio_compressor_release", "Отпускание компрессора (мс)")
+                ],
+                "Гейт и подавление шума": [
+                    ("audio_gate_enabled", "Включить гейт"),
+                    ("audio_gate_threshold", "Порог гейта (дБ)")
+                ],
+                "Эквалайзер": [
+                    ("audio_eq_preset", "Пресет эквалайзера"),
+                    ("audio_eq_mid", "Средние частоты (дБ)"),
+                    ("audio_eq_presence", "Верхние частоты (дБ)")
+                ],
+                "Обработка голоса": [
+                    ("voice_denoise_strength", "Сила шумоподавления"),
+                    ("voice_clarity_boost", "Усиление четкости"),
+                    ("voice_warmth", "Теплота голоса"),
+                    ("voice_de_esser", "Де-эссер (подавление свистящих)"),
+                    ("voice_de_esser_threshold", "Порог де-эссера (дБ)")
                 ]
             },
             "Видео": {
@@ -1988,6 +2142,7 @@ class MainWindow(QMainWindow):
                     ("subtitles_enabled", "Включить субтитры"),
                     ("subtitle_language", "Язык субтитров"),
                     ("subtitle_model", "Модель субтитров"),
+                    ("subtitle_font_family", "Семейство шрифта"),
                     ("subtitle_fontsize", "Размер шрифта"),
                     ("subtitle_font_color", "Цвет шрифта"),
                     ("subtitle_use_backdrop", "Использовать подложку"),
@@ -2004,6 +2159,7 @@ class MainWindow(QMainWindow):
                     ("subtitle_margin_v", "Вертикальный отступ"),
                     ("subtitle_margin_l", "Левый отступ"),
                     ("subtitle_margin_r", "Правый отступ"),
+                    ("subtitle_line_spacing", "Межстрочный интервал"),
                     ("subtitle_max_words", "Максимум слов"),
                     ("subtitle_time_offset", "Сдвиг времени")
                 ]
@@ -2030,6 +2186,11 @@ class MainWindow(QMainWindow):
             "noise_reduction", "histogram_equalization",
             # Чекбоксы для эффектов видео
             "video_effects_enabled", "video_transitions_enabled",
+            # Чекбоксы для аудио эффектов
+            "audio_normalize", "audio_peak_limiting", "audio_loudness_matching",
+            "audio_compressor", "audio_gate_enabled", "audio_eq_enabled",
+            "voice_noise_reduction", "voice_enhancement", "voice_clarity_boost",
+            "voice_warmth", "voice_de_esser",
             "debug_audio_processing", "debug_subtitles_processing", "debug_final_assembly"
         ]
     
@@ -2077,6 +2238,61 @@ class MainWindow(QMainWindow):
             combo.setProperty("internal_values", ["fade", "dissolve", "wipeleft", "wiperight",
                                                  "wipeup", "wipedown", "slideleft", "slideright",
                                                  "slideup", "slidedown"])
+        elif param_key == "subtitle_font_family":
+            from PySide6.QtGui import QFontDatabase
+            font_db = QFontDatabase()
+            system_fonts = font_db.families()
+            combo.addItems(system_fonts)
+            combo.setProperty("internal_values", system_fonts)
+            # Подключаем изменения к обновлению предпросмотра субтитров
+            combo.currentTextChanged.connect(self.on_subtitle_font_changed)
+        elif param_key == "subtitle_model":
+            # Доступные модели Whisper для субтитров
+            combo.addItems(["Tiny", "Base", "Small", "Medium", "Large", "Large-v2", "Large-v3"])
+            combo.setProperty("internal_values", ["tiny", "base", "small", "medium", "large", "large-v2", "large-v3"])
+            # Устанавливаем Medium как значение по умолчанию
+            combo.setCurrentText("Medium")
+        elif param_key == "audio_bitrate":
+            combo.addItems(["128 kbps (низкое качество)", "192 kbps (хорошее качество)", 
+                           "256 kbps (высокое качество)", "320 kbps (отличное качество)",
+                           "448 kbps (профессиональное)", "640 kbps (максимальное)"])
+            combo.setProperty("internal_values", ["128k", "192k", "256k", "320k", "448k", "640k"])
+            # Устанавливаем 192k как значение по умолчанию
+            combo.setCurrentText("192 kbps (хорошее качество)")
+        elif param_key == "audio_sample_rate":
+            combo.addItems(["22.05 kHz (экономия места)", "44.1 kHz (CD качество)",
+                           "48 kHz (DVD/профессиональное)", "96 kHz (высококачественное)"])
+            combo.setProperty("internal_values", ["22050", "44100", "48000", "96000"])
+            # Устанавливаем 44.1 kHz как значение по умолчанию
+            combo.setCurrentText("44.1 kHz (CD качество)")
+        elif param_key == "audio_compressor_ratio":
+            combo.addItems(["2:1 (мягкое сжатие)", "3:1 (умеренное сжатие)", 
+                           "4:1 (стандартное сжатие)", "6:1 (сильное сжатие)",
+                           "8:1 (очень сильное сжатие)", "10:1 (лимитер)"])
+            combo.setProperty("internal_values", ["2:1", "3:1", "4:1", "6:1", "8:1", "10:1"])
+            # Устанавливаем 4:1 как значение по умолчанию
+            combo.setCurrentText("4:1 (стандартное сжатие)")
+        elif param_key == "audio_normalize_method":
+            combo.addItems(["Peak (по пикам)", "RMS (среднеквадратичная)", 
+                           "LUFS (стандарт вещания)", "EBU R128 (европейский стандарт)"])
+            combo.setProperty("internal_values", ["peak", "rms", "lufs", "ebu"])
+            combo.setCurrentText("LUFS (стандарт вещания)")
+        elif param_key == "audio_compressor_type":
+            combo.addItems(["Soft (мягкое сжатие)", "Hard (жёсткое сжатие)", 
+                           "Vintage (аналоговое звучание)", "Optical (оптический компрессор)",
+                           "VCA (быстрый и точный)"])
+            combo.setProperty("internal_values", ["soft", "hard", "vintage", "optical", "vca"])
+            combo.setCurrentText("Soft (мягкое сжатие)")
+        elif param_key == "audio_eq_preset":
+            combo.addItems(["Flat (без изменений)", "Мужской голос", "Женский голос",
+                           "Тёплый голос", "Яркий голос", "Радио голос", "Подкаст",
+                           "Поп музыка", "Рок музыка", "Классическая музыка",
+                           "Усиление басов", "Усиление высоких", "Подавление вокала", "Телефонный звонок"])
+            combo.setProperty("internal_values", ["flat", "voice_male", "voice_female",
+                                                "voice_warm", "voice_bright", "voice_radio", "podcast",
+                                                "music_pop", "music_rock", "music_classical",
+                                                "bass_boost", "treble_boost", "vocal_cut", "phone_call"])
+            combo.setCurrentText("Flat (без изменений)")
         
         return combo
     
@@ -2134,6 +2350,98 @@ class MainWindow(QMainWindow):
             slider.setRange(1, 20)  # 0.1 - 2.0 сек, умножаем на 10
             slider.setValue(5)  # по умолчанию 0.5 сек
             value_label.setText("0.5")
+        elif param_key == "subtitle_fontsize":
+            slider.setRange(20, 200)  # 20 - 200 пикселей
+            slider.setValue(110)  # по умолчанию 110
+            value_label.setText("110")
+        elif param_key == "subtitle_outline_thickness":
+            slider.setRange(0, 20)  # 0 - 20 пикселей
+            slider.setValue(4)  # по умолчанию 4
+            value_label.setText("4")
+        elif param_key == "subtitle_shadow_thickness":
+            slider.setRange(0, 10)  # 0 - 10 пикселей
+            slider.setValue(1)  # по умолчанию 1
+            value_label.setText("1")
+        elif param_key == "subtitle_shadow_alpha":
+            slider.setRange(0, 100)  # 0 - 100%
+            slider.setValue(50)  # по умолчанию 50%
+            value_label.setText("50")
+        elif param_key == "subtitle_shadow_offset_x":
+            slider.setRange(-20, 20)  # -20 до +20 пикселей
+            slider.setValue(2)  # по умолчанию 2
+            value_label.setText("2")
+        elif param_key == "subtitle_shadow_offset_y":
+            slider.setRange(-20, 20)  # -20 до +20 пикселей
+            slider.setValue(2)  # по умолчанию 2
+            value_label.setText("2")
+        elif param_key == "subtitle_margin_v":
+            slider.setRange(0, 100)  # 0 - 100 пикселей
+            slider.setValue(20)  # по умолчанию 20
+            value_label.setText("20")
+        elif param_key == "subtitle_margin_l":
+            slider.setRange(0, 100)  # 0 - 100 пикселей
+            slider.setValue(10)  # по умолчанию 10
+            value_label.setText("10")
+        elif param_key == "subtitle_margin_r":
+            slider.setRange(0, 100)  # 0 - 100 пикселей
+            slider.setValue(10)  # по умолчанию 10
+            value_label.setText("10")
+        elif param_key == "subtitle_line_spacing":
+            slider.setRange(5, 30)  # 0.5 - 3.0, умножаем на 10
+            slider.setValue(12)  # по умолчанию 1.2
+            value_label.setText("1.2")
+        elif param_key == "background_music_volume":
+            slider.setRange(0, 10000)  # 0.00% - 100.00%, умножаем на 100
+            slider.setValue(1500)  # по умолчанию 15.00%
+            value_label.setText("15.00%")
+        elif param_key == "audio_normalize_target":
+            slider.setRange(-40, -10)  # от -40 до -10 dB
+            slider.setValue(-23)  # по умолчанию -23 dB (стандарт YouTube)
+            value_label.setText("-23 dB")
+        elif param_key == "audio_eq_bass":
+            slider.setRange(-100, 100)  # от -10.0 до +10.0 dB, умножаем на 10
+            slider.setValue(0)  # по умолчанию 0.0 dB
+            value_label.setText("0.0 dB")
+        elif param_key == "audio_eq_treble":
+            slider.setRange(-100, 100)  # от -10.0 до +10.0 dB, умножаем на 10
+            slider.setValue(0)  # по умолчанию 0.0 dB
+            value_label.setText("0.0 dB")
+        elif param_key == "audio_peak_limit_db":
+            slider.setRange(-60, 0)  # от -6 до 0 dB
+            slider.setValue(-10)  # -1.0 dB по умолчанию
+            value_label.setText("-1.0 dB")
+        elif param_key == "audio_lufs_target":
+            slider.setRange(-30, -10)  # от -30 до -10 LUFS
+            slider.setValue(-14)  # -14 LUFS по умолчанию (YouTube стандарт)
+            value_label.setText("-14 LUFS")
+        elif param_key == "audio_compressor_attack":
+            slider.setRange(1, 100)  # 1-100 мс
+            slider.setValue(10)  # 10 мс по умолчанию
+            value_label.setText("10 мс")
+        elif param_key == "audio_compressor_release":
+            slider.setRange(10, 1000)  # 10-1000 мс
+            slider.setValue(100)  # 100 мс по умолчанию
+            value_label.setText("100 мс")
+        elif param_key == "audio_gate_threshold":
+            slider.setRange(-600, -200)  # от -60 до -20 dB (умножено на 10)
+            slider.setValue(-400)  # -40 dB по умолчанию
+            value_label.setText("-40.0 dB")
+        elif param_key == "audio_eq_mid":
+            slider.setRange(-100, 100)  # от -10 до +10 dB (умножено на 10)
+            slider.setValue(0)  # 0 dB по умолчанию
+            value_label.setText("0.0 dB")
+        elif param_key == "audio_eq_presence":
+            slider.setRange(-100, 100)  # от -10 до +10 dB (умножено на 10)
+            slider.setValue(0)  # 0 dB по умолчанию
+            value_label.setText("0.0 dB")
+        elif param_key == "voice_denoise_strength":
+            slider.setRange(0, 100)  # 0-100%
+            slider.setValue(50)  # 50% по умолчанию
+            value_label.setText("50%")
+        elif param_key == "voice_de_esser_threshold":
+            slider.setRange(-400, -100)  # от -40 до -10 dB (умножено на 10)
+            slider.setValue(-250)  # -25 dB по умолчанию
+            value_label.setText("-25.0 dB")
         
         # Подключаем обновление значения
         def update_value():
@@ -2147,6 +2455,33 @@ class MainWindow(QMainWindow):
             elif param_key == "video_rotation_angle":
                 display_value = value / 10.0  # Преобразуем обратно в градусы с десятыми
                 value_label.setText(f"{display_value:.1f}°")
+            elif param_key == "subtitle_line_spacing":
+                display_value = value / 10.0
+                value_label.setText(f"{display_value:.1f}")
+                # Используем дебаунсинг для обновления предпросмотра
+                self.subtitle_update_timer.stop()
+                self.subtitle_update_timer.start()
+            elif param_key == "background_music_volume":
+                display_value = value / 100.0  # Делим на 100 для получения процентов с сотыми
+                value_label.setText(f"{display_value:.2f}%")
+            elif param_key in ["audio_normalize_target", "audio_peak_limit_db", "audio_lufs_target"]:
+                if param_key == "audio_lufs_target":
+                    value_label.setText(f"{value} LUFS")
+                else:
+                    value_label.setText(f"{value} dB")
+            elif param_key in ["audio_compressor_attack", "audio_compressor_release"]:
+                value_label.setText(f"{value} мс")
+            elif param_key == "voice_denoise_strength":
+                value_label.setText(f"{value}%")
+            elif param_key in ["audio_eq_bass", "audio_eq_treble", "audio_eq_mid", "audio_eq_presence", 
+                              "audio_gate_threshold", "voice_de_esser_threshold"]:
+                display_value = value / 10.0  # Делим на 10 для получения децибел с десятыми
+                value_label.setText(f"{display_value:+.1f} dB")
+            elif param_key.startswith("subtitle_"):
+                value_label.setText(str(value))
+                # Используем дебаунсинг для обновления предпросмотра
+                self.subtitle_update_timer.stop()
+                self.subtitle_update_timer.start()
             else:
                 value_label.setText(str(value))
         
@@ -2205,7 +2540,9 @@ class MainWindow(QMainWindow):
         return [
             "bokeh_blur_method", "bokeh_focus_area", "style_filter",
             "video_zoom_effect", "video_rotation_effect", "video_color_effect", 
-            "video_filter_effect", "transition_type"
+            "video_filter_effect", "transition_type", "subtitle_font_family", "subtitle_model",
+            "audio_bitrate", "audio_sample_rate", "audio_compressor_ratio",
+            "audio_normalize_method", "audio_compressor_type", "audio_eq_preset"
         ]
     
     def get_combo_translation(self, param_key: str, value: str, to_english: bool = True) -> str:
@@ -2258,7 +2595,14 @@ class MainWindow(QMainWindow):
         return [
             "bokeh_intensity", "bokeh_transition_smoothness", "sharpen_strength",
             "contrast_factor", "brightness_delta", "saturation_factor", "vignette_strength",
-            "video_zoom_intensity", "video_rotation_angle", "transition_duration"
+            "video_zoom_intensity", "video_rotation_angle", "transition_duration",
+            "subtitle_fontsize", "subtitle_outline_thickness", "subtitle_shadow_thickness",
+            "subtitle_shadow_alpha", "subtitle_shadow_offset_x", "subtitle_shadow_offset_y",
+            "subtitle_margin_v", "subtitle_margin_l", "subtitle_margin_r", "subtitle_line_spacing",
+            "background_music_volume", "audio_normalize_target", "audio_peak_limit_db",
+            "audio_lufs_target", "audio_compressor_attack", "audio_compressor_release",
+            "audio_gate_threshold", "audio_eq_bass", "audio_eq_mid", "audio_eq_treble",
+            "audio_eq_presence", "voice_denoise_strength", "voice_de_esser_threshold"
         ]
     
     def get_tooltip_for_parameter(self, param_key: str) -> str:
@@ -2326,13 +2670,13 @@ class MainWindow(QMainWindow):
             elif params == "voice_settings":
                 total_height += 200  # Увеличенная высота виджета с ползунками
             elif params == "logo_position_editor":
-                total_height += 470  # Высота виджета визуального редактора логотипов
+                total_height += 370  # Точная высота: 324 (view) + 30 (кнопки) + 16 (отступы)
             elif params == "subtitle_preview":
-                total_height += 470  # Высота виджета предпросмотра субтитров - идентично редактору логотипов
+                total_height += 370  # Точная высота: 324 (view) + 30 (кнопки) + 16 (отступы)
             else:
                 num_rows = (len(params) + 1) // 2
                 total_height += num_rows * 50  # Увеличенная высота строки параметра для лучших отступов
 
-            total_height += 25  # Увеличенные отступы и разделитель
+            total_height += 10  # Минимальные отступы и разделитель
 
         return max(total_height, 500)  # Увеличиваем минимальную высоту для лучшего вида
