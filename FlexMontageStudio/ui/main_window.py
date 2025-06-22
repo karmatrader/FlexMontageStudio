@@ -301,9 +301,10 @@ class MainWindow(QMainWindow):
         for category, subgroups in categories.items():
             scroll_area = QScrollArea()
             scroll_widget = QWidget()
+            scroll_widget.setObjectName("scroll_widget")  # Для CSS селектора
             main_layout = QVBoxLayout(scroll_widget)
-            main_layout.setContentsMargins(10, 10, 10, 10)  # Увеличиваем отступы для лучшего вида
-            main_layout.setSpacing(15)  # Увеличиваем расстояние между элементами
+            main_layout.setContentsMargins(2, 2, 2, 2)  # Минимальные отступы для визуальных редакторов
+            main_layout.setSpacing(4)  # Минимальное расстояние между элементами
             main_layout.setAlignment(Qt.AlignmentFlag.AlignTop)  # Выравнивание по верху
 
             for subgroup_name, params in subgroups.items():
@@ -357,9 +358,9 @@ class MainWindow(QMainWindow):
                     # Сохраняем ссылку на виджет
                     self.logo_position_editor = logo_editor
 
-                    # Добавляем разделитель
-                    separator = self.create_separator()
-                    main_layout.addWidget(separator)
+                    # Убираем разделитель после визуального редактора логотипов для минимизации отступов
+                    # separator = self.create_separator()
+                    # main_layout.addWidget(separator)
                     continue
 
                 # Специальная обработка для предпросмотра субтитров
@@ -372,9 +373,9 @@ class MainWindow(QMainWindow):
                         # Сохраняем ссылку на виджет
                         self.subtitle_preview_widget = subtitle_preview
                         
-                        # Добавляем разделитель
-                        separator = self.create_separator()
-                        main_layout.addWidget(separator)
+                        # Убираем разделитель после предпросмотра субтитров для минимизации отступов
+                        # separator = self.create_separator()
+                        # main_layout.addWidget(separator)
                         continue
                     except ImportError:
                         # Fallback если виджет недоступен
@@ -400,6 +401,11 @@ class MainWindow(QMainWindow):
             scroll_area.setWidgetResizable(True)  # Позволяем resize для правильной центровки
             scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)  # Убираем горизонтальную прокрутку
             scroll_widget.setMinimumHeight(self.calculate_content_height(subgroups))
+            
+            # Принудительно убираем все отступы у QScrollArea
+            scroll_area.setContentsMargins(0, 0, 0, 0)
+            scroll_area.setViewportMargins(0, 0, 0, 0)
+            scroll_area.setFrameStyle(0)  # Убираем рамку
             
             # Настройки выравнивания для консистентности - выравнивание по верху и левому краю
             scroll_area.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
@@ -1972,7 +1978,8 @@ class MainWindow(QMainWindow):
                 "Настройки кнопки подписки": [
                     ("subscribe_width", "Ширина кнопки подписки"),
                     ("subscribe_display_duration", "Длительность показа кнопки"),
-                    ("subscribe_interval_gap", "Интервал появления кнопки")
+                    ("subscribe_interval_gap", "Интервал появления кнопки"),
+                    ("subscribe_duration", "Общее время показа кнопки")
                 ],
             },
             "Субтитры": {
@@ -2152,39 +2159,39 @@ class MainWindow(QMainWindow):
                 outline: none;
             }
             QSlider::groove:horizontal {
-                border: 1px solid #454545;
-                height: 6px;
+                border: none;
+                height: 1px;
                 background: #353535;
-                margin: 2px 0;
-                border-radius: 3px;
+                margin: 8px 0;
+                border-radius: 0px;
             }
-            QSlider::handle:horizontal {
-                background: #66FF33;
-                border: 1px solid #4DC721;
+            /* QSlider::handle:horizontal {
+                background: #12BAC4;
+                border: 1px solid #0F9AA3;
                 width: 16px;
                 height: 16px;
                 margin: -6px 0;
                 border-radius: 8px;
-            }
-            QSlider::handle:horizontal:hover {
-                background: #5AE02A;
-                border: 1px solid #66FF33;
-            }
-            QSlider::handle:horizontal:pressed {
-                background: #4DC721;
-                border: 1px solid #66FF33;
-            }
+            } */
+            /* QSlider::handle:horizontal:hover {
+                background: #15D4E0;
+                border: 1px solid #12BAC4;
+            } */
+            /* QSlider::handle:horizontal:pressed {
+                background: #0F9AA3;
+                border: 1px solid #12BAC4;
+            } */
             QSlider::sub-page:horizontal {
-                background: #66FF33;
-                border: 1px solid #4DC721;
-                height: 6px;
-                border-radius: 3px;
+                background: #12BAC4;
+                border: none;
+                height: 1px;
+                border-radius: 0px;
             }
             QSlider::add-page:horizontal {
                 background: #353535;
-                border: 1px solid #454545;
-                height: 6px;
-                border-radius: 3px;
+                border: none;
+                height: 1px;
+                border-radius: 0px;
             }
         """)
         

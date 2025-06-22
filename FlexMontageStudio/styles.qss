@@ -34,10 +34,17 @@ QLabel#subgroup {
     padding: 0; /* Убрали padding */
 }
 
-/* Стиль для вкладок */
+/* Стиль для вкладок - принудительно убираем отступы */
 QTabWidget::pane {
     border: none;
     background: #303030;
+    margin: 0px;
+    padding: 0px;
+}
+
+QTabWidget {
+    margin: 0px;
+    padding: 0px;
 }
 
 QTabBar::tab {
@@ -53,16 +60,50 @@ QTabBar::tab:selected {
     color: #FFFFFF;
 }
 
-/* Стиль для области прокрутки */
+/* Стиль для области прокрутки - принудительно убираем отступы */
 QScrollArea {
     background: #303030;
     border: none;
+    margin: 0px;
+    padding: 0px;
 }
 
 /* Явно задаём стиль для виджетов внутри QScrollArea */
 QScrollArea QWidget {
     background: #303030;
     color: #B8B8B8;
+}
+
+/* Минимальные отступы для визуальных редакторов */
+QWidget[objectName="scroll_widget"] {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Принудительное обнуление отступов для визуальных редакторов */
+QWidget[objectName="LogoPositionEditor"] {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+QWidget[objectName="SubtitlePreviewWidget"] {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+/* Обнуление отступов для QGraphicsView внутри редакторов */
+QWidget[objectName="LogoPositionEditor"] QGraphicsView {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+QWidget[objectName="SubtitlePreviewWidget"] QGraphicsView {
+    margin: 0px;
+    padding: 0px;
+    border: none;
 }
 
 /* Стиль для полос прокрутки */
@@ -114,13 +155,29 @@ QCheckBox {
 QCheckBox::indicator {
     width: 16px;
     height: 16px;
-    border: none;
-    background: #353535;
+    border: 1px solid #555555;
+    background: #4A4A4A;
     border-radius: 3px; /* Закругление для macOS */
 }
 
 QCheckBox::indicator:checked {
-    background: #66FF33;
+    background: #12BAC4;
+    border: 1px solid #0F9AA3;
+}
+
+QCheckBox::indicator:unchecked {
+    background: #4A4A4A;
+    border: 1px solid #555555;
+}
+
+QCheckBox::indicator:hover {
+    background: #555555;
+    border: 1px solid #666666;
+}
+
+QCheckBox::indicator:checked:hover {
+    background: #15D4E0;
+    border: 1px solid #12BAC4;
 }
 
 /* Стиль для текстовых полей ввода */
@@ -532,37 +589,37 @@ VoiceSettingsWidget QSlider#voice-setting-slider {
 }
 
 VoiceSettingsWidget QSlider#voice-setting-slider::groove:horizontal {
-    border: 1px solid #454545;
-    height: 6px;
+    border: none;
+    height: 1px;
     background: #353535;
-    margin: 2px 0;
-    border-radius: 3px;
+    margin: 8px 0;
+    border-radius: 0px;
 }
 
-VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal {
-    background: #66FF33;
-    border: 1px solid #4DC721;
+/* VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal {
+    background: #12BAC4;
+    border: 1px solid #0F9AA3;
     width: 16px;
     height: 16px;
     margin: -6px 0;
     border-radius: 8px;
-}
+} */
 
-VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal:hover {
-    background: #5AE02A;
-    border: 1px solid #66FF33;
-}
+/* VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal:hover {
+    background: #15D4E0;
+    border: 1px solid #12BAC4;
+} */
 
-VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal:pressed {
-    background: #4DC721;
-    border: 1px solid #66FF33;
-}
+/* VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal:pressed {
+    background: #0F9AA3;
+    border: 1px solid #12BAC4;
+} */
 
 VoiceSettingsWidget QSlider#voice-setting-slider::sub-page:horizontal {
-    background: #66FF33;
-    border: 1px solid #4DC721;
-    height: 6px;
-    border-radius: 3px;
+    background: #12BAC4;
+    border: none;
+    height: 1px;
+    border-radius: 0px;
 }
 
 /* Общие стили для всех слайдеров в приложении - делаем их зелеными */
@@ -571,59 +628,59 @@ QSlider {
     outline: none;
 }
 
-QSlider::handle:horizontal {
-    background: #66FF33;
-    border: 1px solid #4DC721;
+/* QSlider::handle:horizontal {
+    background: #12BAC4;
+    border: 1px solid #0F9AA3;
     width: 16px;
     height: 16px;
     margin: -6px 0;
     border-radius: 8px;
-}
+} */
 
-QSlider::handle:horizontal:hover {
-    background: #5AE02A;
-    border: 1px solid #66FF33;
-}
+/* QSlider::handle:horizontal:hover {
+    background: #15D4E0;
+    border: 1px solid #12BAC4;
+} */
 
-QSlider::handle:horizontal:pressed {
-    background: #4DC721;
-    border: 1px solid #66FF33;
-}
+/* QSlider::handle:horizontal:pressed {
+    background: #0F9AA3;
+    border: 1px solid #12BAC4;
+} */
 
 QSlider::sub-page:horizontal {
-    background: #66FF33;
-    border: 1px solid #4DC721;
-    height: 6px;
-    border-radius: 3px;
+    background: #12BAC4;
+    border: none;
+    height: 1px;
+    border-radius: 0px;
 }
 
 QSlider::groove:horizontal {
-    border: 1px solid #454545;
-    height: 6px;
+    border: none;
+    height: 1px;
     background: #353535;
-    margin: 2px 0;
-    border-radius: 3px;
+    margin: 8px 0;
+    border-radius: 0px;
 }
 
 QSlider::add-page:horizontal {
     background: #353535;
-    border: 1px solid #454545;
-    height: 6px;
-    border-radius: 3px;
+    border: none;
+    height: 1px;
+    border-radius: 0px;
 }
 
 VoiceSettingsWidget QSlider#voice-setting-slider::add-page:horizontal {
     background: #353535;
-    border: 1px solid #454545;
-    height: 6px;
-    border-radius: 3px;
+    border: none;
+    height: 1px;
+    border-radius: 0px;
 }
 
 /* Метки на ползунках */
 VoiceSettingsWidget QSlider#voice-setting-slider::tick:horizontal {
     background: #666666;
     width: 1px;
-    height: 4px;
+    height: 1px;
 }
 
 /* Кнопка сброса настроек */

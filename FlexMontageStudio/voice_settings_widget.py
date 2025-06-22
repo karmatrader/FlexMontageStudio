@@ -140,39 +140,39 @@ class VoiceSettingsWidget(QWidget):
                 outline: none;
             }
             QSlider::groove:horizontal {
-                border: 1px solid #454545;
-                height: 6px;
+                border: none;
+                height: 1px;
                 background: #353535;
-                margin: 2px 0;
-                border-radius: 3px;
+                margin: 8px 0;
+                border-radius: 0px;
             }
-            QSlider::handle:horizontal {
-                background: #66FF33;
-                border: 1px solid #4DC721;
+            /* QSlider::handle:horizontal {
+                background: #12BAC4;
+                border: 1px solid #0F9AA3;
                 width: 16px;
                 height: 16px;
                 margin: -6px 0;
                 border-radius: 8px;
-            }
-            QSlider::handle:horizontal:hover {
-                background: #5AE02A;
-                border: 1px solid #66FF33;
-            }
-            QSlider::handle:horizontal:pressed {
-                background: #4DC721;
-                border: 1px solid #66FF33;
-            }
+            } */
+            /* QSlider::handle:horizontal:hover {
+                background: #15D4E0;
+                border: 1px solid #12BAC4;
+            } */
+            /* QSlider::handle:horizontal:pressed {
+                background: #0F9AA3;
+                border: 1px solid #12BAC4;
+            } */
             QSlider::sub-page:horizontal {
-                background: #66FF33;
-                border: 1px solid #4DC721;
-                height: 6px;
-                border-radius: 3px;
+                background: #12BAC4;
+                border: none;
+                height: 1px;
+                border-radius: 0px;
             }
             QSlider::add-page:horizontal {
                 background: #353535;
-                border: 1px solid #454545;
-                height: 6px;
-                border-radius: 3px;
+                border: none;
+                height: 1px;
+                border-radius: 0px;
             }
         """)
         

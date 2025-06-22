@@ -377,6 +377,7 @@ class ConfigManager:
             "subscribe_position_y": "main_h-overlay_h+150",
             "subscribe_display_duration": 7,
             "subscribe_interval_gap": 30,
+            "subscribe_duration": "all",
             "subtitles_enabled": True,
             "subtitle_language": "ru",
             "subtitle_model": "medium",

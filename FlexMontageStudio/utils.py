@@ -109,6 +109,7 @@ def find_matching_folder(photo_folder, video_number, start_row, end_row, fallbac
 
     print(f"{BLUE}📂 Содержимое папки {video_folder_path}: {subfolder_contents}{RESET}")
 
+    matching_subfolders = []
     best_subfolder = None
     closest_start = float('inf')
     available_subfolders = []
@@ -123,8 +124,8 @@ def find_matching_folder(photo_folder, video_number, start_row, end_row, fallbac
             # Проверяем, пересекаются ли диапазоны
             if start_row <= folder_end and (end_row - 1) >= folder_start:
                 print(f"{GREEN}✅ Найдена подходящая подпапка: {subfolder_path}{RESET}")
-                return subfolder_path
-            # Ищем ближайшую подпапку по началу диапазона
+                matching_subfolders.append(subfolder_path)
+            # Ищем ближайшую подпапку по началу диапазона для fallback
             if folder_start <= start_row and (start_row - folder_start) < closest_start:
                 closest_start = start_row - folder_start
                 best_subfolder = subfolder_path
@@ -135,6 +136,16 @@ def find_matching_folder(photo_folder, video_number, start_row, end_row, fallbac
             print(f"{YELLOW}⚠️ Подпапка {subfolder_name} не соответствует формату 'start-end', пропускаю{RESET}")
             continue
 
+    # ИСПРАВЛЕНО: Если найдено несколько подходящих подпапок, возвращаем родительскую папку
+    # чтобы find_files() мог рекурсивно обработать ВСЕ подпапки
+    if len(matching_subfolders) > 1:
+        print(f"{GREEN}✅ Найдено {len(matching_subfolders)} подходящих подпапок. Возвращаем родительскую папку для рекурсивного сканирования: {video_folder_path}{RESET}")
+        return video_folder_path
+    elif len(matching_subfolders) == 1:
+        print(f"{GREEN}✅ Найдена одна подходящая подпапка: {matching_subfolders[0]}{RESET}")
+        return matching_subfolders[0]
+
+    # Fallback логика остается прежней
     if best_subfolder and fallback_mode == "closest":
         print(
             f"{YELLOW}⚠️ Точный диапазон для строк {start_row}-{end_row - 1} не найден. Использую ближайшую подпапку: {best_subfolder}{RESET}")

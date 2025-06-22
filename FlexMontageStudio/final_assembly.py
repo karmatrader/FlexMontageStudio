@@ -20,7 +20,9 @@ def validate_inputs(subscribe_frames_folder, temp_video_path, final_audio_path, 
     """Валидация входных файлов и папок"""
     errors = []
 
-    if not os.path.exists(subscribe_frames_folder):
+    # ИСПРАВЛЕНО: Пропускаем проверку subscribe_frames_folder если он None
+    # так как frame_list.txt уже создан и валидирован ранее
+    if subscribe_frames_folder is not None and not os.path.exists(subscribe_frames_folder):
         errors.append(f"Папка с кадрами кнопки не найдена: {subscribe_frames_folder}")
 
     if not os.path.exists(temp_video_path):
@@ -390,10 +392,15 @@ def final_assembly(temp_video_path, final_audio_path, output_file, temp_folder, 
                    logo_width, logo_position_x, logo_position_y, logo_duration, subscribe_width, subscribe_position_x,
                    subscribe_position_y, subscribe_display_duration, subscribe_interval_gap, subtitles_enabled,
                    logo2_path=None, logo2_width=None, logo2_position_x=None, logo2_position_y=None, logo2_duration=None,
-                   clips_info=None, audio_offset=0):
+                   subscribe_duration="all", clips_info=None, audio_offset=0):
     """Основная функция финальной сборки видео"""
 
     logger.info(f"Начало финальной сборки: {output_file}")
+
+    # Исправляем subscribe_width - принудительно делаем четным для libx264
+    if subscribe_width % 2 != 0:
+        subscribe_width = subscribe_width - 1
+        logger.debug(f"Исправлен subscribe_width до четного числа: {subscribe_width}")
 
     # Проверка существования готового файла
     if os.path.exists(output_file):
@@ -401,9 +408,9 @@ def final_assembly(temp_video_path, final_audio_path, output_file, temp_folder, 
         return output_file
 
     try:
-        # Валидация входных данных
+        # Валидация входных данных (исключаем проверку subscribe_frames_folder так как frame_list уже создан)
         validation_errors = validate_inputs(
-            os.path.dirname(frame_list_path), temp_video_path, final_audio_path,
+            None, temp_video_path, final_audio_path,
             logo_path, logo2_path, subtitles_path
         )
 
@@ -466,7 +473,42 @@ def final_assembly(temp_video_path, final_audio_path, output_file, temp_folder, 
 
         # Создание интервалов наложения кнопки подписки
         overlay_intervals = []
-        max_subscribe_time = temp_audio_duration  # Убрали ограничение в 300 секунд для показа кнопки подписки на всю длительность видео
+        
+        # КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Правильное определение длительности для кнопки подписки
+        try:
+            video_duration = get_media_duration(temp_video_path)
+            logger.info(f"📹 Длительность видео: {video_duration:.2f}с, аудио: {temp_audio_duration:.2f}с")
+        except Exception as e:
+            logger.error(f"Ошибка получения длительности видео: {e}")
+            video_duration = temp_audio_duration
+        
+        # ИСПРАВЛЕНО: Логика определения максимального времени показа кнопки
+        # Кнопка может показываться на протяжении всего аудио,
+        # но не должна появляться на чёрном экране после окончания видео
+        if subscribe_duration == "all" or not subscribe_duration:
+            # НОВОЕ: Используем полную длительность аудио, но только в пределах видео
+            max_subscribe_time = temp_audio_duration
+            # Кнопка может показываться даже после окончания видео,
+            # так как final_assembly растянет видео на полную длительность аудио
+        else:
+            try:
+                requested_duration = float(subscribe_duration)
+                max_subscribe_time = min(requested_duration, temp_audio_duration)
+            except (ValueError, TypeError):
+                logger.warning(f"Некорректное значение subscribe_duration: {subscribe_duration}, используем полную длительность аудио")
+                max_subscribe_time = temp_audio_duration
+        
+        logger.info(f"🔘 Кнопка подписки: отображение до {max_subscribe_time:.2f}с (видео: {video_duration:.2f}с, аудио: {temp_audio_duration:.2f}с)")
+        
+        # КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ о несоответствии длительностей
+        if abs(video_duration - temp_audio_duration) > 5.0:
+            if video_duration < temp_audio_duration * 0.5:
+                logger.error(f"❌ КРИТИЧЕСКАЯ ОШИБКА: Видео ({video_duration:.2f}с) намного короче аудио ({temp_audio_duration:.2f}с)!")
+                logger.error("Это может привести к зависанию видео или чёрному экрану")
+                logger.error("Проверьте конфигурацию эффектов и параметры обработки видео")
+            else:
+                logger.warning(f"⚠️ Предупреждение: Длительность видео ({video_duration:.2f}с) и аудио ({temp_audio_duration:.2f}с) различаются")
+                logger.warning("Финальное видео будет иметь длительность аудио")
         interval_start = audio_offset
 
         while interval_start < max_subscribe_time:
@@ -501,9 +543,14 @@ def final_assembly(temp_video_path, final_audio_path, output_file, temp_folder, 
         input_index += 1
 
         # Добавляем кнопку подписки
-        ffmpeg_cmd.extend(["-f", "concat", "-safe", "0", "-i", frame_list_path])
-        subscribe_input_index = input_index
-        input_index += 1
+        subscribe_input_index = None
+        if frame_list_path and os.path.exists(frame_list_path):
+            ffmpeg_cmd.extend(["-f", "concat", "-safe", "0", "-i", frame_list_path])
+            subscribe_input_index = input_index
+            input_index += 1
+            logger.info(f"🔘 Кнопка подписки добавлена как вход {subscribe_input_index}")
+        else:
+            logger.warning(f"⚠️ Frame list для кнопки подписки не найден: {frame_list_path}")
 
         # Построение фильтров
         filter_parts = []
@@ -540,30 +587,46 @@ def final_assembly(temp_video_path, final_audio_path, output_file, temp_folder, 
                 f"{current_stream}[logo]overlay={logo_position_x}:{logo_position_y}:enable='between(t,0,{logo_duration_val})'[v{stream_counter}]")
             current_stream = f"[v{stream_counter}]"
 
-        # Кнопка подписки
-        
-        filter_parts.append(
-            f"[{subscribe_input_index}:v]loop=loop=-1:size=1:start=0,trim=0:{temp_audio_duration},setpts=PTS-STARTPTS,scale={subscribe_width}:-2:force_divisible_by=2,format=yuva420p[subscribe]")
-        overlay_conditions = [f"between(t,{start},{end})" for start, end in overlay_intervals if
-                              end <= temp_audio_duration]
-        overlay_enable = " + ".join(overlay_conditions) if overlay_conditions else "0"
+        # ВОССТАНОВЛЕНА КНОПКА ПОДПИСКИ с простой логикой без сложных фильтров
+        if subscribe_input_index is not None and overlay_intervals:
+            logger.info(f"🔘 Добавляем кнопку подписки: {len(overlay_intervals)} интервалов")
+            
+            # Простое масштабирование кнопки подписки без анимации
+            filter_parts.append(
+                f"[{subscribe_input_index}:v]scale={subscribe_width}:-2:force_divisible_by=2,format=yuva420p[subscribe]")
+            
+            stream_counter += 1
+            
+            # Строим условие включения для всех интервалов
+            enable_conditions = []
+            for start_time, end_time in overlay_intervals:
+                enable_conditions.append(f"between(t,{start_time:.2f},{end_time:.2f})")
+            
+            enable_expression = "+".join(enable_conditions)
+            
+            filter_parts.append(
+                f"{current_stream}[subscribe]overlay={subscribe_position_x}:{subscribe_position_y}:enable='{enable_expression}'[v{stream_counter}]")
+            current_stream = f"[v{stream_counter}]"
+            
+            logger.info(f"🔘 Кнопка подписки настроена: интервалы {overlay_intervals}")
 
-        stream_counter += 1
-        filter_parts.append(
-            f"{current_stream}[subscribe]overlay={subscribe_position_x}:{subscribe_position_y}:enable='{overlay_enable}'[v{stream_counter}]")
-
-        # Финальная команда с улучшенными параметрами аудио
+        # Финальная команда с улучшенными параметрами аудио и видео-аудио синхронизацией
         filter_complex = ";".join(filter_parts)
+        
+        # ИСПРАВЛЕНИЕ: Добавляем дополнительные параметры для предотвращения фризов
         ffmpeg_cmd.extend([
             "-filter_complex", filter_complex,
             "-map", f"[v{stream_counter}]",
             "-map", f"{audio_input_index}:a:0",  # Явно указываем первый аудиопоток
             "-c:v", "libx264", "-preset", video_preset, "-crf", str(video_crf),
             "-c:a", "aac", "-b:a", "128k", "-ac", "2",  # Используем AAC вместо copy
-            # УБРАЛИ: "-t", str(temp_audio_duration),  # Позволяем видео быть естественной длительности
+            "-t", str(temp_audio_duration),  # Ограничиваем длительность для корректной синхронизации с аудио
             "-avoid_negative_ts", "make_zero",
             "-fflags", "+genpts+igndts",
             "-movflags", "+faststart",
+            "-max_interleave_delta", "1000000",  # Улучшенная синхронизация видео-аудио
+            "-vsync", "cfr",  # Постоянная частота кадров для предотвращения фризов
+            "-async", "1",  # Синхронизация аудио
             "-probesize", "50000000",
             "-analyzeduration", "50000000",
             "-map_metadata", "-1",

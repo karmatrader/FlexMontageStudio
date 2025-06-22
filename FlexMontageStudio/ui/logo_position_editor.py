@@ -241,6 +241,7 @@ class LogoPositionEditor(QWidget):
     
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setObjectName("LogoPositionEditor")  # Для CSS селектора
         self.video_width = 1920
         self.video_height = 1080
         self.scale_factor = 0.3  # Масштаб для отображения
@@ -261,11 +262,21 @@ class LogoPositionEditor(QWidget):
         # Графическая сцена
         self.scene = QGraphicsScene()
         self.view = QGraphicsView(self.scene)
-        self.view.setMinimumHeight(350)
+        self.view.setMinimumHeight(324)  # Точно под размер сцены: 1080 * 0.3 = 324
         
-        # Настройки выравнивания для идентичности с редактором субтитров
-        self.view.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # Центрируем по горизонтали, прижимаем к верху - убираем только отступы сверху и снизу
+        self.view.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter)
         self.view.setContentsMargins(0, 0, 0, 0)
+        
+        # Дополнительные настройки для минимизации отступов
+        self.view.setViewportMargins(0, 0, 0, 0)
+        self.view.setFrameStyle(0)  # Убираем рамку
+        self.view.setStyleSheet("QGraphicsView { border: none; margin: 0px; padding: 0px; }")
+        
+        # Принудительно убираем все возможные отступы
+        self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.view.setRenderHint(QPainter.Antialiasing, False)  # Может уменьшить отступы рендеринга
         
         # Улучшаем обработку событий мыши для resize
         self.view.setMouseTracking(True)
@@ -293,6 +304,8 @@ class LogoPositionEditor(QWidget):
         
         # Кнопки управления
         button_layout = QHBoxLayout()
+        button_layout.setContentsMargins(0, 0, 0, 0)
+        button_layout.setSpacing(4)  # Минимальный spacing между кнопками
         
         # Кнопки загрузки логотипов убраны - теперь логотипы загружаются автоматически
         # при выборе каналов через метод set_logo_image

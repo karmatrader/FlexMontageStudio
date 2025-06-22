@@ -95,6 +95,7 @@ class SubtitlePreviewWidget(QWidget):
     
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setObjectName("SubtitlePreviewWidget")  # Для CSS селектора
         self.video_width = 1920
         self.video_height = 1080
         self.scale_factor = 0.3  # Масштаб для отображения - идентично редактору логотипов
@@ -127,11 +128,21 @@ class SubtitlePreviewWidget(QWidget):
         # Графическая сцена - полностью идентичная редактору логотипов
         self.scene = QGraphicsScene()
         self.view = QGraphicsView(self.scene)
-        self.view.setMinimumHeight(350)
+        self.view.setMinimumHeight(324)  # Точно под размер сцены: 1080 * 0.3 = 324
         
-        # Настройки выравнивания для идентичности с редактором логотипов
-        self.view.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        # Центрируем по горизонтали, прижимаем к верху - убираем только отступы сверху и снизу
+        self.view.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter)
         self.view.setContentsMargins(0, 0, 0, 0)
+        
+        # Дополнительные настройки для минимизации отступов (идентично редактору логотипов)
+        self.view.setViewportMargins(0, 0, 0, 0)
+        self.view.setFrameStyle(0)  # Убираем рамку
+        self.view.setStyleSheet("QGraphicsView { border: none; margin: 0px; padding: 0px; }")
+        
+        # Принудительно убираем все возможные отступы
+        self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.view.setRenderHint(QPainter.Antialiasing, False)  # Может уменьшить отступы рендеринга
         
         # Настройка сцены (пропорции 16:9) - полностью идентично редактору логотипов
         scene_width = self.video_width * self.scale_factor
@@ -155,12 +166,18 @@ class SubtitlePreviewWidget(QWidget):
         
         # Область кнопок - идентичная структуре редактора логотипов
         button_layout = QHBoxLayout()
+        button_layout.setContentsMargins(0, 0, 0, 0)
+        button_layout.setSpacing(4)  # Минимальный spacing
         button_layout.addStretch()
         
-        # Невидимая кнопка для идентичного layout с редактором логотипов
-        invisible_btn = QPushButton("Placeholder")
-        invisible_btn.setVisible(False)  # Скрываем кнопку
-        button_layout.addWidget(invisible_btn)
+        # Невидимые кнопки для идентичного layout с редактором логотипов (2 кнопки как у редактора)
+        invisible_btn1 = QPushButton("Сбросить позиции")
+        invisible_btn1.setVisible(False)  # Скрываем кнопку
+        button_layout.addWidget(invisible_btn1)
+        
+        invisible_btn2 = QPushButton("Сохранить позиции") 
+        invisible_btn2.setVisible(False)  # Скрываем кнопку
+        button_layout.addWidget(invisible_btn2)
         
         layout.addLayout(button_layout)
         

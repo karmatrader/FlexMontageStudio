@@ -1218,7 +1218,8 @@ def preprocess_images(photo_folder_vid: str, preprocessed_photo_folder: str, bok
                       bokeh_image_size: Union[List[int], Tuple[int, int]],
                       bokeh_blur_kernel: Union[List[int], Tuple[int, int]],
                       bokeh_blur_sigma: float, video_resolution: Optional[str] = None,
-                      frame_rate: Optional[int] = None, effects_config: dict = None):
+                      frame_rate: Optional[int] = None, effects_config: dict = None,
+                      debug_config: dict = None):
     """Обратная совместимость: предобработка изображений"""
     try:
         # Конвертируем списки в кортежи если необходимо
