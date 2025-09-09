@@ -1,0 +1,70 @@
+ДИАГНОСТИЧЕСКАЯ ИНФОРМАЦИЯ FlexMontage Studio
+==================================================
+
+Платформа: darwin
+Python версия: 3.10.11 (v3.10.11:7d4cc5aa85, Apr  4 2023, 19:05:19) [Clang 13.0.0 (clang-1300.0.29.30)]
+Frozen (компиляция): False
+Текущая директория: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+
+SYS.EXECUTABLE АНАЛИЗ:
+------------------------------
+raw_path: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin/python
+absolute_path: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin/python
+resolved_path: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10
+exists: True
+is_file: True
+is_symlink: True
+parent: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin
+name: python
+suffix: 
+parts: ['/', 'Users', 'mikman', 'PycharmProjects', 'PythonProject', '.venv2', 'bin', 'python']
+path_depth: 8
+
+СТРУКТУРА ПУТЕЙ:
+------------------------------
+Уровень 0: python  
+  Путь: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin/python
+  Содержимое: []
+Уровень 1: bin  
+  Путь: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin
+  Содержимое: ['pyarmor-8', 'flask', 'pyside6-qmllint', 'getmac', 'pyftsubset', 'pyrsa-sign', 'onnxruntime_test', 'pyside6-qtpy2cpp', 'pyarmor-7', 'jupyter-run', 'pyi-grab_version', 'pyi-makespec', 'wheel3.10', 'pyarmor-auth', 'mac_alias', 'dmgbuild', 'youtube_transcript_api', 'wheel3', 'activate.ps1', 'pyarmor']
+Уровень 2: .venv2  
+  Путь: /Users/mikman/PycharmProjects/PythonProject/.venv2
+  Содержимое: ['VIDEO+11LABS', '.DS_Store', 'requirements.txt', 'bin', 'include', 'pyvenv.cfg', 'optimizied_images.py', 'Media Content Modifier.py', '.gitignore', 'change_dates.py', 'lib', 'Telegram Content Aggregator Bot', 'Backup', 'CLAUDE.md', 'Google AI Studio TTS Script.py', 'whisper', 'share', 'rename audio.py']
+Уровень 3: PythonProject  
+  Путь: /Users/mikman/PycharmProjects/PythonProject
+  Содержимое: ['СЕРЫЙ ЮТУБ', 'CSV to TXT API Splitter.py', '.venv2', '.DS_Store', 'FlexMontageStudio', '.claude', '.venv1', '.venv', 'Озвучка - резервная', '.git', '.backup', '.idea']
+Уровень 4: PycharmProjects  
+  Путь: /Users/mikman/PycharmProjects
+  Содержимое: ['.DS_Store', 'PythonProject']
+Уровень 5: mikman  
+  Путь: /Users/mikman
+  Содержимое: ['.venv3', '.zshrc.save', '.claude.json.backup', '.config', 'Music', '.zprofile.pysave', '.wine', '.docker', '.DS_Store', '.flexmontage', '.thumbnails', '.pyarmor', '.CFUserTextEncoding', '.zshrc', '.u2net', '.local', 'Creative Cloud Files', 'Pictures', '.Octo Browser', '.zprofile']
+Уровень 6: Users  
+  Путь: /Users
+  Содержимое: ['.localized', 'Shared', 'mikman']
+
+ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ:
+------------------------------
+HOMEBREW_PREFIX = /usr/local
+PYTHONUNBUFFERED = 1
+INFOPATH = /usr/local/share/info:
+PYTHONPATH = /Users/mikman/PycharmProjects/PythonProject
+__CFBundleIdentifier = com.jetbrains.pycharm.ce
+TMPDIR = /var/folders/bw/39cdj3k16rbdmybjxm07hfhc0000gn/T/
+PYTHONIOENCODING = UTF-8
+HOME = /Users/mikman
+HOMEBREW_REPOSITORY = /usr/local/Homebrew
+PATH = /Users/mikman/PycharmProjects/PythonProject/.venv2/bin:/usr/local/bin:/usr/local/sbin:/Users/mikman/Library/Python/3.9/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Library/Frameworks/Python.framework/Versions/3.13/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin
+__CF_USER_TEXT_ENCODING = 0x1F5:0x7:0x31
+USER = mikman
+HOMEBREW_CELLAR = /usr/local/Cellar
+QT_MAC_WANTS_LAYER = 1
+QT_AUTO_SCREEN_SCALE_FACTOR = 1
+QT_QPA_PLATFORMTHEME = qt6ct
+QT_LOGGING_RULES = *.debug=false;qt.qpa.*=false
+PYSIDE6_OPTION_PYTHON_ENUM = True
+LD_LIBRARY_PATH = /Users/mikman/PycharmProjects/PythonProject/.venv2/lib/python3.10/site-packages/cv2/../../lib:
+
+КАНДИДАТЫ .APP BUNDLE:
+------------------------------

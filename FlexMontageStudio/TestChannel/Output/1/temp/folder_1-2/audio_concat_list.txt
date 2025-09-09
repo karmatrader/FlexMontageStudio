@@ -1,0 +1,4 @@
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_1-2/processed_001.wav'
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_1-2/silence_0.wav'
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_1-2/processed_002.wav'
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_1-2/silence_1.wav'

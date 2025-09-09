@@ -1,0 +1,1506 @@
+2025-09-09 14:10:22,532 - __main__ - INFO - setup_logging:113 - === Система логирования инициализирована ===
+2025-09-09 14:10:22,532 - __main__ - INFO - setup_logging:114 - Лог файл: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/FlexMontageStudio_session.log
+2025-09-09 14:10:22,532 - __main__ - INFO - setup_logging:115 - Директория лога: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:10:22,532 - __main__ - INFO - setup_logging:116 - Python версия: 3.10.11 (v3.10.11:7d4cc5aa85, Apr  4 2023, 19:05:19) [Clang 13.0.0 (clang-1300.0.29.30)]
+2025-09-09 14:10:22,532 - __main__ - INFO - setup_logging:117 - Платформа: darwin
+2025-09-09 14:10:22,532 - __main__ - INFO - setup_logging:118 - Запущено из .app: False
+2025-09-09 14:10:22,532 - __main__ - INFO - main:348 - === Запуск FlexMontage Studio ===
+2025-09-09 14:10:22,532 - __main__ - INFO - main:351 - 🔧 Используем простой отладчик min() вызовов
+2025-09-09 14:10:22,678 - __main__ - INFO - main:360 - 🖥️ Платформа: darwin
+2025-09-09 14:10:22,678 - __main__ - INFO - main:361 - 🏗️ Frozen: False
+2025-09-09 14:10:22,678 - __main__ - WARNING - main:385 - PyObjC недоступен, используем стандартную активацию Qt
+2025-09-09 14:10:22,679 - __main__ - INFO - main:392 - 🔍 Запуск диагностики системы...
+2025-09-09 14:10:22,680 - diagnostic_info - INFO - log_diagnostic_info:220 - === ДИАГНОСТИЧЕСКАЯ ИНФОРМАЦИЯ ===
+2025-09-09 14:10:22,680 - diagnostic_info - INFO - log_diagnostic_info:223 - 🖥️  Платформа: darwin
+2025-09-09 14:10:22,680 - diagnostic_info - INFO - log_diagnostic_info:224 - 🐍 Python версия: 3.10.11 (v3.10.11:7d4cc5aa85, Apr  4 2023, 19:05:19) [Clang 13.0.0 (clang-1300.0.29.30)]
+2025-09-09 14:10:22,680 - diagnostic_info - INFO - log_diagnostic_info:225 - ❄️  Frozen (компиляция): False
+2025-09-09 14:10:22,680 - diagnostic_info - INFO - log_diagnostic_info:226 - 📁 Текущая директория: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:10:22,680 - diagnostic_info - INFO - log_diagnostic_info:229 - 
+=== АНАЛИЗ SYS.EXECUTABLE ===
+2025-09-09 14:10:22,681 - diagnostic_info - INFO - log_diagnostic_info:233 - raw_path: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin/python
+2025-09-09 14:10:22,681 - diagnostic_info - INFO - log_diagnostic_info:233 - absolute_path: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin/python
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - resolved_path: /Library/Frameworks/Python.framework/Versions/3.10/bin/python3.10
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - exists: True
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - is_file: True
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - is_symlink: True
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - parent: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - name: python
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - suffix: 
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - parts: ['/', 'Users', 'mikman', 'PycharmProjects', 'PythonProject', '.venv2', 'bin', 'python']
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:233 - path_depth: 8
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:235 - 
+=== СТРУКТУРА ПУТЕЙ ===
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:244 - Уровень 0: python  
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:245 -   Путь: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin/python
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:246 -   Содержимое: []
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:244 - Уровень 1: bin  
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:245 -   Путь: /Users/mikman/PycharmProjects/PythonProject/.venv2/bin
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:246 -   Содержимое: ['pyarmor-8', 'flask', 'pyside6-qmllint', 'getmac', 'pyftsubset']
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:244 - Уровень 2: .venv2  
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:245 -   Путь: /Users/mikman/PycharmProjects/PythonProject/.venv2
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:246 -   Содержимое: ['VIDEO+11LABS', '.DS_Store', 'requirements.txt', 'bin', 'include']
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:244 - Уровень 3: PythonProject  
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:245 -   Путь: /Users/mikman/PycharmProjects/PythonProject
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:246 -   Содержимое: ['СЕРЫЙ ЮТУБ', 'CSV to TXT API Splitter.py', '.venv2', '.DS_Store', 'FlexMontageStudio']
+2025-09-09 14:10:22,682 - diagnostic_info - INFO - log_diagnostic_info:244 - Уровень 4: PycharmProjects  
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:245 -   Путь: /Users/mikman/PycharmProjects
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:246 -   Содержимое: ['.DS_Store', 'PythonProject']
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:244 - Уровень 5: mikman  
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:245 -   Путь: /Users/mikman
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:246 -   Содержимое: ['.venv3', '.zshrc.save', '.claude.json.backup', '.config', 'Music']
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:244 - Уровень 6: Users  
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:245 -   Путь: /Users
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:246 -   Содержимое: ['.localized', 'Shared', 'mikman']
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:249 - 
+=== АНАЛИЗ РАБОЧЕЙ ДИРЕКТОРИИ ===
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:253 - cwd_path: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:253 - cwd_absolute: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:253 - cwd_resolved: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:253 - cwd_exists: True
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:254 - Содержимое CWD: ['video_processing.py', 'voice_library_manager.py', 'ui', 'diagnostic_info.txt', 'TestChannel', 'ffmpeg', 'nuitka_command_generator.py', 'startup.py', 'styles.qss', 'icon.icns']
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:257 - 
+=== ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ ===
+2025-09-09 14:10:22,683 - diagnostic_info - INFO - log_diagnostic_info:260 - HOMEBREW_PREFIX = /usr/local
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - PYTHONUNBUFFERED = 1
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - INFOPATH = /usr/local/share/info:
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - PYTHONPATH = /Users/mikman/PycharmProjects/PythonProject
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - __CFBundleIdentifier = com.jetbrains.pycharm.ce
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - TMPDIR = /var/folders/bw/39cdj3k16rbdmybjxm07hfhc0000gn/T/
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - PYTHONIOENCODING = UTF-8
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - HOME = /Users/mikman
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - HOMEBREW_REPOSITORY = /usr/local/Homebrew
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - PATH = /Users/mikman/PycharmProjects/PythonProject/.venv2/bin:/usr/local/bin:/usr/local/sbin:/Users/mikman/Library/Python/3.9/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Library/Frameworks/Python.framework/Versions/3.13/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - __CF_USER_TEXT_ENCODING = 0x1F5:0x7:0x31
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - USER = mikman
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - HOMEBREW_CELLAR = /usr/local/Cellar
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - QT_MAC_WANTS_LAYER = 1
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - QT_AUTO_SCREEN_SCALE_FACTOR = 1
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - QT_QPA_PLATFORMTHEME = qt6ct
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - QT_LOGGING_RULES = *.debug=false;qt.qpa.*=false
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - PYSIDE6_OPTION_PYTHON_ENUM = True
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:260 - LD_LIBRARY_PATH = /Users/mikman/PycharmProjects/PythonProject/.venv2/lib/python3.10/site-packages/cv2/../../lib:
+2025-09-09 14:10:22,684 - diagnostic_info - INFO - log_diagnostic_info:263 - 
+=== ПОИСК .APP BUNDLE ===
+2025-09-09 14:10:22,691 - diagnostic_info - WARNING - log_diagnostic_info:273 - ❌ Не найдено кандидатов для .app bundle
+2025-09-09 14:10:22,691 - diagnostic_info - INFO - log_diagnostic_info:276 - 
+=== ТЕСТИРОВАНИЕ ДОСТУПА К КОНФИГУРАЦИОННЫМ ФАЙЛАМ ===
+2025-09-09 14:10:22,691 - diagnostic_info - INFO - log_diagnostic_info:282 - Текущая логика get_app_directory(): /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:10:22,692 - diagnostic_info - INFO - log_diagnostic_info:285 - Результат текущей логики:
+2025-09-09 14:10:22,692 - diagnostic_info - INFO - log_diagnostic_info:286 -   Директория существует: True
+2025-09-09 14:10:22,692 - diagnostic_info - INFO - log_diagnostic_info:287 -   Директория доступна для записи: True
+2025-09-09 14:10:22,692 - diagnostic_info - INFO - log_diagnostic_info:289 -   channels.json: существует=True, читается=True, записывается=True
+2025-09-09 14:10:22,692 - diagnostic_info - INFO - log_diagnostic_info:289 -   licenses.json: существует=False, читается=False, записывается=False
+2025-09-09 14:10:22,692 - diagnostic_info - INFO - log_diagnostic_info:289 -   styles.qss: существует=True, читается=True, записывается=True
+2025-09-09 14:10:22,693 - diagnostic_info - INFO - log_diagnostic_info:355 - ✅ Диагностическая информация сохранена в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/diagnostic_info.txt
+2025-09-09 14:10:22,693 - diagnostic_info - INFO - log_diagnostic_info:360 - === ДИАГНОСТИКА ЗАВЕРШЕНА ===
+2025-09-09 14:10:22,693 - utils.app_paths - INFO - ensure_config_files_external:215 - 📁 Основная директория поиска: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:10:22,694 - utils.app_paths - INFO - ensure_config_files_external:224 - ✅ Найден channels.json: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-09-09 14:10:22,694 - utils.app_paths - INFO - ensure_config_files_external:224 - ✅ Найден license.json: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/license.json
+2025-09-09 14:10:22,694 - utils.app_paths - INFO - ensure_config_files_external:230 - ✅ Все конфигурационные файлы найдены в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:10:22,695 - root - INFO - load_styles:139 - ✅ Стили успешно загружены через File API: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/styles.qss
+2025-09-09 14:10:22,695 - __main__ - INFO - main:457 - 🔐 Проверяем лицензию...
+2025-09-09 14:10:22,696 - __main__ - INFO - check_application_license:156 - 🔐 Начинаем проверку лицензии...
+2025-09-09 14:10:22,697 - utils.app_paths - INFO - get_config_file_path:198 - 🔍 Поиск license.json в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/license.json
+2025-09-09 14:10:22,697 - utils.app_paths - INFO - get_config_file_path:199 -    Существует: ✅
+2025-09-09 14:10:22,697 - __main__ - INFO - check_application_license:162 - 📄 Путь к лицензиям: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/license.json
+2025-09-09 14:10:22,697 - __main__ - INFO - check_application_license:217 - ✅ LicenseManager инициализирован
+2025-09-09 14:10:22,698 - __main__ - INFO - check_application_license:221 - 🗝️ Сохраненный ключ: найден
+2025-09-09 14:10:22,698 - __main__ - INFO - check_application_license:237 - ✅ Сохраненная лицензия действительна
+2025-09-09 14:10:22,776 - utils.app_paths - INFO - get_config_file_path:198 - 🔍 Поиск channels.json в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-09-09 14:10:22,776 - utils.app_paths - INFO - get_config_file_path:199 -    Существует: ✅
+2025-09-09 14:10:23,086 - voice_library_manager - INFO - _load_cache:313 - Загружен кэш голосов: 30 голосов
+2025-09-09 14:10:23,728 - core.config_manager - INFO - load_config:95 - Конфигурация загружена через File API из /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-09-09 14:10:23,732 - ui.main_window - INFO - load_initial_config:305 - Загружено каналов: 22
+2025-09-09 14:10:23,754 - __main__ - INFO - main:494 - Главное окно отображено, запуск цикла событий
+2025-09-09 14:12:17,636 - core.config_manager - INFO - add_channel:175 - Канал 'GRA1' добавлен
+2025-09-09 14:12:21,163 - ui.worker_threads - INFO - run:45 - Загрузка конфигурации для канала: GRA1
+2025-09-09 14:12:21,168 - ui.worker_threads - INFO - run:58 - Конфигурация канала GRA1 успешно загружена
+2025-09-09 14:12:21,169 - ui.worker_threads - INFO - run:45 - Загрузка конфигурации для канала: GRA1
+2025-09-09 14:12:21,174 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-09-09 14:12:21,174 - ui.worker_threads - INFO - run:58 - Конфигурация канала GRA1 успешно загружена
+2025-09-09 14:12:21,174 - voice_library_manager - INFO - _get_api_key_from_txt:50 - Получение API ключа из TXT файла: /Users/mikman/Youtube/Api Keys 11labs/keys/api_list_4.txt
+2025-09-09 14:12:21,175 - voice_library_manager - INFO - _get_api_key_from_txt:62 - Ищем доступные ключи в TXT файле (исключенных: 0)
+2025-09-09 14:12:21,175 - voice_library_manager - INFO - _get_api_key_from_txt:76 - ✅ API ключ найден: sk_312c7...68e2
+2025-09-09 14:12:21,176 - ui.main_window - INFO - _load_channel_logos:1291 - 🔄 ЗАГРУЖАЕМ ПОЗИЦИИ ИЗ UI: subscribe_x='-50', subscribe_y='main_h-overlay_h+150'
+2025-09-09 14:12:21,199 - voice_settings_widget - INFO - load_from_config:329 - Настройки голоса загружены из конфигурации
+2025-09-09 14:12:21,199 - voice_library_manager - INFO - _get_api_key_from_txt:50 - Получение API ключа из TXT файла: /Users/mikman/Youtube/Api Keys 11labs/keys/api_list_4.txt
+2025-09-09 14:12:21,199 - voice_library_manager - INFO - _get_api_key_from_txt:62 - Ищем доступные ключи в TXT файле (исключенных: 0)
+2025-09-09 14:12:21,200 - voice_library_manager - INFO - _get_api_key_from_txt:76 - ✅ API ключ найден: sk_312c7...68e2
+2025-09-09 14:12:21,200 - ui.main_window - INFO - _load_channel_logos:1291 - 🔄 ЗАГРУЖАЕМ ПОЗИЦИИ ИЗ UI: subscribe_x='-50', subscribe_y='main_h-overlay_h+150'
+2025-09-09 14:13:01,663 - ui.main_window - ERROR - toggle_montage:1660 - 🔄🔄🔄 TOGGLE_MONTAGE ВЫЗВАНА!!! is_montage_running = False 🔄🔄🔄
+2025-09-09 14:13:01,663 - ui.main_window - ERROR - toggle_montage:1662 - 🔄🔄🔄 КНОПКА ГОВОРИТ: Запустить монтаж 🔄🔄🔄
+2025-09-09 14:13:01,664 - ui.main_window - INFO - toggle_montage:1691 - ▶️ Запуск обычного монтажа
+2025-09-09 14:13:01,665 - montage_control - INFO - reset_stop_montage_flag:46 - 🔄 Файл-флаг удален
+2025-09-09 14:13:01,665 - montage_control - INFO - reset_stop_montage_flag:50 - 🔄 Флаг остановки монтажа сброшен
+2025-09-09 14:13:01,665 - ui.main_window - INFO - toggle_montage:1697 - 🔄 Флаг остановки СБРОШЕН перед обычным монтажом!
+2025-09-09 14:13:01,667 - ui.worker_threads - INFO - run:92 - ==================================================
+2025-09-09 14:13:01,667 - ui.worker_threads - INFO - run:93 - 🎬 НАЧАЛО МОНТАЖА для канала: GRA1
+2025-09-09 14:13:01,667 - ui.worker_threads - INFO - run:94 - ==================================================
+2025-09-09 14:13:01,667 - ui.worker_threads - INFO - run:97 - 🖥️  Система: darwin
+2025-09-09 14:13:01,667 - ui.worker_threads - INFO - run:98 - 🐍 Python версия: 3.10.11 (v3.10.11:7d4cc5aa85, Apr  4 2023, 19:05:19) [Clang 13.0.0 (clang-1300.0.29.30)]
+2025-09-09 14:13:01,671 - ui.worker_threads - INFO - run:99 - 📊 Использование памяти перед стартом: RSS: 546.7MB, VMS: 35665.2MB
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:100 - 📁 Текущая директория: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:103 - 📋 Конфигурация содержит 143 параметров:
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    adjust_videos_to_audio: True
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    audio_bitrate: 192k
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    audio_channels: 1
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    audio_compressor: False
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    audio_compressor_attack: 10
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    audio_compressor_ratio: 2:1
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    audio_compressor_release: 100
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    audio_compressor_type: soft
+2025-09-09 14:13:01,672 - ui.worker_threads - INFO - run:109 -    audio_eq_bass: 0
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_eq_enabled: False
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_eq_mid: 0
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_eq_presence: 0
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_eq_preset: flat
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_eq_treble: 0
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_folder: /Users/mikman/Youtube/Структура/gra1/Озвучка
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_gate_enabled: False
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_gate_threshold: -400
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_loudness_matching: False
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_lufs_target: -14
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_normalize: False
+2025-09-09 14:13:01,673 - ui.worker_threads - INFO - run:109 -    audio_normalize_method: peak
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    audio_normalize_target: -23
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    audio_peak_limit_db: -10
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    audio_peak_limiting: False
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    audio_sample_rate: 44100
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    background_music_fade_in: 20
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    background_music_fade_out: 30
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    background_music_path: 
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    background_music_volume: 0.0
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    ban_retry_delay: 120
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    base_path: /Users/mikman/Youtube/Структура/gra1
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    bokeh_blur_kernel: [99, 99]
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    bokeh_blur_method: gaussian
+2025-09-09 14:13:01,674 - ui.worker_threads - INFO - run:109 -    bokeh_blur_sigma: 30
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    bokeh_enabled: False
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    bokeh_focus_area: center
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    bokeh_image_size: [1920, 1080]
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    bokeh_intensity: 0.8
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    bokeh_sides_enabled: True
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    bokeh_transition_smoothness: 50
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    brightness_delta: 10
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    brightness_enabled: False
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    channel_column: G
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    channel_folder: /Users/mikman/Youtube/Структура/gra1
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    channel_name: GRA1
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    contrast_enabled: False
+2025-09-09 14:13:01,675 - ui.worker_threads - INFO - run:109 -    contrast_factor: 1.2
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    csv_file_path: /Users/mikman/Youtube/Api Keys 11labs/keys/api_list_4.txt
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    debug_keep_temp_folder: False
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    default_lang: RU
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    default_similarity: 1.0
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    default_stability: 1.0
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    default_voice_speed: 1.0
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    default_voice_style: none
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    edge_enhancement: False
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    frame_rate: 24
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    global_xlsx_file_path: /Users/mikman/Youtube/Структура/Сценарий.xlsx
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    histogram_equalization: False
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    logo2_duration: all
+2025-09-09 14:13:01,676 - ui.worker_threads - INFO - run:109 -    logo2_path: 
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    logo2_position_x: 20
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    logo2_position_y: 20
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    logo2_width: 150
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    logo_duration: all
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    logo_path: 
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    logo_position_x: W-w-20
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    logo_position_y: 20
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    logo_width: 200
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    max_concurrent_montages: 
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    max_concurrent_requests: 
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    max_retries: 10
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    noise_reduction: False
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    num_videos: 10
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    output_directory: /Users/mikman/Youtube/Структура/gra1/Озвучка
+2025-09-09 14:13:01,677 - ui.worker_threads - INFO - run:109 -    output_folder: /Users/mikman/Youtube/Структура/gra1/Готовое видео
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    parallel_threads: 
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    photo_folder: /Users/mikman/Youtube/Структура/Фото
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    photo_order: order
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    preserve_clip_audio_videos: 
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    preserve_video_duration: False
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    proxy_type: standard
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    rotate_endpoint: 
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    rotate_min_interval: 
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    saturation_enabled: False
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    saturation_factor: 1.1
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    sharpen_enabled: False
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    sharpen_strength: 1.5
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    silence_duration: 0
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    standard_voice_id: AB9XsbSA4eLG12t2myjN
+2025-09-09 14:13:01,678 - ui.worker_threads - INFO - run:109 -    style_filter: none
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subscribe_display_duration: 7
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subscribe_duration: all
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subscribe_frames_folder: 
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subscribe_interval_gap: 30
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subscribe_position_x: -50
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subscribe_position_y: main_h-overlay_h+150
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subscribe_width: 1400
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subtitle_back_color: &HFFFFFF
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subtitle_font_color: &HFFFFFF
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subtitle_font_family: .Apple Color Emoji UI
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subtitle_fontsize: 110
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subtitle_language: ru
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subtitle_line_spacing: 12
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subtitle_margin_l: 10
+2025-09-09 14:13:01,679 - ui.worker_threads - INFO - run:109 -    subtitle_margin_r: 10
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_margin_v: 20
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_max_words: 3
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_model: medium
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_outline_color: &H000000
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_outline_thickness: 4
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_alpha: 50
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_color: &H333333
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_offset_x: 2
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_offset_y: 2
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_thickness: 1
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_time_offset: -0.3
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitle_use_backdrop: False
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    subtitles_enabled: False
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    transition_duration: 0.5
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    transition_method: overlay
+2025-09-09 14:13:01,680 - ui.worker_threads - INFO - run:109 -    transition_type: fade
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    use_library_voice: True
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_color_effect: none
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_crf: 23
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_effects_enabled: False
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_filter_effect: none
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_numbers: 
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_preset: ultrafast
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_resolution: 1920x1080
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_rotation_angle: 5.0
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_rotation_effect: none
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_transitions_enabled: False
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_zoom_effect: none
+2025-09-09 14:13:01,681 - ui.worker_threads - INFO - run:109 -    video_zoom_intensity: 1.1
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    vignette_enabled: False
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    vignette_strength: 0.3
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    voice_clarity_boost: False
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    voice_de_esser: False
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    voice_de_esser_threshold: -250
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    voice_denoise_strength: 50
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    voice_enhancement: False
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    voice_noise_reduction: False
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:109 -    voice_warmth: False
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - run:111 - 🎵 Preserve audio videos: []
+2025-09-09 14:13:01,682 - ui.worker_threads - INFO - _validate_paths:212 - 📁 Проверка путей...
+2025-09-09 14:13:01,684 - ui.worker_threads - INFO - _validate_paths:245 -    global_xlsx_file_path: /Users/mikman/Youtube/Структура/Сценарий.xlsx ✅
+2025-09-09 14:13:01,684 - ui.worker_threads - INFO - _validate_paths:237 -    channel_folder: /Users/mikman/Youtube/Структура/gra1 ✅
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - _validate_paths:245 -    base_path: /Users/mikman/Youtube/Структура/gra1 ✅
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - _validate_paths:245 -    csv_file_path: /Users/mikman/Youtube/Api Keys 11labs/keys/api_list_4.txt ✅
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - _validate_paths:245 -    output_directory: /Users/mikman/Youtube/Структура/gra1/Озвучка ✅
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - _validate_paths:245 -    photo_folder: /Users/mikman/Youtube/Структура/Фото ✅
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - _validate_paths:245 -    audio_folder: /Users/mikman/Youtube/Структура/gra1/Озвучка ✅
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - _validate_paths:245 -    output_folder: /Users/mikman/Youtube/Структура/gra1/Готовое видео ✅
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - run:119 - 📦 Проверяем импорт функции process_auto_montage...
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - run:125 - ✅ Статический импорт process_auto_montage успешен
+2025-09-09 14:13:01,685 - ui.worker_threads - INFO - run:146 - 🎬 Запуск process_auto_montage...
+2025-09-09 14:13:01,747 - ui.worker_threads - INFO - run:156 - 🗑️  Сборка мусора выполнена, память: RSS: 545.5MB, VMS: 35663.1MB
+2025-09-09 14:13:01,747 - montage_control - INFO - reset_stop_montage_flag:46 - 🔄 Файл-флаг удален
+2025-09-09 14:13:01,747 - montage_control - INFO - reset_stop_montage_flag:50 - 🔄 Флаг остановки монтажа сброшен
+2025-09-09 14:13:01,747 - main - INFO - process_auto_montage:2682 - Начало обработки канала 'GRA1' в 2025-09-09 14:13:01
+2025-09-09 14:13:01,747 - main - INFO - process_auto_montage:2683 - 🔍 DEBUG process_auto_montage: preserve_clip_audio_videos параметр = []
+2025-09-09 14:13:01,748 - utils.app_paths - INFO - get_config_file_path:198 - 🔍 Поиск channels.json в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-09-09 14:13:01,748 - utils.app_paths - INFO - get_config_file_path:199 -    Существует: ✅
+2025-09-09 14:13:01,751 - core.config_manager - INFO - load_config:95 - Конфигурация загружена через File API из /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-09-09 14:13:01,751 - main - INFO - _setup_parameters:183 - 🎵 DEBUG: raw_volume из config = 0.0 (тип: <class 'float'>)
+2025-09-09 14:13:01,751 - main - INFO - _setup_parameters:196 - 🎵 Фоновая музыка: 0.000000 (прямое значение из конфигурации)
+2025-09-09 14:13:01,751 - main - INFO - process_auto_montage:2691 - Конфигурация канала 'GRA1' загружена успешно
+2025-09-09 14:13:01,751 - main - INFO - process_auto_montage:2696 - 🔍 DEBUG: Сырое значение preserve_clip_audio_videos из конфигурации: '' (тип: <class 'str'>)
+2025-09-09 14:13:01,751 - main - INFO - process_auto_montage:2709 - 🔍 DEBUG: preserve_clip_audio_videos пустое или отсутствует в конфигурации
+2025-09-09 14:13:01,751 - main - ERROR - process_auto_montage:2715 - Папка subscribe_frames_folder не найдена: 
+2025-09-09 14:13:01,751 - main - ERROR - process_auto_montage:2809 - Ошибка конфигурации для канала 'GRA1': Ошибки конфигурации путей: Папка subscribe_frames_folder не найдена: 
+2025-09-09 14:13:01,752 - ui.worker_threads - INFO - run:164 - ✅ process_auto_montage завершен успешно
+2025-09-09 14:13:01,752 - ui.worker_threads - INFO - run:165 - 📊 Использование памяти после завершения: RSS: 546.3MB, VMS: 35663.2MB
+2025-09-09 14:13:01,752 - ui.worker_threads - INFO - run:174 - 🎉 Монтаж канала GRA1 завершен успешно!
+2025-09-09 14:13:01,806 - montage_control - INFO - reset_stop_montage_flag:46 - 🔄 Файл-флаг удален
+2025-09-09 14:13:01,806 - ui.worker_threads - INFO - run:208 - 🏁 Поток монтажа завершен
+2025-09-09 14:13:01,806 - montage_control - INFO - reset_stop_montage_flag:50 - 🔄 Флаг остановки монтажа сброшен
+2025-09-09 14:13:01,832 - montage_control - INFO - reset_stop_montage_flag:46 - 🔄 Файл-флаг удален
+2025-09-09 14:13:01,832 - montage_control - INFO - reset_stop_montage_flag:50 - 🔄 Флаг остановки монтажа сброшен
+2025-09-09 14:13:03,245 - ui.main_window - INFO - montage_finished:2143 - ✅ Монтаж завершен успешно
+2025-09-09 14:13:06,722 - ui.main_window - INFO - montage_finished:2143 - ✅ Монтаж завершен успешно
+2025-09-09 14:14:01,926 - ui.main_window - ERROR - toggle_montage:1660 - 🔄🔄🔄 TOGGLE_MONTAGE ВЫЗВАНА!!! is_montage_running = False 🔄🔄🔄
+2025-09-09 14:14:01,927 - ui.main_window - ERROR - toggle_montage:1662 - 🔄🔄🔄 КНОПКА ГОВОРИТ: Запустить монтаж 🔄🔄🔄
+2025-09-09 14:14:01,927 - ui.main_window - INFO - toggle_montage:1691 - ▶️ Запуск обычного монтажа
+2025-09-09 14:14:01,927 - montage_control - INFO - reset_stop_montage_flag:46 - 🔄 Файл-флаг удален
+2025-09-09 14:14:01,928 - montage_control - INFO - reset_stop_montage_flag:50 - 🔄 Флаг остановки монтажа сброшен
+2025-09-09 14:14:01,928 - ui.main_window - INFO - toggle_montage:1697 - 🔄 Флаг остановки СБРОШЕН перед обычным монтажом!
+2025-09-09 14:14:01,929 - ui.worker_threads - INFO - run:92 - ==================================================
+2025-09-09 14:14:01,929 - ui.worker_threads - INFO - run:93 - 🎬 НАЧАЛО МОНТАЖА для канала: GRA1
+2025-09-09 14:14:01,929 - ui.worker_threads - INFO - run:94 - ==================================================
+2025-09-09 14:14:01,930 - ui.worker_threads - INFO - run:97 - 🖥️  Система: darwin
+2025-09-09 14:14:01,930 - ui.worker_threads - INFO - run:98 - 🐍 Python версия: 3.10.11 (v3.10.11:7d4cc5aa85, Apr  4 2023, 19:05:19) [Clang 13.0.0 (clang-1300.0.29.30)]
+2025-09-09 14:14:01,930 - ui.worker_threads - INFO - run:99 - 📊 Использование памяти перед стартом: RSS: 491.4MB, VMS: 35605.2MB
+2025-09-09 14:14:01,930 - ui.worker_threads - INFO - run:100 - 📁 Текущая директория: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio
+2025-09-09 14:14:01,930 - ui.worker_threads - INFO - run:103 - 📋 Конфигурация содержит 143 параметров:
+2025-09-09 14:14:01,930 - ui.worker_threads - INFO - run:109 -    adjust_videos_to_audio: True
+2025-09-09 14:14:01,930 - ui.worker_threads - INFO - run:109 -    audio_bitrate: 192k
+2025-09-09 14:14:01,930 - ui.worker_threads - INFO - run:109 -    audio_channels: 1
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_compressor: False
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_compressor_attack: 10
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_compressor_ratio: 2:1
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_compressor_release: 100
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_compressor_type: soft
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_eq_bass: 0
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_eq_enabled: False
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_eq_mid: 0
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_eq_presence: 0
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_eq_preset: flat
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_eq_treble: 0
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_folder: /Users/mikman/Youtube/Структура/gra1/Озвучка
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_gate_enabled: False
+2025-09-09 14:14:01,931 - ui.worker_threads - INFO - run:109 -    audio_gate_threshold: -400
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    audio_loudness_matching: False
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    audio_lufs_target: -14
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    audio_normalize: False
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    audio_normalize_method: peak
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    audio_normalize_target: -23
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    audio_peak_limit_db: -10
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    audio_peak_limiting: False
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    audio_sample_rate: 44100
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    background_music_fade_in: 20
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    background_music_fade_out: 30
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    background_music_path: 
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    background_music_volume: 0.0
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    ban_retry_delay: 120
+2025-09-09 14:14:01,932 - ui.worker_threads - INFO - run:109 -    base_path: /Users/mikman/Youtube/Структура/gra1
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_blur_kernel: [99, 99]
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_blur_method: gaussian
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_blur_sigma: 30
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_enabled: False
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_focus_area: center
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_image_size: [1920, 1080]
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_intensity: 0.8
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_sides_enabled: True
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    bokeh_transition_smoothness: 50
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    brightness_delta: 10
+2025-09-09 14:14:01,933 - ui.worker_threads - INFO - run:109 -    brightness_enabled: False
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    channel_column: G
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    channel_folder: /Users/mikman/Youtube/Структура/gra1
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    channel_name: GRA1
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    contrast_enabled: False
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    contrast_factor: 1.2
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    csv_file_path: /Users/mikman/Youtube/Api Keys 11labs/keys/api_list_4.txt
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    debug_keep_temp_folder: False
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    default_lang: RU
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    default_similarity: 1.0
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    default_stability: 1.0
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    default_voice_speed: 1.0
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    default_voice_style: none
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    edge_enhancement: False
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    frame_rate: 24
+2025-09-09 14:14:01,934 - ui.worker_threads - INFO - run:109 -    global_xlsx_file_path: /Users/mikman/Youtube/Структура/Сценарий.xlsx
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    histogram_equalization: False
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo2_duration: all
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo2_path: 
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo2_position_x: 20
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo2_position_y: 20
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo2_width: 150
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo_duration: all
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo_path: 
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo_position_x: W-w-20
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo_position_y: 20
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    logo_width: 200
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    max_concurrent_montages: 
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    max_concurrent_requests: 
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    max_retries: 10
+2025-09-09 14:14:01,935 - ui.worker_threads - INFO - run:109 -    noise_reduction: False
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    num_videos: 10
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    output_directory: /Users/mikman/Youtube/Структура/gra1/Озвучка
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    output_folder: /Users/mikman/Youtube/Структура/gra1/Готовое видео
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    parallel_threads: 
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    photo_folder: /Users/mikman/Youtube/Структура/Фото
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    photo_order: order
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    preserve_clip_audio_videos: 
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    preserve_video_duration: False
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    proxy_type: standard
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    rotate_endpoint: 
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    rotate_min_interval: 
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    saturation_enabled: False
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    saturation_factor: 1.1
+2025-09-09 14:14:01,936 - ui.worker_threads - INFO - run:109 -    sharpen_enabled: False
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    sharpen_strength: 1.5
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    silence_duration: 0
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    standard_voice_id: AB9XsbSA4eLG12t2myjN
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    style_filter: none
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subscribe_display_duration: 7
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subscribe_duration: all
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subscribe_frames_folder: /Users/mikman/Youtube/Структура/gra1/Scene_logo
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subscribe_interval_gap: 30
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subscribe_position_x: -50
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subscribe_position_y: main_h-overlay_h+150
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subscribe_width: 1400
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subtitle_back_color: &HFFFFFF
+2025-09-09 14:14:01,937 - ui.worker_threads - INFO - run:109 -    subtitle_font_color: &HFFFFFF
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_font_family: .Apple Color Emoji UI
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_fontsize: 110
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_language: ru
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_line_spacing: 12
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_margin_l: 10
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_margin_r: 10
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_margin_v: 20
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_max_words: 3
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_model: medium
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_outline_color: &H000000
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_outline_thickness: 4
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_alpha: 50
+2025-09-09 14:14:01,938 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_color: &H333333
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_offset_x: 2
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_offset_y: 2
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    subtitle_shadow_thickness: 1
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    subtitle_time_offset: -0.3
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    subtitle_use_backdrop: False
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    subtitles_enabled: False
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    transition_duration: 0.5
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    transition_method: overlay
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    transition_type: fade
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    use_library_voice: True
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    video_color_effect: none
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    video_crf: 23
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    video_effects_enabled: False
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    video_filter_effect: none
+2025-09-09 14:14:01,939 - ui.worker_threads - INFO - run:109 -    video_numbers: 
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    video_preset: ultrafast
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    video_resolution: 1920x1080
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    video_rotation_angle: 5.0
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    video_rotation_effect: none
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    video_transitions_enabled: False
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    video_zoom_effect: none
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    video_zoom_intensity: 1.1
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    vignette_enabled: False
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    vignette_strength: 0.3
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    voice_clarity_boost: False
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    voice_de_esser: False
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    voice_de_esser_threshold: -250
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    voice_denoise_strength: 50
+2025-09-09 14:14:01,940 - ui.worker_threads - INFO - run:109 -    voice_enhancement: False
+2025-09-09 14:14:01,941 - ui.worker_threads - INFO - run:109 -    voice_noise_reduction: False
+2025-09-09 14:14:01,941 - ui.worker_threads - INFO - run:109 -    voice_warmth: False
+2025-09-09 14:14:01,941 - ui.worker_threads - INFO - run:111 - 🎵 Preserve audio videos: []
+2025-09-09 14:14:01,941 - ui.worker_threads - INFO - _validate_paths:212 - 📁 Проверка путей...
+2025-09-09 14:14:01,941 - ui.worker_threads - INFO - _validate_paths:245 -    global_xlsx_file_path: /Users/mikman/Youtube/Структура/Сценарий.xlsx ✅
+2025-09-09 14:14:01,941 - ui.worker_threads - INFO - _validate_paths:237 -    channel_folder: /Users/mikman/Youtube/Структура/gra1 ✅
+2025-09-09 14:14:01,941 - ui.worker_threads - INFO - _validate_paths:245 -    base_path: /Users/mikman/Youtube/Структура/gra1 ✅
+2025-09-09 14:14:01,941 - ui.worker_threads - INFO - _validate_paths:245 -    csv_file_path: /Users/mikman/Youtube/Api Keys 11labs/keys/api_list_4.txt ✅
+2025-09-09 14:14:01,942 - ui.worker_threads - INFO - _validate_paths:245 -    output_directory: /Users/mikman/Youtube/Структура/gra1/Озвучка ✅
+2025-09-09 14:14:01,942 - ui.worker_threads - INFO - _validate_paths:245 -    photo_folder: /Users/mikman/Youtube/Структура/Фото ✅
+2025-09-09 14:14:01,942 - ui.worker_threads - INFO - _validate_paths:245 -    audio_folder: /Users/mikman/Youtube/Структура/gra1/Озвучка ✅
+2025-09-09 14:14:01,942 - ui.worker_threads - INFO - _validate_paths:245 -    output_folder: /Users/mikman/Youtube/Структура/gra1/Готовое видео ✅
+2025-09-09 14:14:01,942 - ui.worker_threads - INFO - run:119 - 📦 Проверяем импорт функции process_auto_montage...
+2025-09-09 14:14:01,942 - ui.worker_threads - INFO - run:125 - ✅ Статический импорт process_auto_montage успешен
+2025-09-09 14:14:01,942 - ui.worker_threads - INFO - run:146 - 🎬 Запуск process_auto_montage...
+2025-09-09 14:14:02,002 - ui.worker_threads - INFO - run:156 - 🗑️  Сборка мусора выполнена, память: RSS: 491.4MB, VMS: 35605.2MB
+2025-09-09 14:14:02,002 - montage_control - INFO - reset_stop_montage_flag:46 - 🔄 Файл-флаг удален
+2025-09-09 14:14:02,002 - montage_control - INFO - reset_stop_montage_flag:50 - 🔄 Флаг остановки монтажа сброшен
+2025-09-09 14:14:02,002 - main - INFO - process_auto_montage:2682 - Начало обработки канала 'GRA1' в 2025-09-09 14:14:02
+2025-09-09 14:14:02,003 - main - INFO - process_auto_montage:2683 - 🔍 DEBUG process_auto_montage: preserve_clip_audio_videos параметр = []
+2025-09-09 14:14:02,003 - utils.app_paths - INFO - get_config_file_path:198 - 🔍 Поиск channels.json в: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-09-09 14:14:02,003 - utils.app_paths - INFO - get_config_file_path:199 -    Существует: ✅
+2025-09-09 14:14:02,005 - core.config_manager - INFO - load_config:95 - Конфигурация загружена через File API из /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/channels.json
+2025-09-09 14:14:02,005 - main - INFO - _setup_parameters:183 - 🎵 DEBUG: raw_volume из config = 0.0 (тип: <class 'float'>)
+2025-09-09 14:14:02,005 - main - INFO - _setup_parameters:196 - 🎵 Фоновая музыка: 0.000000 (прямое значение из конфигурации)
+2025-09-09 14:14:02,006 - main - INFO - process_auto_montage:2691 - Конфигурация канала 'GRA1' загружена успешно
+2025-09-09 14:14:02,006 - main - INFO - process_auto_montage:2696 - 🔍 DEBUG: Сырое значение preserve_clip_audio_videos из конфигурации: '' (тип: <class 'str'>)
+2025-09-09 14:14:02,006 - main - INFO - process_auto_montage:2709 - 🔍 DEBUG: preserve_clip_audio_videos пустое или отсутствует в конфигурации
+2025-09-09 14:14:02,006 - main - WARNING - check_optional_files:318 - Логотип не найден: . Наложение логотипа пропущено.
+2025-09-09 14:14:02,006 - main - WARNING - check_optional_files:324 - Второй логотип не найден: . Наложение второго логотипа пропущено.
+2025-09-09 14:14:02,006 - main - WARNING - check_optional_files:330 - Фоновая музыка не найдена: . Используется основная аудиодорожка.
+2025-09-09 14:14:02,006 - main - INFO - process_auto_montage:2727 - Обрабатываемые видео: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+2025-09-09 14:14:02,006 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 1 с preserve_clip_audio_videos=[]
+2025-09-09 14:14:02,152 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:14:02,220 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:14:02,225 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:14:02,225 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:14:02,225 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:14:02,290 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:14:02,351 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:14:02,351 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:14:02,351 - main - INFO - process:2006 - === 🚀 Монтаж видео 1 с попапочной логикой ===
+2025-09-09 14:14:02,352 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:14:02,606 - audio_processing - INFO - get_audio_files_for_video:94 - Найдено 24 аудиофайлов для видео 1 (строки 1-25)
+2025-09-09 14:14:02,606 - main - INFO - _get_audio_files_and_range:461 - Найден диапазон для видео 1: строки 1–25
+2025-09-09 14:14:02,607 - main - INFO - _find_photo_folder:481 - Папка с фото/видео: /Users/mikman/Youtube/Структура/Фото/1
+2025-09-09 14:14:02,652 - main - INFO - _copy_audio_files:500 - Скопировано аудиофайлов: 24/24
+2025-09-09 14:14:02,736 - video_processing - INFO - get_folder_audio_mapping_from_excel:2072 - 📊 Соответствие папок и аудиофайлов для видео 1:
+2025-09-09 14:14:02,736 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '1-2': аудиофайлы 001-002 (2 файлов)
+2025-09-09 14:14:02,736 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '3-6': аудиофайлы 003-006 (4 файлов)
+2025-09-09 14:14:02,736 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '7-10': аудиофайлы 007-010 (4 файлов)
+2025-09-09 14:14:02,736 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '11-24': аудиофайлы 011-024 (14 файлов)
+2025-09-09 14:14:02,736 - main - INFO - process:2084 - 🔍 Группируем 119 ОРИГИНАЛЬНЫХ файлов по папкам из /Users/mikman/Youtube/Структура/Фото/1
+2025-09-09 14:14:02,754 - main - INFO - process:2111 - 📊 Итоговый photo_folders_analysis (ОРИГИНАЛЬНЫЕ ФАЙЛЫ):
+2025-09-09 14:14:02,754 - main - INFO - process:2113 -   📁 '7-10': 28 файлов
+2025-09-09 14:14:02,754 - main - INFO - process:2113 -   📁 '1-2': 13 файлов
+2025-09-09 14:14:02,754 - main - INFO - process:2113 -   📁 '3-6': 19 файлов
+2025-09-09 14:14:02,754 - main - INFO - process:2113 -   📁 '11-24': 59 файлов
+2025-09-09 14:14:02,754 - main - INFO - process:2120 - 🖼️ Предобработка изображений перед анализом папок
+2025-09-09 14:14:02,754 - main - INFO - _preprocess_images:508 - === 🖼️ Предобработка изображений ===
+2025-09-09 14:14:02,813 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:14:02,867 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:14:02,870 - video_processing - INFO - preprocess_images:3070 - Найдено файлов для предобработки: 119 (изображений: 110)
+2025-09-09 14:15:34,217 - video_processing - INFO - preprocess_images:3108 - Предобработка изображений завершена
+2025-09-09 14:15:34,255 - main - INFO - _preprocess_images:632 - ✅ Предобработка изображений завершена
+2025-09-09 14:15:34,339 - video_processing - INFO - get_folder_audio_mapping_from_excel:2072 - 📊 Соответствие папок и аудиофайлов для видео 1:
+2025-09-09 14:15:34,340 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '1-2': аудиофайлы 001-002 (2 файлов)
+2025-09-09 14:15:34,340 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '3-6': аудиофайлы 003-006 (4 файлов)
+2025-09-09 14:15:34,340 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '7-10': аудиофайлы 007-010 (4 файлов)
+2025-09-09 14:15:34,340 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '11-24': аудиофайлы 011-024 (14 файлов)
+2025-09-09 14:15:34,340 - main - INFO - process:2129 - 🔄 Расчет Excel попапочных длительностей для синхронизации аудио и видео
+2025-09-09 14:15:34,340 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:15:34,340 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:15:34,340 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:15:34,340 - video_processing - WARNING - _parse_silence_duration:2005 - Некорректный тип silence_duration: <class 'str'>, используется 0
+2025-09-09 14:15:34,340 - video_processing - INFO - calculate_folder_durations_excel_based:2364 - 🔍 Расчет длительностей папок для видео 1
+2025-09-09 14:15:34,341 - video_processing - INFO - calculate_folder_durations_excel_based:2365 -    Средняя пауза: 0.00с
+2025-09-09 14:15:34,421 - video_processing - INFO - get_folder_audio_mapping_from_excel:2072 - 📊 Соответствие папок и аудиофайлов для видео 1:
+2025-09-09 14:15:34,421 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '1-2': аудиофайлы 001-002 (2 файлов)
+2025-09-09 14:15:34,421 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '3-6': аудиофайлы 003-006 (4 файлов)
+2025-09-09 14:15:34,422 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '7-10': аудиофайлы 007-010 (4 файлов)
+2025-09-09 14:15:34,422 - video_processing - INFO - get_folder_audio_mapping_from_excel:2074 -    Папка '11-24': аудиофайлы 011-024 (14 файлов)
+2025-09-09 14:15:34,422 - video_processing - INFO - calculate_folder_durations_excel_based:2388 - 🔄 XFADE настройки:
+2025-09-09 14:15:34,422 - video_processing - INFO - calculate_folder_durations_excel_based:2389 -    XFADE внутри папок: отключен
+2025-09-09 14:15:34,422 - video_processing - INFO - calculate_folder_durations_excel_based:2390 -    XFADE между папками: отключен
+2025-09-09 14:15:34,422 - video_processing - INFO - calculate_folder_durations_excel_based:2391 -    Длительность перехода: 0.50с
+2025-09-09 14:15:34,422 - video_processing - INFO - calculate_folder_durations_excel_based:2395 - 📁 Обработка папки '1-2'
+2025-09-09 14:15:34,515 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 001.mp3: 27.92с
+2025-09-09 14:15:34,515 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:34,562 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 002.mp3: 37.04с
+2025-09-09 14:15:34,562 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:34,563 - video_processing - INFO - calculate_folder_durations_excel_based:2441 -    ✅ Итого для папки '1-2': 64.97с (2 файлов)
+2025-09-09 14:15:34,563 - video_processing - INFO - calculate_folder_durations_excel_based:2395 - 📁 Обработка папки '3-6'
+2025-09-09 14:15:34,610 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 003.mp3: 27.56с
+2025-09-09 14:15:34,610 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:34,656 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 004.mp3: 14.65с
+2025-09-09 14:15:34,656 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:34,703 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 005.mp3: 19.07с
+2025-09-09 14:15:34,703 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:34,825 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 006.mp3: 27.09с
+2025-09-09 14:15:34,826 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:34,826 - video_processing - INFO - calculate_folder_durations_excel_based:2441 -    ✅ Итого для папки '3-6': 88.37с (4 файлов)
+2025-09-09 14:15:34,826 - video_processing - INFO - calculate_folder_durations_excel_based:2395 - 📁 Обработка папки '7-10'
+2025-09-09 14:15:34,932 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 007.mp3: 30.35с
+2025-09-09 14:15:34,932 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:34,980 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 008.mp3: 22.91с
+2025-09-09 14:15:34,981 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,028 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 009.mp3: 32.52с
+2025-09-09 14:15:35,029 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,078 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 010.mp3: 33.46с
+2025-09-09 14:15:35,080 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,080 - video_processing - INFO - calculate_folder_durations_excel_based:2441 -    ✅ Итого для папки '7-10': 119.25с (4 файлов)
+2025-09-09 14:15:35,080 - video_processing - INFO - calculate_folder_durations_excel_based:2395 - 📁 Обработка папки '11-24'
+2025-09-09 14:15:35,133 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 011.mp3: 47.80с
+2025-09-09 14:15:35,134 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,182 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 012.mp3: 41.35с
+2025-09-09 14:15:35,183 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,231 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 013.mp3: 22.13с
+2025-09-09 14:15:35,231 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,279 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 014.mp3: 28.21с
+2025-09-09 14:15:35,280 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,337 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 015.mp3: 12.70с
+2025-09-09 14:15:35,338 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,391 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 016.mp3: 32.89с
+2025-09-09 14:15:35,392 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,444 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 017.mp3: 34.14с
+2025-09-09 14:15:35,445 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,493 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 018.mp3: 31.03с
+2025-09-09 14:15:35,493 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,542 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 019.mp3: 33.36с
+2025-09-09 14:15:35,543 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,590 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 020.mp3: 39.76с
+2025-09-09 14:15:35,591 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,640 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 021.mp3: 19.93с
+2025-09-09 14:15:35,641 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,689 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 022.mp3: 17.06с
+2025-09-09 14:15:35,690 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,740 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 023.mp3: 11.49с
+2025-09-09 14:15:35,742 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,791 - video_processing - INFO - calculate_folder_durations_excel_based:2410 -    🎵 024.mp3: 10.42с
+2025-09-09 14:15:35,791 - video_processing - INFO - calculate_folder_durations_excel_based:2414 -    🔇 + пауза: 0.00с
+2025-09-09 14:15:35,791 - video_processing - INFO - calculate_folder_durations_excel_based:2441 -    ✅ Итого для папки '11-24': 382.28с (14 файлов)
+2025-09-09 14:15:35,791 - video_processing - INFO - calculate_folder_durations_excel_based:2458 - 📊 Общая длительность: 654.86с
+2025-09-09 14:15:35,792 - video_processing - INFO - calculate_folder_durations_excel_based:2462 - 🔍 calculate_folder_durations_excel_based получил photo_folders_analysis: True
+2025-09-09 14:15:35,792 - video_processing - INFO - calculate_folder_durations_excel_based:2466 - 🔍 photo_folders_analysis содержит 4 папок: ['7-10', '1-2', '3-6', '11-24']
+2025-09-09 14:15:35,792 - video_processing - INFO - calculate_folder_durations_excel_based:2469 - 🔍 Обрабатываем папку '7-10' из photo_folders_analysis
+2025-09-09 14:15:35,794 - video_processing - INFO - calculate_folder_durations_excel_based:2492 -    ✅ Папка '7-10': 28 файлов взято из photo_folders_analysis
+2025-09-09 14:15:35,795 - video_processing - INFO - calculate_folder_durations_excel_based:2469 - 🔍 Обрабатываем папку '1-2' из photo_folders_analysis
+2025-09-09 14:15:35,796 - video_processing - INFO - calculate_folder_durations_excel_based:2492 -    ✅ Папка '1-2': 13 файлов взято из photo_folders_analysis
+2025-09-09 14:15:35,796 - video_processing - INFO - calculate_folder_durations_excel_based:2469 - 🔍 Обрабатываем папку '3-6' из photo_folders_analysis
+2025-09-09 14:15:35,797 - video_processing - INFO - calculate_folder_durations_excel_based:2492 -    ✅ Папка '3-6': 19 файлов взято из photo_folders_analysis
+2025-09-09 14:15:35,798 - video_processing - INFO - calculate_folder_durations_excel_based:2469 - 🔍 Обрабатываем папку '11-24' из photo_folders_analysis
+2025-09-09 14:15:35,800 - video_processing - INFO - calculate_folder_durations_excel_based:2492 -    ✅ Папка '11-24': 59 файлов взято из photo_folders_analysis
+2025-09-09 14:15:35,800 - main - INFO - process:2141 - 📊 Excel попапочные длительности: {'1-2': 64.966531, '3-6': 88.37224599999999, '7-10': 119.24898, '11-24': 382.27591800000005}
+2025-09-09 14:15:35,800 - main - INFO - process:2142 - 📊 Excel общая длительность: 654.864с
+2025-09-09 14:15:35,805 - main - INFO - process:2224 - 📄 JSON файл с математикой создан: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/video_1_math_analysis.json
+2025-09-09 14:15:35,806 - main - INFO - process:2225 - 📁 Проверка существования файла: True
+2025-09-09 14:15:35,806 - main - INFO - process:2227 - 📊 Размер JSON файла: 75533 байт
+2025-09-09 14:15:35,806 - main - INFO - process:2234 - 🚀 ЗАПУСК ПОПАПОЧНОЙ ОБРАБОТКИ
+2025-09-09 14:15:35,806 - main - INFO - process:2237 - 🎵 Создание аудиосегментов для каждой папки
+2025-09-09 14:15:35,806 - main - INFO - process:2241 - 🔊 Создание аудиосегмента для папки '1-2' (длительность: 64.97с)
+2025-09-09 14:15:35,806 - audio_processing - INFO - process_audio_files_by_excel_folders:1109 - 🎵 Обработка аудио по Excel папкам
+2025-09-09 14:15:35,806 - audio_processing - INFO - process_audio_files_by_excel_folders:1110 - 📋 Excel папки: ['1-2']
+2025-09-09 14:15:35,853 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:15:35,898 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:15:35,899 - audio_processing - INFO - process_audio_files_by_excel_folders:1125 - 📁 Обработка папки '1-2'
+2025-09-09 14:15:35,899 - audio_processing - INFO - process_audio_files_by_excel_folders:1130 -    📊 Используем соответствие из Excel: 001-002 (2 файлов)
+2025-09-09 14:15:35,899 - audio_processing - INFO - process_audio_files:270 - Начинаем обработку 2 аудиофайлов
+2025-09-09 14:15:35,899 - audio_processing - WARNING - _parse_silence_duration:319 - Некорректный тип silence_duration: <class 'str'>, используется 0
+2025-09-09 14:15:36,279 - audio_processing - INFO - _process_individual_files:361 - Обработано файлов: 2/2
+2025-09-09 14:15:37,792 - audio_processing - INFO - _concatenate_audio_files:438 - Аудио склеено и сконвертировано: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_1-2/final_audio.mp3
+2025-09-09 14:15:37,842 - audio_processing - INFO - process_audio_files:289 - Обработка аудио завершена: 2 файлов, длительность: 64.94 сек
+2025-09-09 14:15:37,844 - audio_processing - INFO - process_audio_files_by_excel_folders:1170 -    ✅ Длительность сегмента: 64.94с
+2025-09-09 14:15:37,844 - audio_processing - INFO - process_audio_files_by_excel_folders:1177 - 🔗 Склеиваем 1 аудио сегментов
+2025-09-09 14:15:37,845 - audio_processing - INFO - _concatenate_audio_segments:495 - 🔗 Склеиваем 1 аудио сегментов
+2025-09-09 14:15:37,846 - audio_processing - INFO - _concatenate_audio_segments:502 -    Сегмент 1: final_audio.mp3
+2025-09-09 14:15:39,162 - audio_processing - INFO - _concatenate_audio_segments:515 - ✅ Финальное аудио создано: main_audio_segment_1-2.mp3 (64.94с)
+2025-09-09 14:15:39,209 - audio_processing - INFO - process_audio_files_by_excel_folders:1182 - ✅ Финальное аудио: 64.94с
+2025-09-09 14:15:39,209 - main - INFO - process:2268 - 🔇 ОТКЛЮЧЕНО: Фоновая музыка будет добавлена глобально позже
+2025-09-09 14:15:39,363 - main - INFO - process:2280 - ✅ Аудиосегмент для папки '1-2' создан: folder_audio_segment_1-2.wav
+2025-09-09 14:15:39,364 - main - INFO - process:2241 - 🔊 Создание аудиосегмента для папки '3-6' (длительность: 88.37с)
+2025-09-09 14:15:39,364 - audio_processing - INFO - process_audio_files_by_excel_folders:1109 - 🎵 Обработка аудио по Excel папкам
+2025-09-09 14:15:39,364 - audio_processing - INFO - process_audio_files_by_excel_folders:1110 - 📋 Excel папки: ['3-6']
+2025-09-09 14:15:39,411 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:15:39,458 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:15:39,459 - audio_processing - INFO - process_audio_files_by_excel_folders:1125 - 📁 Обработка папки '3-6'
+2025-09-09 14:15:39,459 - audio_processing - INFO - process_audio_files_by_excel_folders:1130 -    📊 Используем соответствие из Excel: 003-006 (4 файлов)
+2025-09-09 14:15:39,459 - audio_processing - INFO - process_audio_files:270 - Начинаем обработку 4 аудиофайлов
+2025-09-09 14:15:39,460 - audio_processing - WARNING - _parse_silence_duration:319 - Некорректный тип silence_duration: <class 'str'>, используется 0
+2025-09-09 14:15:40,141 - audio_processing - INFO - _process_individual_files:361 - Обработано файлов: 4/4
+2025-09-09 14:15:42,143 - audio_processing - INFO - _concatenate_audio_files:438 - Аудио склеено и сконвертировано: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_3-6/final_audio.mp3
+2025-09-09 14:15:42,190 - audio_processing - INFO - process_audio_files:289 - Обработка аудио завершена: 4 файлов, длительность: 88.29 сек
+2025-09-09 14:15:42,190 - audio_processing - INFO - process_audio_files_by_excel_folders:1170 -    ✅ Длительность сегмента: 88.29с
+2025-09-09 14:15:42,190 - audio_processing - INFO - process_audio_files_by_excel_folders:1177 - 🔗 Склеиваем 1 аудио сегментов
+2025-09-09 14:15:42,190 - audio_processing - INFO - _concatenate_audio_segments:495 - 🔗 Склеиваем 1 аудио сегментов
+2025-09-09 14:15:42,191 - audio_processing - INFO - _concatenate_audio_segments:502 -    Сегмент 1: final_audio.mp3
+2025-09-09 14:15:43,919 - audio_processing - INFO - _concatenate_audio_segments:515 - ✅ Финальное аудио создано: main_audio_segment_3-6.mp3 (88.29с)
+2025-09-09 14:15:43,966 - audio_processing - INFO - process_audio_files_by_excel_folders:1182 - ✅ Финальное аудио: 88.29с
+2025-09-09 14:15:43,967 - main - INFO - process:2268 - 🔇 ОТКЛЮЧЕНО: Фоновая музыка будет добавлена глобально позже
+2025-09-09 14:15:44,163 - main - INFO - process:2280 - ✅ Аудиосегмент для папки '3-6' создан: folder_audio_segment_3-6.wav
+2025-09-09 14:15:44,164 - main - INFO - process:2241 - 🔊 Создание аудиосегмента для папки '7-10' (длительность: 119.25с)
+2025-09-09 14:15:44,164 - audio_processing - INFO - process_audio_files_by_excel_folders:1109 - 🎵 Обработка аудио по Excel папкам
+2025-09-09 14:15:44,165 - audio_processing - INFO - process_audio_files_by_excel_folders:1110 - 📋 Excel папки: ['7-10']
+2025-09-09 14:15:44,210 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:15:44,258 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:15:44,258 - audio_processing - INFO - process_audio_files_by_excel_folders:1125 - 📁 Обработка папки '7-10'
+2025-09-09 14:15:44,258 - audio_processing - INFO - process_audio_files_by_excel_folders:1130 -    📊 Используем соответствие из Excel: 007-010 (4 файлов)
+2025-09-09 14:15:44,259 - audio_processing - INFO - process_audio_files:270 - Начинаем обработку 4 аудиофайлов
+2025-09-09 14:15:44,260 - audio_processing - WARNING - _parse_silence_duration:319 - Некорректный тип silence_duration: <class 'str'>, используется 0
+2025-09-09 14:15:44,992 - audio_processing - INFO - _process_individual_files:361 - Обработано файлов: 4/4
+2025-09-09 14:15:47,604 - audio_processing - INFO - _concatenate_audio_files:438 - Аудио склеено и сконвертировано: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_7-10/final_audio.mp3
+2025-09-09 14:15:47,652 - audio_processing - INFO - process_audio_files:289 - Обработка аудио завершена: 4 файлов, длительность: 119.17 сек
+2025-09-09 14:15:47,653 - audio_processing - INFO - process_audio_files_by_excel_folders:1170 -    ✅ Длительность сегмента: 119.17с
+2025-09-09 14:15:47,653 - audio_processing - INFO - process_audio_files_by_excel_folders:1177 - 🔗 Склеиваем 1 аудио сегментов
+2025-09-09 14:15:47,653 - audio_processing - INFO - _concatenate_audio_segments:495 - 🔗 Склеиваем 1 аудио сегментов
+2025-09-09 14:15:47,654 - audio_processing - INFO - _concatenate_audio_segments:502 -    Сегмент 1: final_audio.mp3
+2025-09-09 14:15:50,001 - audio_processing - INFO - _concatenate_audio_segments:515 - ✅ Финальное аудио создано: main_audio_segment_7-10.mp3 (119.17с)
+2025-09-09 14:15:50,051 - audio_processing - INFO - process_audio_files_by_excel_folders:1182 - ✅ Финальное аудио: 119.17с
+2025-09-09 14:15:50,053 - main - INFO - process:2268 - 🔇 ОТКЛЮЧЕНО: Фоновая музыка будет добавлена глобально позже
+2025-09-09 14:15:50,268 - main - INFO - process:2280 - ✅ Аудиосегмент для папки '7-10' создан: folder_audio_segment_7-10.wav
+2025-09-09 14:15:50,269 - main - INFO - process:2241 - 🔊 Создание аудиосегмента для папки '11-24' (длительность: 382.28с)
+2025-09-09 14:15:50,269 - audio_processing - INFO - process_audio_files_by_excel_folders:1109 - 🎵 Обработка аудио по Excel папкам
+2025-09-09 14:15:50,269 - audio_processing - INFO - process_audio_files_by_excel_folders:1110 - 📋 Excel папки: ['11-24']
+2025-09-09 14:15:50,314 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:15:50,360 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:15:50,360 - audio_processing - INFO - process_audio_files_by_excel_folders:1125 - 📁 Обработка папки '11-24'
+2025-09-09 14:15:50,360 - audio_processing - INFO - process_audio_files_by_excel_folders:1130 -    📊 Используем соответствие из Excel: 011-024 (14 файлов)
+2025-09-09 14:15:50,361 - audio_processing - INFO - process_audio_files:270 - Начинаем обработку 14 аудиофайлов
+2025-09-09 14:15:50,361 - audio_processing - WARNING - _parse_silence_duration:319 - Некорректный тип silence_duration: <class 'str'>, используется 0
+2025-09-09 14:15:52,908 - audio_processing - INFO - _process_individual_files:361 - Обработано файлов: 14/14
+2025-09-09 14:16:00,545 - audio_processing - INFO - _concatenate_audio_files:438 - Аудио склеено и сконвертировано: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_11-24/final_audio.mp3
+2025-09-09 14:16:00,592 - audio_processing - INFO - process_audio_files:289 - Обработка аудио завершена: 14 файлов, длительность: 381.88 сек
+2025-09-09 14:16:00,592 - audio_processing - INFO - process_audio_files_by_excel_folders:1170 -    ✅ Длительность сегмента: 381.88с
+2025-09-09 14:16:00,593 - audio_processing - INFO - process_audio_files_by_excel_folders:1177 - 🔗 Склеиваем 1 аудио сегментов
+2025-09-09 14:16:00,593 - audio_processing - INFO - _concatenate_audio_segments:495 - 🔗 Склеиваем 1 аудио сегментов
+2025-09-09 14:16:00,595 - audio_processing - INFO - _concatenate_audio_segments:502 -    Сегмент 1: final_audio.mp3
+2025-09-09 14:16:07,762 - audio_processing - INFO - _concatenate_audio_segments:515 - ✅ Финальное аудио создано: main_audio_segment_11-24.mp3 (381.88с)
+2025-09-09 14:16:07,808 - audio_processing - INFO - process_audio_files_by_excel_folders:1182 - ✅ Финальное аудио: 381.88с
+2025-09-09 14:16:07,809 - main - INFO - process:2268 - 🔇 ОТКЛЮЧЕНО: Фоновая музыка будет добавлена глобально позже
+2025-09-09 14:16:08,252 - main - INFO - process:2280 - ✅ Аудиосегмент для папки '11-24' создан: folder_audio_segment_11-24.wav
+2025-09-09 14:16:08,253 - main - INFO - process:2286 - 🎬 Создание видеосегментов для каждой папки
+2025-09-09 14:16:08,253 - main - INFO - process:2290 - 🎥 Обработка видеосегмента папки '1-2'
+2025-09-09 14:16:08,253 - video_processing - INFO - process_single_folder_segment:1091 - 🎬 Обработка сегмента папки '1-2' (цель: 64.97с)
+2025-09-09 14:16:08,254 - video_processing - INFO - process_single_folder_segment:1092 -    Медиафайлов: 13
+2025-09-09 14:16:08,254 - video_processing - INFO - process_single_folder_segment:1093 -    Аудио для папки: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_audio_segment_1-2.wav
+2025-09-09 14:16:08,254 - video_processing - INFO - process_single_folder_segment:1096 - 📋 Входящие файлы для папки '1-2':
+2025-09-09 14:16:08,254 - video_processing - INFO - process_single_folder_segment:1107 -    1. Запись экрана 2025-06-23 в 18.13.21.mov
+2025-09-09 14:16:08,254 - video_processing - INFO - process_single_folder_segment:1107 -    2. imgi_165_9e70443a72f4d16478037e9cd20c9a77.webp
+2025-09-09 14:16:08,254 - video_processing - INFO - process_single_folder_segment:1107 -    3. Запись экрана 2025-09-08 в 12.59.02.mov
+2025-09-09 14:16:08,254 - video_processing - INFO - process_single_folder_segment:1107 -    4. 4.mov
+2025-09-09 14:16:08,254 - video_processing - INFO - process_single_folder_segment:1107 -    5. 2.mov
+2025-09-09 14:16:08,255 - video_processing - INFO - process_single_folder_segment:1107 -    6. 3.mov
+2025-09-09 14:16:08,255 - video_processing - INFO - process_single_folder_segment:1107 -    7. 1.mov
+2025-09-09 14:16:08,255 - video_processing - INFO - process_single_folder_segment:1107 -    8. Запись экрана 2025-06-23 в 18.12.08.mov
+2025-09-09 14:16:08,255 - video_processing - INFO - process_single_folder_segment:1107 -    9. Запись экрана 2025-06-23 в 17.58.18.mov
+2025-09-09 14:16:08,255 - video_processing - INFO - process_single_folder_segment:1107 -    10. imgi_175_4bb3c034-362f-4443-9b43-06f58c9e89db.jpg
+2025-09-09 14:16:08,255 - video_processing - INFO - process_single_folder_segment:1107 -    11. imgi_122_nikolay-tsiskaridze-with-his-mother_29.jpg
+2025-09-09 14:16:08,255 - video_processing - INFO - process_single_folder_segment:1107 -    12. imgi_124_5-2-pic_32ratio_900x600-900x600-98494.jpg
+2025-09-09 14:16:08,255 - video_processing - INFO - process_single_folder_segment:1107 -    13. imgi_173_20060831_gaf_rl09_296.jpg
+2025-09-09 14:16:08,256 - video_processing - INFO - process_single_folder_segment:1136 - ✅ Проверка медиафайлов: 13 файлов существует
+2025-09-09 14:16:08,335 - video_processing - INFO - process_single_folder_segment:1145 - 📊 Сравнение длительностей для папки '1-2':
+2025-09-09 14:16:08,335 - video_processing - INFO - process_single_folder_segment:1146 -    Целевая длительность (из Excel): 64.97с
+2025-09-09 14:16:08,335 - video_processing - INFO - process_single_folder_segment:1147 -    Длительность аудиофайла: 64.91с
+2025-09-09 14:16:08,335 - video_processing - INFO - process_single_folder_segment:1148 -    Разница: 0.06с
+2025-09-09 14:16:08,337 - video_processing - INFO - calculate_media_sequence_for_folder:2529 - 📁 Папка '1-2': сортируем 13 файлов
+2025-09-09 14:16:08,337 - video_processing - INFO - calculate_media_sequence_for_folder:2530 -    Целевая длительность: 64.97с
+2025-09-09 14:16:08,337 - video_processing - INFO - calculate_media_sequence_for_folder:2531 -    XFADE переходы: отключены
+2025-09-09 14:16:08,337 - video_processing - INFO - calculate_media_sequence_for_folder:2632 -    Без переходов - применяем новую логику распределения
+2025-09-09 14:16:08,424 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео 1.mov: 3.80с (полная длительность)
+2025-09-09 14:16:08,490 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео 2.mov: 8.27с (полная длительность)
+2025-09-09 14:16:08,570 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео 3.mov: 5.27с (полная длительность)
+2025-09-09 14:16:08,637 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео 4.mov: 9.82с (полная длительность)
+2025-09-09 14:16:08,646 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_122_nikolay-tsiskaridze-with-his-mother_29.jpg
+2025-09-09 14:16:08,646 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_124_5-2-pic_32ratio_900x600-900x600-98494.jpg
+2025-09-09 14:16:08,647 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_165_9e70443a72f4d16478037e9cd20c9a77.webp
+2025-09-09 14:16:08,647 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_173_20060831_gaf_rl09_296.jpg
+2025-09-09 14:16:08,647 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_175_4bb3c034-362f-4443-9b43-06f58c9e89db.jpg
+2025-09-09 14:16:08,723 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео Запись экрана 2025-06-23 в 18.13.21.mov: 8.48с (полная длительность)
+2025-09-09 14:16:08,864 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео Запись экрана 2025-09-08 в 12.59.02.mov: 6.68с (полная длительность)
+2025-09-09 14:16:08,998 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео Запись экрана 2025-06-23 в 18.12.08.mov: 3.07с (полная длительность)
+2025-09-09 14:16:09,082 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео Запись экрана 2025-06-23 в 17.58.18.mov: 11.15с (полная длительность)
+2025-09-09 14:16:09,083 - video_processing - INFO - calculate_media_sequence_for_folder:2661 -    Общая длительность видео: 56.53с
+2025-09-09 14:16:09,083 - video_processing - INFO - calculate_media_sequence_for_folder:2662 -    Оставшееся время для фото: 8.43с
+2025-09-09 14:16:09,083 - video_processing - INFO - calculate_media_sequence_for_folder:2676 -    Длительность на фото: 1.69с
+2025-09-09 14:16:10,325 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_1-2_0_1.mp4
+2025-09-09 14:16:13,459 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_1-2_1_2.mp4
+2025-09-09 14:16:15,782 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_1-2_2_3.mp4
+2025-09-09 14:16:18,236 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_1-2_3_4.mp4
+2025-09-09 14:16:28,168 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_1-2_9_Запись экрана 2025-06-23 в 18.13.21.mp4
+2025-09-09 14:16:31,263 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_1-2_10_Запись экрана 2025-09-08 в 12.59.02.mp4
+2025-09-09 14:16:33,326 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_1-2_11_Запись экрана 2025-06-23 в 18.12.08.mp4
+2025-09-09 14:16:37,957 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_1-2_12_Запись экрана 2025-06-23 в 17.58.18.mp4
+2025-09-09 14:16:38,310 - video_processing - INFO - process_single_folder_segment:1230 - 🔍 ДИАГНОСТИКА переходов для папки '1-2':
+2025-09-09 14:16:38,310 - video_processing - INFO - process_single_folder_segment:1231 -    effects_config существует: True
+2025-09-09 14:16:38,310 - video_processing - INFO - process_single_folder_segment:1235 -    transitions_enabled: False (тип: <class 'bool'>)
+2025-09-09 14:16:38,310 - video_processing - INFO - process_single_folder_segment:1236 -    transition_method: 'overlay' (тип: <class 'str'>)
+2025-09-09 14:16:38,310 - video_processing - INFO - process_single_folder_segment:1237 -    transition_method == 'xfade': False
+2025-09-09 14:16:38,311 - video_processing - INFO - process_single_folder_segment:1245 -    Итоговое решение - transitions_enabled: False
+2025-09-09 14:16:38,311 - video_processing - INFO - process_single_folder_segment:1257 - 📼 Простая конкатенация в папке '1-2' (переходы отключены)
+2025-09-09 14:16:38,311 - video_processing - INFO - _concatenate_simple_no_audio:1589 - 📼 Простая конкатенация видеоряда (13 файлов) без аудио для: temp_video_segment_1-2.mp4
+2025-09-09 14:16:43,346 - video_processing - INFO - _concatenate_simple_no_audio:1624 - ✅ Видеоряд сегмента создан: temp_video_segment_1-2.mp4 (длительность: 64.88с)
+2025-09-09 14:16:43,347 - video_processing - INFO - process_single_folder_segment:1286 - 🎵 Микшируем видеоряд сегмента '1-2' с аудио: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_audio_segment_1-2.wav
+2025-09-09 14:16:43,542 - video_processing - INFO - process_single_folder_segment:1306 - 📏 ДЛИТЕЛЬНОСТИ сегмента '1-2':
+2025-09-09 14:16:43,543 - video_processing - INFO - process_single_folder_segment:1307 -    Целевая длительность папки (с компенсацией): 64.97с
+2025-09-09 14:16:43,543 - video_processing - INFO - process_single_folder_segment:1308 -    Фактическая длительность аудио: 64.91с
+2025-09-09 14:16:43,543 - video_processing - INFO - process_single_folder_segment:1309 -    Используем для видео: 64.97с
+2025-09-09 14:16:43,543 - video_processing - INFO - process_single_folder_segment:1321 - 🔍 ДИАГНОСТИКА повторения сегмента '1-2':
+2025-09-09 14:16:43,543 - video_processing - INFO - process_single_folder_segment:1322 -    Желаемая длительность: 64.97с
+2025-09-09 14:16:43,543 - video_processing - INFO - process_single_folder_segment:1323 -    Фактическая длительность: 64.88с
+2025-09-09 14:16:43,543 - video_processing - INFO - process_single_folder_segment:1324 -    Разница: 0.09с
+2025-09-09 14:16:43,543 - video_processing - INFO - process_single_folder_segment:1383 - 🎵 Используем только аудио папки для сегмента '1-2'
+2025-09-09 14:16:48,332 - video_processing - INFO - process_single_folder_segment:1411 - ✅ Сегмент папки '1-2' успешно создан: video_segment_1-2.mp4 (64.88с)
+2025-09-09 14:16:48,333 - main - INFO - process:2334 - ✅ Видеосегмент для папки '1-2' создан: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/video_segment_1-2.mp4
+2025-09-09 14:16:48,333 - main - INFO - process:2290 - 🎥 Обработка видеосегмента папки '3-6'
+2025-09-09 14:16:48,336 - video_processing - INFO - process_single_folder_segment:1091 - 🎬 Обработка сегмента папки '3-6' (цель: 88.37с)
+2025-09-09 14:16:48,336 - video_processing - INFO - process_single_folder_segment:1092 -    Медиафайлов: 19
+2025-09-09 14:16:48,336 - video_processing - INFO - process_single_folder_segment:1093 -    Аудио для папки: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_audio_segment_3-6.wav
+2025-09-09 14:16:48,337 - video_processing - INFO - process_single_folder_segment:1096 - 📋 Входящие файлы для папки '3-6':
+2025-09-09 14:16:48,337 - video_processing - INFO - process_single_folder_segment:1107 -    1. imgi_137_nikolay-tsiskaridze-in-his-youth_83.jpg
+2025-09-09 14:16:48,337 - video_processing - INFO - process_single_folder_segment:1107 -    2. imgi_102_nikolay-tsiskaridze-in-the-early-2000s_11.jpg
+2025-09-09 14:16:48,338 - video_processing - INFO - process_single_folder_segment:1107 -    3. imgi_168_0_25b76dd8a36daf11acf681e13d1daa25_1704897559.jpg
+2025-09-09 14:16:48,338 - video_processing - INFO - process_single_folder_segment:1107 -    4. imgi_169_lgn55787135084414.jpg
+2025-09-09 14:16:48,339 - video_processing - INFO - process_single_folder_segment:1107 -    5. imgi_105_e67555c8a69f.jpg
+2025-09-09 14:16:48,339 - video_processing - INFO - process_single_folder_segment:1107 -    6. imgi_106_914e330f7f5f894c299201753691a76b.jpg
+2025-09-09 14:16:48,340 - video_processing - INFO - process_single_folder_segment:1107 -    7. imgi_152_nikolay-ciskaridze-1.jpg
+2025-09-09 14:16:48,340 - video_processing - INFO - process_single_folder_segment:1107 -    8. imgi_160_ciskaridzzz-2.jpg
+2025-09-09 14:16:48,340 - video_processing - INFO - process_single_folder_segment:1107 -    9. imgi_145_88.jpg
+2025-09-09 14:16:48,341 - video_processing - INFO - process_single_folder_segment:1107 -    10. imgi_130_wr-960.webp
+2025-09-09 14:16:48,341 - video_processing - INFO - process_single_folder_segment:1107 -    11. imgi_163_nikolay-tsiskaridze-as-a-child_9.jpg
+2025-09-09 14:16:48,341 - video_processing - INFO - process_single_folder_segment:1107 -    12. imgi_142_ec67e1f500b2.jpg
+2025-09-09 14:16:48,342 - video_processing - INFO - process_single_folder_segment:1107 -    13. imgi_117_3Tsiskaridze.jpg
+2025-09-09 14:16:48,342 - video_processing - INFO - process_single_folder_segment:1107 -    14. imgi_179_wr-750.webp
+2025-09-09 14:16:48,342 - video_processing - INFO - process_single_folder_segment:1107 -    15. imgi_182_2018-12-27-482_18163-1_645723.webp
+2025-09-09 14:16:48,342 - video_processing - INFO - process_single_folder_segment:1107 -    16. imgi_100_na-scene-nikolay-tanceval-kak-bog.jpg
+2025-09-09 14:16:48,342 - video_processing - INFO - process_single_folder_segment:1107 -    17. imgi_136_189531.jpg
+2025-09-09 14:16:48,342 - video_processing - INFO - process_single_folder_segment:1107 -    18. imgi_121_PRINT_Tsiskaridze_2Photo_Alovert_3344_0.jpg
+2025-09-09 14:16:48,342 - video_processing - INFO - process_single_folder_segment:1107 -    19. imgi_124_86.jpg
+2025-09-09 14:16:48,344 - video_processing - INFO - process_single_folder_segment:1136 - ✅ Проверка медиафайлов: 19 файлов существует
+2025-09-09 14:16:48,425 - video_processing - INFO - process_single_folder_segment:1145 - 📊 Сравнение длительностей для папки '3-6':
+2025-09-09 14:16:48,426 - video_processing - INFO - process_single_folder_segment:1146 -    Целевая длительность (из Excel): 88.37с
+2025-09-09 14:16:48,427 - video_processing - INFO - process_single_folder_segment:1147 -    Длительность аудиофайла: 88.25с
+2025-09-09 14:16:48,427 - video_processing - INFO - process_single_folder_segment:1148 -    Разница: 0.12с
+2025-09-09 14:16:48,429 - video_processing - INFO - calculate_media_sequence_for_folder:2529 - 📁 Папка '3-6': сортируем 19 файлов
+2025-09-09 14:16:48,429 - video_processing - INFO - calculate_media_sequence_for_folder:2530 -    Целевая длительность: 88.37с
+2025-09-09 14:16:48,429 - video_processing - INFO - calculate_media_sequence_for_folder:2531 -    XFADE переходы: отключены
+2025-09-09 14:16:48,429 - video_processing - INFO - calculate_media_sequence_for_folder:2632 -    Без переходов - применяем новую логику распределения
+2025-09-09 14:16:48,430 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_100_na-scene-nikolay-tanceval-kak-bog.jpg
+2025-09-09 14:16:48,430 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_102_nikolay-tsiskaridze-in-the-early-2000s_11.jpg
+2025-09-09 14:16:48,430 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_105_e67555c8a69f.jpg
+2025-09-09 14:16:48,431 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_106_914e330f7f5f894c299201753691a76b.jpg
+2025-09-09 14:16:48,431 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_117_3Tsiskaridze.jpg
+2025-09-09 14:16:48,432 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_121_PRINT_Tsiskaridze_2Photo_Alovert_3344_0.jpg
+2025-09-09 14:16:48,432 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_124_86.jpg
+2025-09-09 14:16:48,432 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_130_wr-960.webp
+2025-09-09 14:16:48,433 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_136_189531.jpg
+2025-09-09 14:16:48,433 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_137_nikolay-tsiskaridze-in-his-youth_83.jpg
+2025-09-09 14:16:48,433 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_142_ec67e1f500b2.jpg
+2025-09-09 14:16:48,434 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_145_88.jpg
+2025-09-09 14:16:48,434 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_152_nikolay-ciskaridze-1.jpg
+2025-09-09 14:16:48,434 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_160_ciskaridzzz-2.jpg
+2025-09-09 14:16:48,435 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_163_nikolay-tsiskaridze-as-a-child_9.jpg
+2025-09-09 14:16:48,435 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_168_0_25b76dd8a36daf11acf681e13d1daa25_1704897559.jpg
+2025-09-09 14:16:48,435 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_169_lgn55787135084414.jpg
+2025-09-09 14:16:48,436 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_179_wr-750.webp
+2025-09-09 14:16:48,436 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_182_2018-12-27-482_18163-1_645723.webp
+2025-09-09 14:16:48,436 - video_processing - INFO - calculate_media_sequence_for_folder:2661 -    Общая длительность видео: 0.00с
+2025-09-09 14:16:48,437 - video_processing - INFO - calculate_media_sequence_for_folder:2662 -    Оставшееся время для фото: 88.37с
+2025-09-09 14:16:48,437 - video_processing - INFO - calculate_media_sequence_for_folder:2676 -    Длительность на фото: 4.65с
+2025-09-09 14:17:32,317 - video_processing - INFO - process_single_folder_segment:1230 - 🔍 ДИАГНОСТИКА переходов для папки '3-6':
+2025-09-09 14:17:32,318 - video_processing - INFO - process_single_folder_segment:1231 -    effects_config существует: True
+2025-09-09 14:17:32,318 - video_processing - INFO - process_single_folder_segment:1235 -    transitions_enabled: False (тип: <class 'bool'>)
+2025-09-09 14:17:32,319 - video_processing - INFO - process_single_folder_segment:1236 -    transition_method: 'overlay' (тип: <class 'str'>)
+2025-09-09 14:17:32,319 - video_processing - INFO - process_single_folder_segment:1237 -    transition_method == 'xfade': False
+2025-09-09 14:17:32,319 - video_processing - INFO - process_single_folder_segment:1245 -    Итоговое решение - transitions_enabled: False
+2025-09-09 14:17:32,319 - video_processing - INFO - process_single_folder_segment:1257 - 📼 Простая конкатенация в папке '3-6' (переходы отключены)
+2025-09-09 14:17:32,320 - video_processing - INFO - _concatenate_simple_no_audio:1589 - 📼 Простая конкатенация видеоряда (19 файлов) без аудио для: temp_video_segment_3-6.mp4
+2025-09-09 14:17:37,376 - video_processing - INFO - _concatenate_simple_no_audio:1624 - ✅ Видеоряд сегмента создан: temp_video_segment_3-6.mp4 (длительность: 88.67с)
+2025-09-09 14:17:37,378 - video_processing - INFO - process_single_folder_segment:1286 - 🎵 Микшируем видеоряд сегмента '3-6' с аудио: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_audio_segment_3-6.wav
+2025-09-09 14:17:37,620 - video_processing - INFO - process_single_folder_segment:1306 - 📏 ДЛИТЕЛЬНОСТИ сегмента '3-6':
+2025-09-09 14:17:37,620 - video_processing - INFO - process_single_folder_segment:1307 -    Целевая длительность папки (с компенсацией): 88.37с
+2025-09-09 14:17:37,621 - video_processing - INFO - process_single_folder_segment:1308 -    Фактическая длительность аудио: 88.25с
+2025-09-09 14:17:37,621 - video_processing - INFO - process_single_folder_segment:1309 -    Используем для видео: 88.37с
+2025-09-09 14:17:37,621 - video_processing - INFO - process_single_folder_segment:1321 - 🔍 ДИАГНОСТИКА повторения сегмента '3-6':
+2025-09-09 14:17:37,621 - video_processing - INFO - process_single_folder_segment:1322 -    Желаемая длительность: 88.37с
+2025-09-09 14:17:37,621 - video_processing - INFO - process_single_folder_segment:1323 -    Фактическая длительность: 88.67с
+2025-09-09 14:17:37,621 - video_processing - INFO - process_single_folder_segment:1324 -    Разница: -0.29с
+2025-09-09 14:17:37,622 - video_processing - INFO - process_single_folder_segment:1358 - 🔧 Видеоряд папки '3-6' (88.67с) длиннее аудио. Обрезано до: 88.372с
+2025-09-09 14:17:37,622 - video_processing - INFO - process_single_folder_segment:1383 - 🎵 Используем только аудио папки для сегмента '3-6'
+2025-09-09 14:17:43,034 - video_processing - INFO - process_single_folder_segment:1411 - ✅ Сегмент папки '3-6' успешно создан: video_segment_3-6.mp4 (88.25с)
+2025-09-09 14:17:43,035 - main - INFO - process:2334 - ✅ Видеосегмент для папки '3-6' создан: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/video_segment_3-6.mp4
+2025-09-09 14:17:43,035 - main - INFO - process:2290 - 🎥 Обработка видеосегмента папки '7-10'
+2025-09-09 14:17:43,036 - video_processing - INFO - process_single_folder_segment:1091 - 🎬 Обработка сегмента папки '7-10' (цель: 119.25с)
+2025-09-09 14:17:43,036 - video_processing - INFO - process_single_folder_segment:1092 -    Медиафайлов: 28
+2025-09-09 14:17:43,036 - video_processing - INFO - process_single_folder_segment:1093 -    Аудио для папки: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_audio_segment_7-10.wav
+2025-09-09 14:17:43,036 - video_processing - INFO - process_single_folder_segment:1096 - 📋 Входящие файлы для папки '7-10':
+2025-09-09 14:17:43,036 - video_processing - INFO - process_single_folder_segment:1107 -    1. imgi_135_33493e009d99-landscape.jpg
+2025-09-09 14:17:43,036 - video_processing - INFO - process_single_folder_segment:1107 -    2. imgi_139_tsiskaridze01.jpg
+2025-09-09 14:17:43,037 - video_processing - INFO - process_single_folder_segment:1107 -    3. imgi_114_b997b39125fb6886c998f7cabf685153_cropped_510x638.webp
+2025-09-09 14:17:43,037 - video_processing - INFO - process_single_folder_segment:1107 -    4. imgi_161_upload-RIAN_152102.HR-pic905-895x505-57091.jpg
+2025-09-09 14:17:43,037 - video_processing - INFO - process_single_folder_segment:1107 -    5. imgi_127_524b4736299600ce3dcc437926d82cbc_cropped_510x791.webp
+2025-09-09 14:17:43,037 - video_processing - INFO - process_single_folder_segment:1107 -    6. imgi_131_akademiya_vaganovoy.jpg
+2025-09-09 14:17:43,037 - video_processing - INFO - process_single_folder_segment:1107 -    7. imgi_155_original-1p6f.jpg
+2025-09-09 14:17:43,038 - video_processing - INFO - process_single_folder_segment:1107 -    8. imgi_103_2022-09-23_090757.jpg
+2025-09-09 14:17:43,038 - video_processing - INFO - process_single_folder_segment:1107 -    9. imgi_97_tsisk3.jpg
+2025-09-09 14:17:43,038 - video_processing - INFO - process_single_folder_segment:1107 -    10. imgi_110_b2ad7bbb7b476754f3f0a61930988bd4_ce_2403x1600x79x0.jpg
+2025-09-09 14:17:43,038 - video_processing - INFO - process_single_folder_segment:1107 -    11. imgi_93_ciskaridze-ryadom-s-princessoy-dianoy060427.jpg
+2025-09-09 14:17:43,038 - video_processing - INFO - process_single_folder_segment:1107 -    12. imgi_117_80.jpg
+2025-09-09 14:17:43,039 - video_processing - INFO - process_single_folder_segment:1107 -    13. imgi_143_1.png
+2025-09-09 14:17:43,039 - video_processing - INFO - process_single_folder_segment:1107 -    14. imgi_127_78.jpg
+2025-09-09 14:17:43,039 - video_processing - INFO - process_single_folder_segment:1107 -    15. imgi_163_201.jpg
+2025-09-09 14:17:43,039 - video_processing - INFO - process_single_folder_segment:1107 -    16. imgi_181_AT_2__05206 копия.jpg
+2025-09-09 14:17:43,039 - video_processing - INFO - process_single_folder_segment:1107 -    17. imgi_95_859841527992.jpg
+2025-09-09 14:17:43,039 - video_processing - INFO - process_single_folder_segment:1107 -    18. imgi_113_17042912.jpg
+2025-09-09 14:17:43,039 - video_processing - INFO - process_single_folder_segment:1107 -    19. imgi_143_8c0f5515ed053c1148e2baf6faf0a200_cropped_510x510.webp
+2025-09-09 14:17:43,040 - video_processing - INFO - process_single_folder_segment:1107 -    20. imgi_149_858x540.jpg
+2025-09-09 14:17:43,040 - video_processing - INFO - process_single_folder_segment:1107 -    21. imgi_174_funny-klev-club-p-smeshnie-kartinki-tsiskaridze-4.jpg
+2025-09-09 14:17:43,040 - video_processing - INFO - process_single_folder_segment:1107 -    22. imgi_150_344444444443232.jpg
+2025-09-09 14:17:43,040 - video_processing - INFO - process_single_folder_segment:1107 -    23. imgi_128_251215o2q1.jpg
+2025-09-09 14:17:43,040 - video_processing - INFO - process_single_folder_segment:1107 -    24. imgi_139__normal.jpg
+2025-09-09 14:17:43,040 - video_processing - INFO - process_single_folder_segment:1107 -    25. imgi_180_5654_photo.jpg
+2025-09-09 14:17:43,040 - video_processing - INFO - process_single_folder_segment:1107 -    26. imgi_150_35d235fce3f99e1eacf35f14a43d8464_cropped_666x833.jpg
+2025-09-09 14:17:43,041 - video_processing - INFO - process_single_folder_segment:1107 -    27. imgi_106_nikolay-ciskaridze061906-1024x512.jpg
+2025-09-09 14:17:43,041 - video_processing - INFO - process_single_folder_segment:1107 -    28. imgi_118_2a3e85833d661660c827483946d34675_ce_532x367x0x46.jpg
+2025-09-09 14:17:43,041 - video_processing - INFO - process_single_folder_segment:1136 - ✅ Проверка медиафайлов: 28 файлов существует
+2025-09-09 14:17:43,119 - video_processing - INFO - process_single_folder_segment:1145 - 📊 Сравнение длительностей для папки '7-10':
+2025-09-09 14:17:43,119 - video_processing - INFO - process_single_folder_segment:1146 -    Целевая длительность (из Excel): 119.25с
+2025-09-09 14:17:43,120 - video_processing - INFO - process_single_folder_segment:1147 -    Длительность аудиофайла: 119.13с
+2025-09-09 14:17:43,120 - video_processing - INFO - process_single_folder_segment:1148 -    Разница: 0.12с
+2025-09-09 14:17:43,120 - video_processing - INFO - calculate_media_sequence_for_folder:2529 - 📁 Папка '7-10': сортируем 28 файлов
+2025-09-09 14:17:43,120 - video_processing - INFO - calculate_media_sequence_for_folder:2530 -    Целевая длительность: 119.25с
+2025-09-09 14:17:43,120 - video_processing - INFO - calculate_media_sequence_for_folder:2531 -    XFADE переходы: отключены
+2025-09-09 14:17:43,138 - video_processing - INFO - calculate_media_sequence_for_folder:2632 -    Без переходов - применяем новую логику распределения
+2025-09-09 14:17:43,138 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_93_ciskaridze-ryadom-s-princessoy-dianoy060427.jpg
+2025-09-09 14:17:43,139 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_95_859841527992.jpg
+2025-09-09 14:17:43,139 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_97_tsisk3.jpg
+2025-09-09 14:17:43,139 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_103_2022-09-23_090757.jpg
+2025-09-09 14:17:43,139 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_106_nikolay-ciskaridze061906-1024x512.jpg
+2025-09-09 14:17:43,139 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_110_b2ad7bbb7b476754f3f0a61930988bd4_ce_2403x1600x79x0.jpg
+2025-09-09 14:17:43,139 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_113_17042912.jpg
+2025-09-09 14:17:43,140 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_114_b997b39125fb6886c998f7cabf685153_cropped_510x638.webp
+2025-09-09 14:17:43,140 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_117_80.jpg
+2025-09-09 14:17:43,140 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_118_2a3e85833d661660c827483946d34675_ce_532x367x0x46.jpg
+2025-09-09 14:17:43,140 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_127_524b4736299600ce3dcc437926d82cbc_cropped_510x791.webp
+2025-09-09 14:17:43,140 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_127_78.jpg
+2025-09-09 14:17:43,140 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_128_251215o2q1.jpg
+2025-09-09 14:17:43,140 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_131_akademiya_vaganovoy.jpg
+2025-09-09 14:17:43,140 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_135_33493e009d99-landscape.jpg
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_139_tsiskaridze01.jpg
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_139__normal.jpg
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_143_1.png
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_143_8c0f5515ed053c1148e2baf6faf0a200_cropped_510x510.webp
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_149_858x540.jpg
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_150_344444444443232.jpg
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_150_35d235fce3f99e1eacf35f14a43d8464_cropped_666x833.jpg
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_155_original-1p6f.jpg
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_161_upload-RIAN_152102.HR-pic905-895x505-57091.jpg
+2025-09-09 14:17:43,141 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_163_201.jpg
+2025-09-09 14:17:43,142 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_174_funny-klev-club-p-smeshnie-kartinki-tsiskaridze-4.jpg
+2025-09-09 14:17:43,142 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_180_5654_photo.jpg
+2025-09-09 14:17:43,142 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_181_AT_2__05206 копия.jpg
+2025-09-09 14:17:43,142 - video_processing - INFO - calculate_media_sequence_for_folder:2661 -    Общая длительность видео: 0.00с
+2025-09-09 14:17:43,142 - video_processing - INFO - calculate_media_sequence_for_folder:2662 -    Оставшееся время для фото: 119.25с
+2025-09-09 14:17:43,142 - video_processing - INFO - calculate_media_sequence_for_folder:2676 -    Длительность на фото: 4.26с
+2025-09-09 14:18:32,308 - video_processing - INFO - process_single_folder_segment:1230 - 🔍 ДИАГНОСТИКА переходов для папки '7-10':
+2025-09-09 14:18:32,309 - video_processing - INFO - process_single_folder_segment:1231 -    effects_config существует: True
+2025-09-09 14:18:32,309 - video_processing - INFO - process_single_folder_segment:1235 -    transitions_enabled: False (тип: <class 'bool'>)
+2025-09-09 14:18:32,309 - video_processing - INFO - process_single_folder_segment:1236 -    transition_method: 'overlay' (тип: <class 'str'>)
+2025-09-09 14:18:32,309 - video_processing - INFO - process_single_folder_segment:1237 -    transition_method == 'xfade': False
+2025-09-09 14:18:32,310 - video_processing - INFO - process_single_folder_segment:1245 -    Итоговое решение - transitions_enabled: False
+2025-09-09 14:18:32,310 - video_processing - INFO - process_single_folder_segment:1257 - 📼 Простая конкатенация в папке '7-10' (переходы отключены)
+2025-09-09 14:18:32,310 - video_processing - INFO - _concatenate_simple_no_audio:1589 - 📼 Простая конкатенация видеоряда (28 файлов) без аудио для: temp_video_segment_7-10.mp4
+2025-09-09 14:18:38,986 - video_processing - INFO - _concatenate_simple_no_audio:1624 - ✅ Видеоряд сегмента создан: temp_video_segment_7-10.mp4 (длительность: 119.00с)
+2025-09-09 14:18:38,986 - video_processing - INFO - process_single_folder_segment:1286 - 🎵 Микшируем видеоряд сегмента '7-10' с аудио: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_audio_segment_7-10.wav
+2025-09-09 14:18:39,185 - video_processing - INFO - process_single_folder_segment:1306 - 📏 ДЛИТЕЛЬНОСТИ сегмента '7-10':
+2025-09-09 14:18:39,185 - video_processing - INFO - process_single_folder_segment:1307 -    Целевая длительность папки (с компенсацией): 119.25с
+2025-09-09 14:18:39,185 - video_processing - INFO - process_single_folder_segment:1308 -    Фактическая длительность аудио: 119.13с
+2025-09-09 14:18:39,186 - video_processing - INFO - process_single_folder_segment:1309 -    Используем для видео: 119.25с
+2025-09-09 14:18:39,186 - video_processing - INFO - process_single_folder_segment:1321 - 🔍 ДИАГНОСТИКА повторения сегмента '7-10':
+2025-09-09 14:18:39,186 - video_processing - INFO - process_single_folder_segment:1322 -    Желаемая длительность: 119.25с
+2025-09-09 14:18:39,186 - video_processing - INFO - process_single_folder_segment:1323 -    Фактическая длительность: 119.00с
+2025-09-09 14:18:39,186 - video_processing - INFO - process_single_folder_segment:1324 -    Разница: 0.25с
+2025-09-09 14:18:39,186 - video_processing - INFO - process_single_folder_segment:1383 - 🎵 Используем только аудио папки для сегмента '7-10'
+2025-09-09 14:18:46,130 - video_processing - INFO - process_single_folder_segment:1411 - ✅ Сегмент папки '7-10' успешно создан: video_segment_7-10.mp4 (119.00с)
+2025-09-09 14:18:46,131 - main - INFO - process:2334 - ✅ Видеосегмент для папки '7-10' создан: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/video_segment_7-10.mp4
+2025-09-09 14:18:46,131 - main - INFO - process:2290 - 🎥 Обработка видеосегмента папки '11-24'
+2025-09-09 14:18:46,133 - video_processing - INFO - process_single_folder_segment:1091 - 🎬 Обработка сегмента папки '11-24' (цель: 382.28с)
+2025-09-09 14:18:46,133 - video_processing - INFO - process_single_folder_segment:1092 -    Медиафайлов: 59
+2025-09-09 14:18:46,133 - video_processing - INFO - process_single_folder_segment:1093 -    Аудио для папки: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_audio_segment_11-24.wav
+2025-09-09 14:18:46,134 - video_processing - INFO - process_single_folder_segment:1096 - 📋 Входящие файлы для папки '11-24':
+2025-09-09 14:18:46,134 - video_processing - INFO - process_single_folder_segment:1107 -    1. imgi_142_PRINT_Tsiskaridze_2Photo_Alovert_3344_0.jpg
+2025-09-09 14:18:46,134 - video_processing - INFO - process_single_folder_segment:1107 -    2. imgi_157_9e70443a72f4d16478037e9cd20c9a77.webp
+2025-09-09 14:18:46,134 - video_processing - INFO - process_single_folder_segment:1107 -    3. imgi_191_Владимир_Путин_встретил_Светлану_Захарову_и_Николая_Цискаридзе._15_марта_2005_года._20.kremlin.ru.jpg
+2025-09-09 14:18:46,134 - video_processing - INFO - process_single_folder_segment:1107 -    4. imgi_187_86.jpg
+2025-09-09 14:18:46,134 - video_processing - INFO - process_single_folder_segment:1107 -    5. imgi_150_90.jpg
+2025-09-09 14:18:46,134 - video_processing - INFO - process_single_folder_segment:1107 -    6. imgi_182_sis.jpg
+2025-09-09 14:18:46,135 - video_processing - INFO - process_single_folder_segment:1107 -    7. imgi_194_mc_info_23046_orig_1612866806.jpg
+2025-09-09 14:18:46,135 - video_processing - INFO - process_single_folder_segment:1107 -    8. imgi_176_c62e135fd5bba5cbd3862c61ee0dd1d0-qdocument-name-26.jpg
+2025-09-09 14:18:46,135 - video_processing - INFO - process_single_folder_segment:1107 -    9. imgi_139_nikolaj-ciskaridze-esli-by-v-menya-kogdanibudy-vkladyvali-denygi-to-na-lune-bylo-by-napisano-moe-imya_53126_cover_999x724.webp
+2025-09-09 14:18:46,135 - video_processing - INFO - process_single_folder_segment:1107 -    10. imgi_153_10-8.jpg
+2025-09-09 14:18:46,135 - video_processing - INFO - process_single_folder_segment:1107 -    11. imgi_132__normal_2.jpg
+2025-09-09 14:18:46,135 - video_processing - INFO - process_single_folder_segment:1107 -    12. imgi_117_tsiskaridze.jpg
+2025-09-09 14:18:46,135 - video_processing - INFO - process_single_folder_segment:1107 -    13. imgi_121_oZS7LzCK81NcrZydyxjRnxeFGqOo9dhTQdmN9Lof_780.jpg
+2025-09-09 14:18:46,135 - video_processing - INFO - process_single_folder_segment:1107 -    14. imgi_209_IMG_20221219_062005_0.jpg
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    15. imgi_108_wr-960.webp
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    16. imgi_174_9651ac552db57e71dbe889cc6e5bfe3d.webp
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    17. imgi_140_756515243996039.jpg
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    18. imgi_113_50af1fa7efeaacabda1b5a616dfa4684.jpg
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    19. imgi_181_ciskaridze.jpg
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    20. imgi_169_99d5dcf59f935f28727df50fee2484ad-2022-12-03-20-09-48.jpg
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    21. imgi_184_a02f1c77d554522c0d959193f5a0f344.jpg
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    22. imgi_123_wr-960.webp
+2025-09-09 14:18:46,136 - video_processing - INFO - process_single_folder_segment:1107 -    23. imgi_135_Nikolay_tciskaridze.jpg
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    24. 1.mov
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    25. imgi_162_aezj020jy0176fun0sbpmnpladnxh6uy.webp
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    26. imgi_134_c0262ff8821db13ede57475d0167c189.jpg
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    27. imgi_201__normal.jpg
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    28. imgi_163_1200_5ec67aa082682c294ec867d5.jpg
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    29. imgi_141_0dc16cc882274a8734830284fd2809a44f68a6e886dbdc8fc0181c9e6fc309f8.jpg
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    30. imgi_144_nikolay-ciskaridze073249.jpg
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    31. imgi_190_Bez-imeni-18-pic_32ratio_900x600-900x600-75861.jpg
+2025-09-09 14:18:46,137 - video_processing - INFO - process_single_folder_segment:1107 -    32. imgi_127_5656_photo.jpg
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    33. imgi_166_wr-960.webp
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    34. imgi_163_33493e009d99.jpg
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    35. imgi_158_347083728155191.jpg
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    36. imgi_125_64ac0fde6c65ac74f902623a132ac7bd.jpg
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    37. imgi_187_wr-960.webp
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    38. imgi_145_1735638933239.jpg
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    39. imgi_170_0aa74d83c96d3e7995621ebb36afbfd2.jpg
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    40. imgi_105_na-scene-nikolay-tanceval-kak-bog.jpg
+2025-09-09 14:18:46,138 - video_processing - INFO - process_single_folder_segment:1107 -    41. imgi_114_eto-ochen-strashno-vot-chto-na-samom-dele-seychas-proishodit-s-ciskaridze.jpg
+2025-09-09 14:18:46,139 - video_processing - INFO - process_single_folder_segment:1107 -    42. imgi_169_17042912.jpg
+2025-09-09 14:18:46,139 - video_processing - INFO - process_single_folder_segment:1107 -    43. imgi_192_7abe850d73ef53aea8f38d77f9bd22eb-2022-12-05-20-12-08.jpg
+2025-09-09 14:18:46,139 - video_processing - INFO - process_single_folder_segment:1107 -    44. imgi_193_balet1000_e00.jpg
+2025-09-09 14:18:46,139 - video_processing - INFO - process_single_folder_segment:1107 -    45. imgi_131_88.jpg
+2025-09-09 14:18:46,139 - video_processing - INFO - process_single_folder_segment:1107 -    46. imgi_146_51ce5feb6fd4b916690a795c6f7bad70.jpg
+2025-09-09 14:18:46,164 - video_processing - INFO - process_single_folder_segment:1107 -    47. imgi_149_nikolai-maksimovich-ciskaridze.jpg
+2025-09-09 14:18:46,165 - video_processing - INFO - process_single_folder_segment:1107 -    48. imgi_182_5655_photo.jpg
+2025-09-09 14:18:46,165 - video_processing - INFO - process_single_folder_segment:1107 -    49. imgi_126_86.jpg
+2025-09-09 14:18:46,165 - video_processing - INFO - process_single_folder_segment:1107 -    50. imgi_120_251215o2q1.jpg
+2025-09-09 14:18:46,165 - video_processing - INFO - process_single_folder_segment:1107 -    51. imgi_189_luubjh0VOf0DugMXSyHyScoqx2GImdnvEQIMw542_780.png
+2025-09-09 14:18:46,165 - video_processing - INFO - process_single_folder_segment:1107 -    52. imgi_177_Цискаридзе-1.jpg
+2025-09-09 14:18:46,165 - video_processing - INFO - process_single_folder_segment:1107 -    53. imgi_172_1601275112_6.jpg
+2025-09-09 14:18:46,165 - video_processing - INFO - process_single_folder_segment:1107 -    54. imgi_133_original.webp
+2025-09-09 14:18:46,165 - video_processing - INFO - process_single_folder_segment:1107 -    55. imgi_112_90.jpg
+2025-09-09 14:18:46,166 - video_processing - INFO - process_single_folder_segment:1107 -    56. imgi_156_nikolay-ciskaridze092130.jpg
+2025-09-09 14:18:46,166 - video_processing - INFO - process_single_folder_segment:1107 -    57. imgi_180_1200_6744609a82682c4371850e31.jpg
+2025-09-09 14:18:46,166 - video_processing - INFO - process_single_folder_segment:1107 -    58. imgi_128_90.jpg
+2025-09-09 14:18:46,166 - video_processing - INFO - process_single_folder_segment:1107 -    59. imgi_151_1200_5e4bef3f82682c0443378b4e.jpg
+2025-09-09 14:18:46,167 - video_processing - INFO - process_single_folder_segment:1136 - ✅ Проверка медиафайлов: 59 файлов существует
+2025-09-09 14:18:46,238 - video_processing - INFO - process_single_folder_segment:1145 - 📊 Сравнение длительностей для папки '11-24':
+2025-09-09 14:18:46,238 - video_processing - INFO - process_single_folder_segment:1146 -    Целевая длительность (из Excel): 382.28с
+2025-09-09 14:18:46,238 - video_processing - INFO - process_single_folder_segment:1147 -    Длительность аудиофайла: 381.86с
+2025-09-09 14:18:46,238 - video_processing - INFO - process_single_folder_segment:1148 -    Разница: 0.42с
+2025-09-09 14:18:46,264 - video_processing - INFO - calculate_media_sequence_for_folder:2529 - 📁 Папка '11-24': сортируем 59 файлов
+2025-09-09 14:18:46,273 - video_processing - INFO - calculate_media_sequence_for_folder:2530 -    Целевая длительность: 382.28с
+2025-09-09 14:18:46,273 - video_processing - INFO - calculate_media_sequence_for_folder:2531 -    XFADE переходы: отключены
+2025-09-09 14:18:46,273 - video_processing - INFO - calculate_media_sequence_for_folder:2632 -    Без переходов - применяем новую логику распределения
+2025-09-09 14:18:46,365 - video_processing - INFO - calculate_media_sequence_for_folder:2648 -    📹 Видео 1.mov: 42.36с (полная длительность)
+2025-09-09 14:18:46,365 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_105_na-scene-nikolay-tanceval-kak-bog.jpg
+2025-09-09 14:18:46,365 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_108_wr-960.webp
+2025-09-09 14:18:46,365 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_112_90.jpg
+2025-09-09 14:18:46,366 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_113_50af1fa7efeaacabda1b5a616dfa4684.jpg
+2025-09-09 14:18:46,366 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_114_eto-ochen-strashno-vot-chto-na-samom-dele-seychas-proishodit-s-ciskaridze.jpg
+2025-09-09 14:18:46,366 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_117_tsiskaridze.jpg
+2025-09-09 14:18:46,366 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_120_251215o2q1.jpg
+2025-09-09 14:18:46,366 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_121_oZS7LzCK81NcrZydyxjRnxeFGqOo9dhTQdmN9Lof_780.jpg
+2025-09-09 14:18:46,367 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_123_wr-960.webp
+2025-09-09 14:18:46,367 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_125_64ac0fde6c65ac74f902623a132ac7bd.jpg
+2025-09-09 14:18:46,367 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_126_86.jpg
+2025-09-09 14:18:46,367 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_127_5656_photo.jpg
+2025-09-09 14:18:46,367 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_128_90.jpg
+2025-09-09 14:18:46,367 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_131_88.jpg
+2025-09-09 14:18:46,368 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_132__normal_2.jpg
+2025-09-09 14:18:46,368 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_133_original.webp
+2025-09-09 14:18:46,368 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_134_c0262ff8821db13ede57475d0167c189.jpg
+2025-09-09 14:18:46,368 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_135_Nikolay_tciskaridze.jpg
+2025-09-09 14:18:46,368 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_139_nikolaj-ciskaridze-esli-by-v-menya-kogdanibudy-vkladyvali-denygi-to-na-lune-bylo-by-napisano-moe-imya_53126_cover_999x724.webp
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_140_756515243996039.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_141_0dc16cc882274a8734830284fd2809a44f68a6e886dbdc8fc0181c9e6fc309f8.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_142_PRINT_Tsiskaridze_2Photo_Alovert_3344_0.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_144_nikolay-ciskaridze073249.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_145_1735638933239.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_146_51ce5feb6fd4b916690a795c6f7bad70.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_149_nikolai-maksimovich-ciskaridze.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_150_90.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_151_1200_5e4bef3f82682c0443378b4e.jpg
+2025-09-09 14:18:46,369 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_153_10-8.jpg
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_156_nikolay-ciskaridze092130.jpg
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_157_9e70443a72f4d16478037e9cd20c9a77.webp
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_158_347083728155191.jpg
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_162_aezj020jy0176fun0sbpmnpladnxh6uy.webp
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_163_1200_5ec67aa082682c294ec867d5.jpg
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_163_33493e009d99.jpg
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_166_wr-960.webp
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_169_99d5dcf59f935f28727df50fee2484ad-2022-12-03-20-09-48.jpg
+2025-09-09 14:18:46,370 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_169_17042912.jpg
+2025-09-09 14:18:46,371 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_170_0aa74d83c96d3e7995621ebb36afbfd2.jpg
+2025-09-09 14:18:46,371 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_172_1601275112_6.jpg
+2025-09-09 14:18:46,371 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_174_9651ac552db57e71dbe889cc6e5bfe3d.webp
+2025-09-09 14:18:46,371 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_176_c62e135fd5bba5cbd3862c61ee0dd1d0-qdocument-name-26.jpg
+2025-09-09 14:18:46,371 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_177_Цискаридзе-1.jpg
+2025-09-09 14:18:46,371 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_180_1200_6744609a82682c4371850e31.jpg
+2025-09-09 14:18:46,371 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_181_ciskaridze.jpg
+2025-09-09 14:18:46,372 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_182_sis.jpg
+2025-09-09 14:18:46,372 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_182_5655_photo.jpg
+2025-09-09 14:18:46,372 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_184_a02f1c77d554522c0d959193f5a0f344.jpg
+2025-09-09 14:18:46,372 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_187_86.jpg
+2025-09-09 14:18:46,372 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_187_wr-960.webp
+2025-09-09 14:18:46,372 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_189_luubjh0VOf0DugMXSyHyScoqx2GImdnvEQIMw542_780.png
+2025-09-09 14:18:46,372 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_190_Bez-imeni-18-pic_32ratio_900x600-900x600-75861.jpg
+2025-09-09 14:18:46,373 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_191_Владимир_Путин_встретил_Светлану_Захарову_и_Николая_Цискаридзе._15_марта_2005_года._20.kremlin.ru.jpg
+2025-09-09 14:18:46,373 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_192_7abe850d73ef53aea8f38d77f9bd22eb-2022-12-05-20-12-08.jpg
+2025-09-09 14:18:46,373 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_193_balet1000_e00.jpg
+2025-09-09 14:18:46,373 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_194_mc_info_23046_orig_1612866806.jpg
+2025-09-09 14:18:46,373 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_201__normal.jpg
+2025-09-09 14:18:46,373 - video_processing - INFO - calculate_media_sequence_for_folder:2657 -    📷 Фото imgi_209_IMG_20221219_062005_0.jpg
+2025-09-09 14:18:46,373 - video_processing - INFO - calculate_media_sequence_for_folder:2661 -    Общая длительность видео: 42.36с
+2025-09-09 14:18:46,373 - video_processing - INFO - calculate_media_sequence_for_folder:2662 -    Оставшееся время для фото: 339.91с
+2025-09-09 14:18:46,374 - video_processing - INFO - calculate_media_sequence_for_folder:2676 -    Длительность на фото: 5.86с
+2025-09-09 14:18:53,426 - video_processing - INFO - reencode_video:869 - ✅ Видео успешно перекодировано и валидно: processed_11-24_0_1.mp4
+2025-09-09 14:21:01,141 - video_processing - INFO - process_single_folder_segment:1230 - 🔍 ДИАГНОСТИКА переходов для папки '11-24':
+2025-09-09 14:21:01,143 - video_processing - INFO - process_single_folder_segment:1231 -    effects_config существует: True
+2025-09-09 14:21:01,144 - video_processing - INFO - process_single_folder_segment:1235 -    transitions_enabled: False (тип: <class 'bool'>)
+2025-09-09 14:21:01,144 - video_processing - INFO - process_single_folder_segment:1236 -    transition_method: 'overlay' (тип: <class 'str'>)
+2025-09-09 14:21:01,144 - video_processing - INFO - process_single_folder_segment:1237 -    transition_method == 'xfade': False
+2025-09-09 14:21:01,144 - video_processing - INFO - process_single_folder_segment:1245 -    Итоговое решение - transitions_enabled: False
+2025-09-09 14:21:01,144 - video_processing - INFO - process_single_folder_segment:1257 - 📼 Простая конкатенация в папке '11-24' (переходы отключены)
+2025-09-09 14:21:01,145 - video_processing - INFO - _concatenate_simple_no_audio:1589 - 📼 Простая конкатенация видеоряда (59 файлов) без аудио для: temp_video_segment_11-24.mp4
+2025-09-09 14:22:22,005 - video_processing - INFO - _concatenate_simple_no_audio:1624 - ✅ Видеоряд сегмента создан: temp_video_segment_11-24.mp4 (длительность: 383.08с)
+2025-09-09 14:22:22,007 - video_processing - INFO - process_single_folder_segment:1286 - 🎵 Микшируем видеоряд сегмента '11-24' с аудио: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/folder_audio_segment_11-24.wav
+2025-09-09 14:22:22,252 - video_processing - INFO - process_single_folder_segment:1306 - 📏 ДЛИТЕЛЬНОСТИ сегмента '11-24':
+2025-09-09 14:22:22,253 - video_processing - INFO - process_single_folder_segment:1307 -    Целевая длительность папки (с компенсацией): 382.28с
+2025-09-09 14:22:22,253 - video_processing - INFO - process_single_folder_segment:1308 -    Фактическая длительность аудио: 381.86с
+2025-09-09 14:22:22,254 - video_processing - INFO - process_single_folder_segment:1309 -    Используем для видео: 382.28с
+2025-09-09 14:22:22,254 - video_processing - INFO - process_single_folder_segment:1321 - 🔍 ДИАГНОСТИКА повторения сегмента '11-24':
+2025-09-09 14:22:22,254 - video_processing - INFO - process_single_folder_segment:1322 -    Желаемая длительность: 382.28с
+2025-09-09 14:22:22,254 - video_processing - INFO - process_single_folder_segment:1323 -    Фактическая длительность: 383.08с
+2025-09-09 14:22:22,255 - video_processing - INFO - process_single_folder_segment:1324 -    Разница: -0.81с
+2025-09-09 14:22:22,255 - video_processing - INFO - process_single_folder_segment:1358 - 🔧 Видеоряд папки '11-24' (383.08с) длиннее аудио. Обрезано до: 382.276с
+2025-09-09 14:22:22,255 - video_processing - INFO - process_single_folder_segment:1383 - 🎵 Используем только аудио папки для сегмента '11-24'
+2025-09-09 14:22:45,101 - video_processing - INFO - process_single_folder_segment:1411 - ✅ Сегмент папки '11-24' успешно создан: video_segment_11-24.mp4 (381.86с)
+2025-09-09 14:22:45,102 - main - INFO - process:2334 - ✅ Видеосегмент для папки '11-24' создан: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/video_segment_11-24.mp4
+2025-09-09 14:22:45,102 - main - INFO - process:2339 - 🔗 Конкатенация готовых видеосегментов
+2025-09-09 14:22:45,103 - main - INFO - process:2369 - 📋 Порядок конкатенации сегментов:
+2025-09-09 14:22:45,103 - main - INFO - process:2378 -    1. 1-2 → video_segment_1-2.mp4
+2025-09-09 14:22:45,103 - main - INFO - process:2378 -    2. 3-6 → video_segment_3-6.mp4
+2025-09-09 14:22:45,103 - main - INFO - process:2378 -    3. 7-10 → video_segment_7-10.mp4
+2025-09-09 14:22:45,104 - main - INFO - process:2378 -    4. 11-24 → video_segment_11-24.mp4
+2025-09-09 14:22:45,104 - main - INFO - process:2390 - 🔍 ДИАГНОСТИКА ДЛИТЕЛЬНОСТЕЙ СЕГМЕНТОВ:
+2025-09-09 14:22:45,158 - main - INFO - process:2400 -    📁 1-2: фактическая=64.88с, ожидаемая=64.97с
+2025-09-09 14:22:45,220 - main - INFO - process:2400 -    📁 3-6: фактическая=88.25с, ожидаемая=88.37с
+2025-09-09 14:22:45,301 - main - INFO - process:2400 -    📁 7-10: фактическая=119.00с, ожидаемая=119.25с
+2025-09-09 14:22:45,357 - main - INFO - process:2400 -    📁 11-24: фактическая=381.86с, ожидаемая=382.28с
+2025-09-09 14:22:45,357 - main - INFO - process:2407 - 📊 Общая длительность всех сегментов: 653.98с
+2025-09-09 14:22:45,357 - main - INFO - process:2409 - 📊 Ожидаемая общая длительность (Excel): 654.86с
+2025-09-09 14:22:45,357 - main - INFO - process:2413 - 📊 Фактическая общая длительность (сегменты): 653.98с
+2025-09-09 14:22:45,358 - main - INFO - process:2422 - 🔗 Простая конкатенация готовых видеосегментов (XFADE уже внутри)
+2025-09-09 14:22:45,412 - main - INFO - process:2444 -    📁 1-2: 64.88с (ожидаемо 64.97с)
+2025-09-09 14:22:45,472 - main - INFO - process:2444 -    📁 3-6: 88.25с (ожидаемо 88.37с)
+2025-09-09 14:22:45,551 - main - INFO - process:2444 -    📁 7-10: 119.00с (ожидаемо 119.25с)
+2025-09-09 14:22:45,610 - main - INFO - process:2444 -    📁 11-24: 381.86с (ожидаемо 382.28с)
+2025-09-09 14:22:46,452 - main - INFO - process:2457 - ✅ Финальная конкатенация завершена: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/final_concatenated_video.mp4
+2025-09-09 14:22:46,510 - main - INFO - process:2461 - 📊 Длительность финального видео: 654.01с
+2025-09-09 14:22:46,510 - main - INFO - process:2471 - 🏗️ Финальная сборка с глобальными элементами
+2025-09-09 14:22:46,510 - main - INFO - _create_subscribe_frames:1710 - === 🎞️ Создание кадров подписки ===
+2025-09-09 14:22:46,511 - final_assembly - INFO - create_subscribe_frame_list:329 - Найдено кадров кнопки 'ПОДПИСЫВАЙТЕСЬ': 1
+2025-09-09 14:22:46,567 - main - INFO - process:2492 - 🔍 ПЕРЕДАЧА ОТЛАДОЧНЫХ ДАННЫХ В create_combined_audio:
+2025-09-09 14:22:46,568 - main - INFO - process:2494 -    video_number: 1
+2025-09-09 14:22:46,569 - main - INFO - process:2494 -    excel_audio_duration: 653.9830039999999
+2025-09-09 14:22:46,569 - main - INFO - process:2494 -    folder_durations: {'1-2': 64.966531, '3-6': 88.37224599999999, '7-10': 119.24898, '11-24': 382.27591800000005}
+2025-09-09 14:22:46,569 - main - INFO - process:2494 -    total_expected_duration: 654.8636750000001
+2025-09-09 14:22:46,569 - main - INFO - process:2494 -    audio_folder: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/audio
+2025-09-09 14:22:46,570 - main - INFO - process:2494 -    silence_duration: 0
+2025-09-09 14:22:46,570 - main - INFO - process:2494 -    excel_range: 1-25
+2025-09-09 14:22:46,570 - main - INFO - process:2494 -    synchronized_audio_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/final_concatenated_video.mp4
+2025-09-09 14:22:46,571 - main - INFO - process:2494 -    synchronized_audio_actual_duration: 654.006213
+2025-09-09 14:22:46,571 - main - INFO - _final_assembly:1765 - === 🏗️ Финальная сборка ===
+2025-09-09 14:22:46,572 - audio_processing - INFO - create_combined_audio:533 - 🎵 Создание комбинированного аудио
+2025-09-09 14:22:46,572 - audio_processing - INFO - create_combined_audio:534 -    Главная дорожка: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/final_concatenated_video.mp4
+2025-09-09 14:22:46,572 - audio_processing - INFO - create_combined_audio:535 -    Клипов с аудио: 0
+2025-09-09 14:22:46,572 - audio_processing - INFO - create_combined_audio:536 -    Целевая длительность: 653.983с
+2025-09-09 14:22:46,573 - audio_processing - INFO - create_combined_audio:537 -    Фоновая музыка: НЕТ
+2025-09-09 14:22:46,573 - audio_processing - INFO - create_combined_audio:538 -    Громкость музыки: 0.000
+2025-09-09 14:22:46,652 - audio_processing - INFO - create_combined_audio:545 -    Фактическая длительность главной дорожки: 654.006с
+2025-09-09 14:22:46,653 - audio_processing - INFO - create_combined_audio:551 - 🔍 ДИАГНОСТИКА ДЛИТЕЛЬНОСТИ АУДИО:
+2025-09-09 14:22:46,653 - audio_processing - INFO - create_combined_audio:552 -    Ожидаемая: 653.983с
+2025-09-09 14:22:46,653 - audio_processing - INFO - create_combined_audio:553 -    Фактическая: 654.006с
+2025-09-09 14:22:46,653 - audio_processing - INFO - create_combined_audio:554 -    Разница: 0.023с
+2025-09-09 14:22:46,654 - audio_processing - INFO - create_combined_audio:555 -    Допустимая разница: 163.496с
+2025-09-09 14:22:46,654 - audio_processing - INFO - create_combined_audio:582 - 📻 Фоновая музыка не указана
+2025-09-09 14:22:46,654 - audio_processing - INFO - create_combined_audio:586 - 📻 Используем только основную дорожку
+2025-09-09 14:22:47,023 - audio_processing - INFO - create_combined_audio:596 - ✅ Главная дорожка скопирована без изменений
+2025-09-09 14:22:47,023 - main - INFO - _final_assembly:1781 - ✅ Исправленная функция create_combined_audio завершена: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3 (654.006с)
+2025-09-09 14:22:47,023 - final_assembly - INFO - final_assembly:1062 - 🔍 ЧЕРНЫЙ ЭКРАН DEBUG: Начало финальной сборки: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/final_video_1.mp4
+2025-09-09 14:22:47,162 - final_assembly - INFO - final_assembly:1068 - 🔍 ЧЕРНЫЙ ЭКРАН DEBUG: Входные файлы
+2025-09-09 14:22:47,163 - final_assembly - INFO - final_assembly:1069 -    temp_video_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/final_concatenated_video.mp4 (длительность: 654.006с)
+2025-09-09 14:22:47,163 - final_assembly - INFO - final_assembly:1070 -    final_audio_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3 (длительность: 654.006с)
+2025-09-09 14:22:47,163 - final_assembly - INFO - final_assembly:1071 -    🚨 КРИТИЧЕСКОЕ ЛОГИРОВАНИЕ: ИМУПРАВИЛЬНЫЙ АУДИОФАЙЛ? /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3
+2025-09-09 14:22:47,163 - final_assembly - INFO - final_assembly:1072 -    🚨 ПРОВЕРКА: Содержит ли 'final_audio_with_music' в пути: False
+2025-09-09 14:22:47,163 - final_assembly - INFO - final_assembly:1073 -    temp_audio_duration (параметр): 654.006с
+2025-09-09 14:22:47,164 - final_assembly - INFO - final_assembly:1074 -    audio_offset: 0.000с
+2025-09-09 14:22:47,164 - final_assembly - INFO - final_assembly:1075 -    adjust_videos_to_audio: True
+2025-09-09 14:22:47,225 - final_assembly - INFO - final_assembly:1091 -    🔍 ДИАГНОСТИКА АУДИОФАЙЛА final_assembly: {'programs': [], 'stream_groups': [], 'streams': [{'codec_name': 'aac', 'channels': 2, 'duration': '654.006213', 'bit_rate': '121649'}]}
+2025-09-09 14:22:47,226 - final_assembly - INFO - final_assembly:1098 - ✅ Режим подстройки видео под аудио: целевая длительность 654.01с
+2025-09-09 14:22:47,251 - final_assembly - INFO - final_assembly:1131 - Проверка исходных файлов...
+2025-09-09 14:23:33,500 - final_assembly - INFO - check_audio_streams:192 - Аудиопотоки в /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/final_concatenated_video.mp4: 2 потоков
+2025-09-09 14:23:33,501 - final_assembly - INFO - check_audio_streams:194 -   Поток 0: aac (индекс: 0)
+2025-09-09 14:23:33,501 - final_assembly - INFO - check_audio_streams:194 -   Поток 1: unknown (индекс: 1)
+2025-09-09 14:24:21,253 - final_assembly - INFO - check_audio_streams:192 - Аудиопотоки в /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3: 2 потоков
+2025-09-09 14:24:21,256 - final_assembly - INFO - check_audio_streams:194 -   Поток 0: aac (индекс: 0)
+2025-09-09 14:24:21,256 - final_assembly - INFO - check_audio_streams:194 -   Поток 1: unknown (индекс: 1)
+2025-09-09 14:24:21,256 - final_assembly - INFO - final_assembly:1135 - Временное видео имеет аудио: True
+2025-09-09 14:24:21,256 - final_assembly - INFO - final_assembly:1136 - Финальное аудио имеет звук: True
+2025-09-09 14:24:21,304 - final_assembly - INFO - run_ffmpeg_command:205 - Выполнение: Создание отладочного файла кнопки
+2025-09-09 14:24:22,426 - final_assembly - INFO - run_ffmpeg_command:291 - ✅ FFmpeg завершен за 1.1с: Создание отладочного файла кнопки
+2025-09-09 14:24:22,428 - final_assembly - INFO - final_assembly:1173 - Клипы отсутствуют
+2025-09-09 14:24:22,428 - final_assembly - INFO - final_assembly:1177 - 🔍 ЧЕРНЫЙ ЭКРАН DEBUG: Перед created_combined_audio
+2025-09-09 14:24:22,428 - final_assembly - INFO - final_assembly:1178 -    final_audio_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3
+2025-09-09 14:24:22,428 - final_assembly - INFO - final_assembly:1179 -    audio_segments: 0
+2025-09-09 14:24:22,428 - final_assembly - INFO - final_assembly:1180 -    last_audio_clip_end_time: 0.000с
+2025-09-09 14:24:22,428 - final_assembly - INFO - final_assembly:1181 -    temp_audio_duration (входной): 654.006с
+2025-09-09 14:24:22,428 - final_assembly - INFO - final_assembly:1184 - 🔍 ИСПРАВЛЕНИЕ: Создание combined_audio с длительностью 654.01с
+2025-09-09 14:24:22,428 - final_assembly - INFO - create_combined_audio:661 - 🔍 ЧЕРНЫЙ ЭКРАН DEBUG: create_combined_audio
+2025-09-09 14:24:22,428 - final_assembly - INFO - create_combined_audio:662 -    final_audio_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:663 -    audio_segments: 0
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:664 -    last_audio_clip_end_time: 0.000с
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:665 -    temp_audio_duration: 654.006с
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:666 -    folder_durations: True
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:667 -    audio_folder: /Users/mikman/Youtube/Структура/gra1/Озвучка
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:668 -    overall_range: 1-25
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:670 - Создание объединенного аудио...
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:671 - Параметры: last_audio_clip_end_time=0.00с, temp_audio_duration=654.01с
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_combined_audio:676 - 🔄 Создание синхронизированной аудиодорожки с учетом структуры видео
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_synchronized_audio:523 - 🔍 ЧЕРНЫЙ ЭКРАН DEBUG: create_synchronized_audio
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_synchronized_audio:524 -    audio_segments: 0
+2025-09-09 14:24:22,429 - final_assembly - INFO - create_synchronized_audio:525 -    last_audio_clip_end_time: 0.000с
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:526 -    temp_audio_duration (входная): 654.006с
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:527 -    folder_durations: {'1-2': 64.966531, '3-6': 88.37224599999999, '7-10': 119.24898, '11-24': 382.27591800000005}
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:528 -    audio_folder: /Users/mikman/Youtube/Структура/gra1/Озвучка
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:529 -    overall_range: 1-25
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:531 - 🎯 Создание синхронизированной аудиодорожки
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:532 -    folder_durations: {'1-2': 64.966531, '3-6': 88.37224599999999, '7-10': 119.24898, '11-24': 382.27591800000005}
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:537 - 🔍 DEBUG: Пауза между аудиофайлами: 0.000с
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:559 -    📁 Обрабатываем папку: 1-2
+2025-09-09 14:24:22,430 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 001.mp3
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 002.mp3
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:559 -    📁 Обрабатываем папку: 3-6
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 003.mp3
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 004.mp3
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 005.mp3
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 006.mp3
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:559 -    📁 Обрабатываем папку: 7-10
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 007.mp3
+2025-09-09 14:24:22,431 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 008.mp3
+2025-09-09 14:24:22,432 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 009.mp3
+2025-09-09 14:24:22,432 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 010.mp3
+2025-09-09 14:24:22,432 - final_assembly - INFO - create_synchronized_audio:559 -    📁 Обрабатываем папку: 11-24
+2025-09-09 14:24:22,432 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 011.mp3
+2025-09-09 14:24:22,432 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 012.mp3
+2025-09-09 14:24:22,432 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 013.mp3
+2025-09-09 14:24:22,432 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 014.mp3
+2025-09-09 14:24:22,432 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 015.mp3
+2025-09-09 14:24:22,433 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 016.mp3
+2025-09-09 14:24:22,433 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 017.mp3
+2025-09-09 14:24:22,433 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 018.mp3
+2025-09-09 14:24:22,433 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 019.mp3
+2025-09-09 14:24:22,433 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 020.mp3
+2025-09-09 14:24:22,433 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 021.mp3
+2025-09-09 14:24:22,433 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 022.mp3
+2025-09-09 14:24:22,433 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 023.mp3
+2025-09-09 14:24:22,434 - final_assembly - INFO - create_synchronized_audio:579 -      🎵 Добавлен: 024.mp3
+2025-09-09 14:24:22,481 - final_assembly - INFO - run_ffmpeg_command:205 - Выполнение: Объединение синхронизированных аудиосегментов
+2025-09-09 14:24:41,547 - final_assembly - INFO - run_ffmpeg_command:291 - ✅ FFmpeg завершен за 19.0с: Объединение синхронизированных аудиосегментов
+2025-09-09 14:24:41,596 - final_assembly - INFO - create_synchronized_audio:654 - 📻 Нет аудио из клипов для смешивания, используем только основную дорожку
+2025-09-09 14:24:41,596 - final_assembly - INFO - create_synchronized_audio:655 - 🔍 DEBUG: Возврат main_audio (без клипов): /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/synchronized_main_audio.mp3, 654.006с (фактически: 653.322с)
+2025-09-09 14:24:41,597 - final_assembly - INFO - final_assembly:1198 - 🔍 ЧЕРНЫЙ ЭКРАН DEBUG: После create_combined_audio
+2025-09-09 14:24:41,597 - final_assembly - INFO - final_assembly:1199 -    combined_audio_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/synchronized_main_audio.mp3
+2025-09-09 14:24:41,597 - final_assembly - INFO - final_assembly:1200 -    updated_audio_duration: 653.322с
+2025-09-09 14:24:41,640 - final_assembly - INFO - final_assembly:1202 -    combined_audio фактическая длительность: 653.322с
+2025-09-09 14:24:42,277 - final_assembly - INFO - check_audio_streams:192 - Аудиопотоки в /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/synchronized_main_audio.mp3: 2 потоков
+2025-09-09 14:24:42,277 - final_assembly - INFO - check_audio_streams:194 -   Поток 0: mp3 (индекс: 0)
+2025-09-09 14:24:42,277 - final_assembly - INFO - check_audio_streams:194 -   Поток 1: unknown (индекс: 1)
+2025-09-09 14:24:42,320 - final_assembly - INFO - verify_audio_quality:861 - Длительность аудио: 653.32с (ожидалось: 653.32с)
+2025-09-09 14:24:42,336 - final_assembly - INFO - verify_audio_quality:870 - ✅ Проверка длительности аудио пройдена. Ожидалось: 653.32с, Фактически: 653.32с, Разница: 0.00с.
+2025-09-09 14:24:42,380 - final_assembly - INFO - run_ffmpeg_command:205 - Выполнение: Проверка звука на 60с
+2025-09-09 14:24:42,655 - final_assembly - INFO - run_ffmpeg_command:291 - ✅ FFmpeg завершен за 0.3с: Проверка звука на 60с
+2025-09-09 14:24:42,740 - final_assembly - INFO - run_ffmpeg_command:205 - Выполнение: Проверка звука на 120с
+2025-09-09 14:24:43,079 - final_assembly - INFO - run_ffmpeg_command:291 - ✅ FFmpeg завершен за 0.3с: Проверка звука на 120с
+2025-09-09 14:24:43,177 - final_assembly - INFO - final_assembly:1211 - 🎵 Длительности: combined_audio=653.32с, final_audio=654.01с
+2025-09-09 14:24:43,231 - final_assembly - INFO - final_assembly:1216 - 🎯 ИСПРАВЛЕНИЕ: Используем длительность final_audio_path: 654.01с
+2025-09-09 14:24:43,232 - final_assembly - INFO - final_assembly:1217 -    (Игнорируем combined_audio длительность: 653.32с)
+2025-09-09 14:24:43,288 - final_assembly - INFO - final_assembly:1225 - 📹 Длительность видео: 654.01с, аудио: 654.01с
+2025-09-09 14:24:43,289 - final_assembly - INFO - final_assembly:1231 - 🔍 ЧЕРНЫЙ ЭКРАН DEBUG: temp_video корректен
+2025-09-09 14:24:43,289 - final_assembly - INFO - final_assembly:1256 - 🔘 Кнопка подписки: отображение до 654.01с (видео: 654.01с, аудио: 654.01с)
+2025-09-09 14:24:43,334 - final_assembly - INFO - final_assembly:1299 - 🎵 КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Используем final_audio_path вместо combined_audio_path
+2025-09-09 14:24:43,340 - final_assembly - INFO - final_assembly:1300 -    final_audio_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3
+2025-09-09 14:24:43,340 - final_assembly - INFO - final_assembly:1301 -    combined_audio_path (ИГНОРИРУЕМ): /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/synchronized_main_audio.mp3
+2025-09-09 14:24:43,340 - final_assembly - INFO - final_assembly:1312 - 🔘 Кнопка подписки добавлена как вход 2
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1401 - ✅ Видео (654.01с) достаточно длинное для аудио (654.01с), зацикливание не требуется
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1455 - 🔘 Добавляем кнопку подписки: 18 интервалов
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1456 - 🔘 Позиция кнопки: -50xmain_h-overlay_h+150, размер: 1400
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1475 - 🔘 Кнопка подписки настроена: интервалы [(0.0, 7.0), (37.0, 44.0), (74.0, 81.0), (111.0, 118.0), (148.0, 155.0), (185.0, 192.0), (222.0, 229.0), (259.0, 266.0), (296.0, 303.0), (333.0, 340.0), (370.0, 377.0), (407.0, 414.0), (444.0, 451.0), (481.0, 488.0), (518.0, 525.0), (555.0, 562.0), (592.0, 599.0), (629.0, 636.0)]
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1476 - 🔘 Enable expression: between(t,0.00,7.00)+between(t,37.00,44.00)+between(t,74.00,81.00)+between(t,111.00,118.00)+between(t,148.00,155.00)+between(t,185.00,192.00)+between(t,222.00,229.00)+between(t,259.00,266.00)+between(t,296.00,303.00)+between(t,333.00,340.00)+between(t,370.00,377.00)+between(t,407.00,414.00)+between(t,444.00,451.00)+between(t,481.00,488.00)+between(t,518.00,525.00)+between(t,555.00,562.00)+between(t,592.00,599.00)+between(t,629.00,636.00)
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1486 - 🔍 ФИНАЛЬНАЯ СБОРКА:
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1487 -    temp_audio_duration: 654.006с
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1488 -    video_duration: 654.006с
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1489 -    target_video_duration: 654.006с
+2025-09-09 14:24:43,341 - final_assembly - INFO - final_assembly:1490 -    stream_counter: 1
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1491 -    Финальный поток видео: [v1]
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1492 - 🔍 FILTER COMPLEX: [2:v]scale=1400:-2:force_divisible_by=2,format=yuva420p[subscribe];[0:v][subscribe]overlay=-50:main_h-overlay_h+150:enable='between(t,0.00,7.00)+between(t,37.00,44.00)+between(t,74.00,81.00)+between(t,111.00,118.00)+between(t,148.00,155.00)+between(t,185.00,192.00)+between(t,222.00,229.00)+between(t,259.00,266.00)+between(t,296.00,303.00)+between(t,333.00,340.00)+between(t,370.00,377.00)+between(t,407.00,414.00)+between(t,444.00,451.00)+between(t,481.00,488.00)+between(t,518.00,525.00)+between(t,555.00,562.00)+between(t,592.00,599.00)+between(t,629.00,636.00)'[v1]
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1514 - 🔍 ЧЕРНЫЙ ЭКРАН DEBUG: Финальная FFmpeg команда
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1515 -    temp_video_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/final_concatenated_video.mp4
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1516 -    🎵 ИСПОЛЬЗУЕМЫЙ АУДИОФАЙЛ: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1517 -    🚫 ИГНОРИРУЕМЫЙ combined_audio_path: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/synchronized_main_audio.mp3
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1518 -    temp_audio_duration (для обрезки): 654.006с
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1519 -    video_duration (фактическая): 654.006с
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1520 -    filter_complex: [2:v]scale=1400:-2:force_divisible_by=2,format=yuva420p[subscribe];[0:v][subscribe]overlay=-50:main_h-overlay_h+150:enable='between(t,0.00,7.00)+between(t,37.00,44.00)+between(t,74.00,81.00)+between(t,111.00,118.00)+between(t,148.00,155.00)+between(t,185.00,192.00)+between(t,222.00,229.00)+between(t,259.00,266.00)+between(t,296.00,303.00)+between(t,333.00,340.00)+between(t,370.00,377.00)+between(t,407.00,414.00)+between(t,444.00,451.00)+between(t,481.00,488.00)+between(t,518.00,525.00)+between(t,555.00,562.00)+between(t,592.00,599.00)+between(t,629.00,636.00)'[v1]
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1523 - Полная FFmpeg команда: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg -i /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/final_concatenated_video.mp4 -i /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3 -f concat -safe 0 -i /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/frame_list.txt -filter_complex [2:v]scale=1400:-2:force_divisible_by=2,format=yuva420p[subscribe];[0:v][subscribe]overlay=-50:main_h-overlay_h+150:enable='between(t,0.00,7.00)+between(t,37.00,44.00)+between(t,74.00,81.00)+between(t,111.00,118.00)+between(t,148.00,155.00)+between(t,185.00,192.00)+between(t,222.00,229.00)+between(t,259.00,266.00)+between(t,296.00,303.00)+between(t,333.00,340.00)+between(t,370.00,377.00)+between(t,407.00,414.00)+between(t,444.00,451.00)+between(t,481.00,488.00)+between(t,518.00,525.00)+between(t,555.00,562.00)+between(t,592.00,599.00)+between(t,629.00,636.00)'[v1] -map [v1] -map 1:a:0 -c:v libx264 -preset ultrafast -crf 23 -c:a aac -b:a 128k -ac 2 -t 654.006213 -avoid_negative_ts make_zero -fflags +genpts+igndts -movflags +faststart -max_interleave_delta 1000000 -fps_mode cfr -async 1 -probesize 50000000 -analyzeduration 50000000 -map_metadata -1 -y /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/final_video_1.mp4
+2025-09-09 14:24:43,342 - final_assembly - INFO - final_assembly:1526 - 🚀 ЗАПУСК финальной FFmpeg команды для final_video_1.mp4
+2025-09-09 14:24:43,342 - final_assembly - INFO - run_ffmpeg_command:205 - Выполнение: Финальная сборка видео
+2025-09-09 14:25:13,507 - final_assembly - INFO - run_ffmpeg_command:233 - ⏳ FFmpeg выполняется 30.1с: Финальная сборка видео
+2025-09-09 14:25:44,253 - final_assembly - INFO - run_ffmpeg_command:233 - ⏳ FFmpeg выполняется 60.9с: Финальная сборка видео
+2025-09-09 14:26:00,954 - final_assembly - INFO - run_ffmpeg_command:291 - ✅ FFmpeg завершен за 77.6с: Финальная сборка видео
+2025-09-09 14:26:00,954 - final_assembly - INFO - final_assembly:1528 - ✅ ЗАВЕРШЕНА финальная FFmpeg команда для final_video_1.mp4
+2025-09-09 14:26:01,069 - final_assembly - INFO - final_assembly:1536 - Длительность финального видео: 654.03с
+2025-09-09 14:26:08,597 - final_assembly - INFO - check_audio_streams:192 - Аудиопотоки в /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/final_video_1.mp4: 2 потоков
+2025-09-09 14:26:08,597 - final_assembly - INFO - check_audio_streams:194 -   Поток 0: aac (индекс: 0)
+2025-09-09 14:26:08,598 - final_assembly - INFO - check_audio_streams:194 -   Поток 1: unknown (индекс: 1)
+2025-09-09 14:26:08,598 - final_assembly - INFO - final_assembly:1540 - Финальное видео содержит аудио: True
+2025-09-09 14:26:08,598 - final_assembly - INFO - final_assembly:1551 - 🔍 Проверяем качество финального видео против исходного аудио: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp/combined_audio_fixed.mp3
+2025-09-09 14:26:15,962 - final_assembly - INFO - check_audio_streams:192 - Аудиопотоки в /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/final_video_1.mp4: 2 потоков
+2025-09-09 14:26:15,964 - final_assembly - INFO - check_audio_streams:194 -   Поток 0: aac (индекс: 0)
+2025-09-09 14:26:15,964 - final_assembly - INFO - check_audio_streams:194 -   Поток 1: unknown (индекс: 1)
+2025-09-09 14:26:16,019 - final_assembly - INFO - verify_audio_quality:861 - Длительность аудио: 654.03с (ожидалось: 654.01с)
+2025-09-09 14:26:16,019 - final_assembly - INFO - verify_audio_quality:870 - ✅ Проверка длительности аудио пройдена. Ожидалось: 654.01с, Фактически: 654.03с, Разница: 0.02с.
+2025-09-09 14:26:16,097 - final_assembly - INFO - run_ffmpeg_command:205 - Выполнение: Проверка звука на 60с
+2025-09-09 14:26:16,396 - final_assembly - INFO - run_ffmpeg_command:291 - ✅ FFmpeg завершен за 0.3с: Проверка звука на 60с
+2025-09-09 14:26:16,497 - final_assembly - INFO - run_ffmpeg_command:205 - Выполнение: Проверка звука на 120с
+2025-09-09 14:26:19,546 - final_assembly - INFO - run_ffmpeg_command:291 - ✅ FFmpeg завершен за 3.0с: Проверка звука на 120с
+2025-09-09 14:26:19,596 - final_assembly - INFO - final_assembly:1555 - Финальная сборка завершена: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/final_video_1.mp4
+2025-09-09 14:26:19,597 - main - INFO - process:2510 - ✅ ПОПАПОЧНАЯ ОБРАБОТКА ЗАВЕРШЕНА: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/final_video_1.mp4
+2025-09-09 14:26:19,597 - main - INFO - process:2513 - 🔇 Фоновая музыка обрабатывается в final_assembly
+2025-09-09 14:26:19,652 - main - INFO - _validate_final_video:1965 - Длительность видео: 10:54
+2025-09-09 14:26:19,652 - main - INFO - _validate_final_video:1971 - Длительность видео соответствует ожидаемой
+2025-09-09 14:26:19,653 - main - INFO - process:2518 - === ✅ Монтаж видео 1 завершён! Видео: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/final_video_1.mp4 ===
+2025-09-09 14:26:19,653 - main - INFO - process:2520 - 🔍 DEBUG: Начинаем финальную диагностику для видео 1
+2025-09-09 14:26:19,709 - main - INFO - process:2524 - 🏁 ИТОГОВАЯ ДИАГНОСТИКА:
+2025-09-09 14:26:19,709 - main - INFO - process:2525 -    Ожидаемая длительность аудио: 653.98с
+2025-09-09 14:26:19,709 - main - INFO - process:2526 -    Фактическая длительность финального видео: 654.03с
+2025-09-09 14:26:19,710 - main - INFO - process:2530 -    ✅ ПРОБЛЕМА РЕШЕНА: Длительности соответствуют (разница: 0.05с)
+2025-09-09 14:26:19,710 - main - INFO - process:2536 - 🔍 DEBUG: Диагностика завершена, готовимся вернуть True для видео 1
+2025-09-09 14:26:19,710 - main - INFO - _manage_temp_folder:1986 - 🗑️ Удаляем temp папку: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp
+2025-09-09 14:26:19,710 - main - INFO - _manage_temp_folder:1987 - 🗑️ Параметр 'debug_keep_temp_folder' отключен
+2025-09-09 14:26:21,257 - main - INFO - _manage_temp_folder:1995 - ✅ Temp папка успешно удалена: /Users/mikman/Youtube/Структура/gra1/Готовое видео/1/temp
+2025-09-09 14:26:21,257 - main - INFO - process:2541 - 🔍 DEBUG: Возвращaем True для видео 1
+2025-09-09 14:26:21,258 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: True (тип: <class 'bool'>)
+2025-09-09 14:26:21,259 - main - INFO - process_auto_montage:2773 - ✅ Видео 1 обработано успешно
+2025-09-09 14:26:21,260 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 2 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:21,346 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:21,396 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:21,416 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:21,416 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:21,417 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:21,466 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:21,518 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:21,519 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:21,519 - main - INFO - process:2006 - === 🚀 Монтаж видео 2 с попапочной логикой ===
+2025-09-09 14:26:21,519 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:21,757 - audio_processing - ERROR - _find_video_range:172 - Видео 2 не найдено в столбце A
+2025-09-09 14:26:21,757 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:21,758 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 2: Видео 2 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:21,758 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 2 не найдены
+2025-09-09 14:26:21,758 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:21,758 - main - ERROR - process_auto_montage:2785 - ❌ Видео 2 не удалось обработать - метод вернул: False
+2025-09-09 14:26:21,759 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 3 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:21,846 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:21,896 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:21,897 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:21,897 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:21,897 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:21,946 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,046 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,047 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:22,048 - main - INFO - process:2006 - === 🚀 Монтаж видео 3 с попапочной логикой ===
+2025-09-09 14:26:22,048 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:22,054 - audio_processing - ERROR - _find_video_range:172 - Видео 3 не найдено в столбце A
+2025-09-09 14:26:22,054 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,055 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 3: Видео 3 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,055 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 3 не найдены
+2025-09-09 14:26:22,056 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:22,056 - main - ERROR - process_auto_montage:2785 - ❌ Видео 3 не удалось обработать - метод вернул: False
+2025-09-09 14:26:22,056 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 4 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:22,146 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,196 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,197 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:22,197 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:22,197 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:22,247 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,310 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,311 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:22,311 - main - INFO - process:2006 - === 🚀 Монтаж видео 4 с попапочной логикой ===
+2025-09-09 14:26:22,311 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:22,316 - audio_processing - ERROR - _find_video_range:172 - Видео 4 не найдено в столбце A
+2025-09-09 14:26:22,316 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,317 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 4: Видео 4 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,317 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 4 не найдены
+2025-09-09 14:26:22,317 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:22,317 - main - ERROR - process_auto_montage:2785 - ❌ Видео 4 не удалось обработать - метод вернул: False
+2025-09-09 14:26:22,317 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 5 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:22,396 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,449 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,450 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:22,450 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:22,450 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:22,498 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,546 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,547 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:22,547 - main - INFO - process:2006 - === 🚀 Монтаж видео 5 с попапочной логикой ===
+2025-09-09 14:26:22,547 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:22,551 - audio_processing - ERROR - _find_video_range:172 - Видео 5 не найдено в столбце A
+2025-09-09 14:26:22,551 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,552 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 5: Видео 5 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,552 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 5 не найдены
+2025-09-09 14:26:22,552 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:22,552 - main - ERROR - process_auto_montage:2785 - ❌ Видео 5 не удалось обработать - метод вернул: False
+2025-09-09 14:26:22,552 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 6 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:22,600 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,649 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,649 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:22,649 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:22,649 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:22,696 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,746 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,747 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:22,747 - main - INFO - process:2006 - === 🚀 Монтаж видео 6 с попапочной логикой ===
+2025-09-09 14:26:22,747 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:22,751 - audio_processing - ERROR - _find_video_range:172 - Видео 6 не найдено в столбце A
+2025-09-09 14:26:22,751 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,751 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 6: Видео 6 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,751 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 6 не найдены
+2025-09-09 14:26:22,751 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:22,751 - main - ERROR - process_auto_montage:2785 - ❌ Видео 6 не удалось обработать - метод вернул: False
+2025-09-09 14:26:22,751 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 7 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:22,800 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,847 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,848 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:22,848 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:22,848 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:22,896 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,946 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:22,947 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:22,947 - main - INFO - process:2006 - === 🚀 Монтаж видео 7 с попапочной логикой ===
+2025-09-09 14:26:22,947 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:22,951 - audio_processing - ERROR - _find_video_range:172 - Видео 7 не найдено в столбце A
+2025-09-09 14:26:22,951 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,951 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 7: Видео 7 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:22,951 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 7 не найдены
+2025-09-09 14:26:22,952 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:22,952 - main - ERROR - process_auto_montage:2785 - ❌ Видео 7 не удалось обработать - метод вернул: False
+2025-09-09 14:26:22,952 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 8 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:23,001 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,048 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,049 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:23,049 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:23,049 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:23,096 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,146 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,147 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:23,147 - main - INFO - process:2006 - === 🚀 Монтаж видео 8 с попапочной логикой ===
+2025-09-09 14:26:23,147 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:23,151 - audio_processing - ERROR - _find_video_range:172 - Видео 8 не найдено в столбце A
+2025-09-09 14:26:23,151 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:23,152 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 8: Видео 8 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:23,152 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 8 не найдены
+2025-09-09 14:26:23,152 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:23,152 - main - ERROR - process_auto_montage:2785 - ❌ Видео 8 не удалось обработать - метод вернул: False
+2025-09-09 14:26:23,152 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 9 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:23,198 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,247 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,247 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:23,247 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:23,247 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:23,296 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,346 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,347 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:23,347 - main - INFO - process:2006 - === 🚀 Монтаж видео 9 с попапочной логикой ===
+2025-09-09 14:26:23,347 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:23,351 - audio_processing - ERROR - _find_video_range:172 - Видео 9 не найдено в столбце A
+2025-09-09 14:26:23,351 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:23,351 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 9: Видео 9 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:23,351 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 9 не найдены
+2025-09-09 14:26:23,351 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:23,352 - main - ERROR - process_auto_montage:2785 - ❌ Видео 9 не удалось обработать - метод вернул: False
+2025-09-09 14:26:23,352 - main - INFO - process_auto_montage:2740 - 🔍 DEBUG: Создаем VideoProcessor для видео 10 с preserve_clip_audio_videos=[]
+2025-09-09 14:26:23,396 - audio_processing - INFO - _validate_ffmpeg:247 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,446 - audio_processing - INFO - _validate_ffmpeg:254 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,447 - video_processing - INFO - create_video_effects_config:621 - 🔧 КРИТИЧЕСКАЯ ПРОВЕРКА effects_config:
+2025-09-09 14:26:23,447 - video_processing - INFO - create_video_effects_config:622 -    transitions_enabled: False
+2025-09-09 14:26:23,447 - video_processing - INFO - create_video_effects_config:623 -    transition_method: overlay
+2025-09-09 14:26:23,496 - video_processing - INFO - check_availability:209 - 🔍 Проверка FFmpeg по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,546 - video_processing - INFO - check_availability:213 - ✅ FFmpeg доступен по пути: /Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/ffmpeg/ffmpeg
+2025-09-09 14:26:23,547 - main - INFO - process_auto_montage:2748 - 🔍 DEBUG: VideoProcessor создан успешно, вызываем process()
+2025-09-09 14:26:23,547 - main - INFO - process:2006 - === 🚀 Монтаж видео 10 с попапочной логикой ===
+2025-09-09 14:26:23,547 - main - INFO - process:2007 - 🔍 DEBUG VideoProcessor.process: self.preserve_clip_audio_videos = []
+2025-09-09 14:26:23,551 - audio_processing - ERROR - _find_video_range:172 - Видео 10 не найдено в столбце A
+2025-09-09 14:26:23,551 - audio_processing - ERROR - _find_video_range:174 - Доступные видео: ВИДЕО 1
+2025-09-09 14:26:23,551 - audio_processing - ERROR - get_audio_files_for_video:99 - Ошибка получения аудиофайлов для видео 10: Видео 10 не найдено в столбце A. Доступные видео: ВИДЕО 1
+2025-09-09 14:26:23,551 - main - ERROR - process:2230 - ❌ Ошибка создания JSON файла с математикой: Ошибка получения аудиофайлов: Аудиофайлы для видео 10 не найдены
+2025-09-09 14:26:23,551 - main - INFO - process_auto_montage:2757 - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-09 14:26:23,552 - main - ERROR - process_auto_montage:2785 - ❌ Видео 10 не удалось обработать - метод вернул: False
+2025-09-09 14:26:23,552 - main - INFO - process_auto_montage:2794 - === 📊 Итоговая статистика ===
+2025-09-09 14:26:23,552 - main - INFO - process_auto_montage:2795 - Канал: GRA1
+2025-09-09 14:26:23,552 - main - INFO - process_auto_montage:2796 - Успешно обработано: 1
+2025-09-09 14:26:23,552 - main - INFO - process_auto_montage:2797 - Ошибок: 9
+2025-09-09 14:26:23,552 - main - INFO - process_auto_montage:2798 - Время обработки: 0:12:21.549482
+2025-09-09 14:26:23,552 - main - INFO - process_auto_montage:2799 - Завершено: 2025-09-09 14:26:23
+2025-09-09 14:26:23,552 - main - WARNING - process_auto_montage:2804 - ⚠️ Обнаружены проблемы при обработке 9 видео
+2025-09-09 14:26:23,553 - ui.worker_threads - INFO - run:164 - ✅ process_auto_montage завершен успешно
+2025-09-09 14:26:23,553 - ui.worker_threads - INFO - run:165 - 📊 Использование памяти после завершения: RSS: 313.3MB, VMS: 35612.1MB
+2025-09-09 14:26:23,553 - ui.worker_threads - INFO - run:174 - 🎉 Монтаж канала GRA1 завершен успешно!
+2025-09-09 14:26:23,719 - ui.worker_threads - INFO - run:208 - 🏁 Поток монтажа завершен
+2025-09-09 14:26:23,719 - montage_control - INFO - reset_stop_montage_flag:46 - 🔄 Файл-флаг удален
+2025-09-09 14:26:23,746 - montage_control - INFO - reset_stop_montage_flag:50 - 🔄 Флаг остановки монтажа сброшен
+2025-09-09 14:26:23,798 - montage_control - INFO - reset_stop_montage_flag:46 - 🔄 Файл-флаг удален
+2025-09-09 14:26:23,798 - montage_control - INFO - reset_stop_montage_flag:50 - 🔄 Флаг остановки монтажа сброшен
+2025-09-09 14:26:30,216 - ui.main_window - INFO - montage_finished:2143 - ✅ Монтаж завершен успешно
+2025-09-09 14:26:31,970 - ui.main_window - INFO - montage_finished:2143 - ✅ Монтаж завершен успешно

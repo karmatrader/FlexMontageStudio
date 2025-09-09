@@ -1,0 +1,408 @@
+{
+  "timestamp": "2025-08-29T17:08:58.453829",
+  "video_number": "1",
+  "paths": {
+    "photo_folder": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1",
+    "preprocessed_photos_base": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/preprocessed_photos",
+    "output_folder": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output",
+    "temp_folder": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp"
+  },
+  "excel_analysis": {
+    "folder_durations": {
+      "1-2": 53.93825,
+      "3-5": 75.645813,
+      "6": 26.969125,
+      "7": 26.655688,
+      "8-10": 79.407375
+    },
+    "total_duration": 264.61625100000003,
+    "folder_to_files": {
+      "3-5": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/8.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/9.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/12.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/13.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/11.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/10.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/7.jpg"
+      ],
+      "8-10": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/28.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/22.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/23.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/27.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/26.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/24.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/25.jpg"
+      ],
+      "7": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/21.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/20.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/18.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/19.jpg"
+      ],
+      "6": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/14.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/15.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/17.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/16.jpg"
+      ],
+      "1-2": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/4.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/5.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/6.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/2.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/3.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/1 Video test.mov",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/1.jpg"
+      ]
+    },
+    "folder_audio_mapping": {
+      "1-2": [
+        1,
+        2
+      ],
+      "3-5": [
+        3,
+        4,
+        5
+      ],
+      "6": [
+        6
+      ],
+      "7": [
+        7
+      ],
+      "8-10": [
+        8,
+        9,
+        10
+      ]
+    },
+    "ranges_analysis": {
+      "1-2": {
+        "duration_seconds": 53.93825,
+        "duration_minutes": "0.90",
+        "files_count": 7,
+        "files": [
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/4.jpg",
+            "file_name": "4.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/5.jpg",
+            "file_name": "5.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/6.jpg",
+            "file_name": "6.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/2.jpg",
+            "file_name": "2.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/3.jpg",
+            "file_name": "3.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/1 Video test.mov",
+            "file_name": "1 Video test.mov"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/1.jpg",
+            "file_name": "1.jpg"
+          }
+        ]
+      },
+      "3-5": {
+        "duration_seconds": 75.645813,
+        "duration_minutes": "1.26",
+        "files_count": 7,
+        "files": [
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/8.jpg",
+            "file_name": "8.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/9.jpg",
+            "file_name": "9.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/12.jpg",
+            "file_name": "12.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/13.jpg",
+            "file_name": "13.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/11.jpg",
+            "file_name": "11.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/10.jpg",
+            "file_name": "10.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/7.jpg",
+            "file_name": "7.jpg"
+          }
+        ]
+      },
+      "6": {
+        "duration_seconds": 26.969125,
+        "duration_minutes": "0.45",
+        "files_count": 4,
+        "files": [
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/14.jpg",
+            "file_name": "14.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/15.jpg",
+            "file_name": "15.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/17.jpg",
+            "file_name": "17.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/16.jpg",
+            "file_name": "16.jpg"
+          }
+        ]
+      },
+      "7": {
+        "duration_seconds": 26.655688,
+        "duration_minutes": "0.44",
+        "files_count": 4,
+        "files": [
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/21.jpg",
+            "file_name": "21.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/20.jpg",
+            "file_name": "20.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/18.jpg",
+            "file_name": "18.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/19.jpg",
+            "file_name": "19.jpg"
+          }
+        ]
+      },
+      "8-10": {
+        "duration_seconds": 79.407375,
+        "duration_minutes": "1.32",
+        "files_count": 7,
+        "files": [
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/28.jpg",
+            "file_name": "28.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/22.jpg",
+            "file_name": "22.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/23.jpg",
+            "file_name": "23.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/27.jpg",
+            "file_name": "27.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/26.jpg",
+            "file_name": "26.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/24.jpg",
+            "file_name": "24.jpg"
+          },
+          {
+            "file_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/25.jpg",
+            "file_name": "25.jpg"
+          }
+        ]
+      }
+    },
+    "pause_settings": {
+      "silence_duration": "1.0-2.5",
+      "pause_after_each_audio": true,
+      "comment": "Паузы добавляются после КАЖДОГО аудиофайла"
+    }
+  },
+  "audio_analysis": {
+    "audio_files_count": 10,
+    "audio_files": [
+      "001.mp3",
+      "002.mp3",
+      "003.mp3",
+      "004.mp3",
+      "005.mp3",
+      "006.mp3",
+      "007.mp3",
+      "008.mp3",
+      "009.mp3",
+      "010.mp3"
+    ],
+    "audio_files_full_paths": [
+      "001.mp3",
+      "002.mp3",
+      "003.mp3",
+      "004.mp3",
+      "005.mp3",
+      "006.mp3",
+      "007.mp3",
+      "008.mp3",
+      "009.mp3",
+      "010.mp3"
+    ],
+    "silence_duration": "1.0-2.5"
+  },
+  "photo_analysis": {
+    "photo_folder": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1",
+    "photo_files_count": 29,
+    "photo_files": [
+      "8.jpg",
+      "9.jpg",
+      "12.jpg",
+      "13.jpg",
+      "11.jpg",
+      "10.jpg",
+      "7.jpg",
+      "28.jpg",
+      "22.jpg",
+      "23.jpg",
+      "27.jpg",
+      "26.jpg",
+      "24.jpg",
+      "25.jpg",
+      "21.jpg",
+      "20.jpg",
+      "18.jpg",
+      "19.jpg",
+      "14.jpg",
+      "15.jpg",
+      "17.jpg",
+      "16.jpg",
+      "4.jpg",
+      "5.jpg",
+      "6.jpg",
+      "2.jpg",
+      "3.jpg",
+      "1 Video test.mov",
+      "1.jpg"
+    ],
+    "photo_files_full_paths": [
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/8.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/9.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/12.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/13.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/11.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/10.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/7.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/28.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/22.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/23.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/27.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/26.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/24.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/25.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/21.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/20.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/18.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/19.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/14.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/15.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/17.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/16.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/4.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/5.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/6.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/2.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/3.jpg",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/1 Video test.mov",
+      "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/1.jpg"
+    ]
+  },
+  "preprocessed_folders_analysis": {
+    "3-5": {
+      "full_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5",
+      "files_count": 7,
+      "files": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/8.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/9.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/12.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/13.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/11.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/10.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/3-5/7.jpg"
+      ]
+    },
+    "8-10": {
+      "full_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10",
+      "files_count": 7,
+      "files": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/28.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/22.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/23.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/27.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/26.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/24.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/8-10/25.jpg"
+      ]
+    },
+    "7": {
+      "full_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7",
+      "files_count": 4,
+      "files": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/21.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/20.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/18.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/7/19.jpg"
+      ]
+    },
+    "6": {
+      "full_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6",
+      "files_count": 4,
+      "files": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/14.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/15.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/17.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/6/16.jpg"
+      ]
+    },
+    "1-2": {
+      "full_path": "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2",
+      "files_count": 7,
+      "files": [
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/4.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/5.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/6.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/2.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/3.jpg",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/1 Video test.mov",
+        "/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Media/1/1-10/1-2/1.jpg"
+      ]
+    }
+  },
+  "expected_logic": {
+    "description": "Файлы должны быть взяты из папок preprocessed_photos/1-2/, 3-4/, 5-8/, 9-13/, 14-31/",
+    "expected_total_duration": 1194.92,
+    "expected_folder_durations": {
+      "1-2": 42.47,
+      "3-4": 59.56,
+      "5-8": 166.43,
+      "9-13": 217.24,
+      "14-31": 709.22
+    },
+    "calculation_method": "Файлы из каждой папки должны показываться в течение времени, указанного в expected_folder_durations"
+  }
+}

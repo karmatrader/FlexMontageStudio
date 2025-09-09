@@ -1,0 +1,120 @@
+2025-09-03 21:52:03,021 - DEBUG - ✅ Видео создано из изображения и валидно: 008.jpg -> processed_1-7_7_008.mp4
+2025-09-03 21:52:03,024 - DEBUG - ⏳ Ждем 0.1 секунды для завершения записи файла: processed_1-7_7_008.mp4
+2025-09-03 21:52:03,685 - DEBUG -    ✅ Обработан клип 008.jpg -> processed_1-7_7_008.mp4 (116.43с, целевая 116.42с)
+2025-09-03 21:52:03,685 - INFO - 🔍 ДИАГНОСТИКА переходов для папки '1-7':
+2025-09-03 21:52:03,686 - INFO -    effects_config существует: True
+2025-09-03 21:52:03,686 - INFO -    transitions_enabled: True (тип: <class 'bool'>)
+2025-09-03 21:52:03,687 - INFO -    transition_method: 'xfade' (тип: <class 'str'>)
+2025-09-03 21:52:03,688 - INFO -    transition_method == 'xfade': True
+2025-09-03 21:52:03,688 - INFO -    Итоговое решение - transitions_enabled: True
+2025-09-03 21:52:03,689 - INFO - 🔄 Применяем XFADE переходы внутри папки '1-7' (8 файлов)
+2025-09-03 21:52:03,690 - INFO - 🎬 XFADE внутри папки '1-7': 8 файлов
+2025-09-03 21:52:03,691 - INFO -    Целевая длительность: 817.94с
+2025-09-03 21:52:03,691 - INFO -    Параметры переходов: тип=fade, длительность=0.5с
+2025-09-03 21:52:03,869 - DEBUG -    processed_1-7_0_001.mp4: 3.00с
+2025-09-03 21:52:04,079 - DEBUG -    processed_1-7_1_002.mp4: 116.43с
+2025-09-03 21:52:04,283 - DEBUG -    processed_1-7_2_003.mp4: 116.43с
+2025-09-03 21:52:04,470 - DEBUG -    processed_1-7_3_004.mp4: 116.43с
+2025-09-03 21:52:04,639 - DEBUG -    processed_1-7_4_005.mp4: 116.43с
+2025-09-03 21:52:04,841 - DEBUG -    processed_1-7_5_006.mp4: 116.43с
+2025-09-03 21:52:05,059 - DEBUG -    processed_1-7_6_007.mp4: 116.43с
+2025-09-03 21:52:05,491 - DEBUG -    processed_1-7_7_008.mp4: 116.43с
+2025-09-03 21:52:05,492 - INFO - 🔄 XFADE расчеты:
+2025-09-03 21:52:05,493 - INFO -    Входная длительность: 818.03с
+2025-09-03 21:52:05,494 - INFO -    Переходов: 7
+2025-09-03 21:52:05,494 - INFO -    Потеря на переходах: 3.50с
+2025-09-03 21:52:05,496 - INFO -    Ожидаемая выходная: 814.53с
+2025-09-03 21:52:05,497 - INFO -    Целевая длительность: 817.94с
+2025-09-03 21:52:05,497 - WARNING - ⚠️ Большая разница между ожидаемой (814.53с) и целевой (817.94с) длительностями!
+2025-09-03 21:52:05,498 - WARNING - ⚠️ Возможно, компенсация была применена неправильно в calculate_media_sequence_for_folder
+2025-09-03 21:52:05,663 - DEBUG -    Переход 1: offset=2.500с, cumulative=118.933с
+2025-09-03 21:52:05,665 - DEBUG -    Переход 2: offset=118.433с, cumulative=234.867с
+2025-09-03 21:52:05,666 - DEBUG -    Переход 3: offset=234.367с, cumulative=350.800с
+2025-09-03 21:52:05,666 - DEBUG -    Переход 4: offset=350.300с, cumulative=466.733с
+2025-09-03 21:52:05,667 - DEBUG -    Переход 5: offset=466.233с, cumulative=582.667с
+2025-09-03 21:52:05,667 - DEBUG -    Переход 6: offset=582.167с, cumulative=698.600с
+2025-09-03 21:52:05,667 - DEBUG -    Переход 7: offset=698.100с, cumulative=814.533с
+2025-09-03 21:52:05,667 - INFO - 🎵 XFADE без аудио клипов для папки '1-7'
+2025-09-03 21:52:05,668 - INFO - 🎬 Выполняем XFADE для папки '1-7'...
+2025-09-03 21:52:05,668 - DEBUG - XFADE команда: E:\pyPROJECT\FlexMontageStudio.win.dist\ffmpeg\ffmpeg.exe -v error -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\processed_1-7_0_001.mp4 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\processed_1-7_1_002.mp4 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\processed_1-7_2_003.mp4 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\processed_1-7_3_004.mp4 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\processed_1-7_4_005.mp4 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\processed_1-7_5_006.mp4 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\processed_1-7_6_007.mp4 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\processed_1-7_7_008.mp4 -filter_complex [0:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v0_norm];[1:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v1_norm];[2:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v2_norm];[3:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v3_norm];[4:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v4_norm];[5:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v5_norm];[6:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v6_norm];[7:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v7_norm];[v0_norm][v1_norm]xfade=transition=fade:duration=0.500:offset=2.500[vx0];[vx0][v2_norm]xfade=transition=fade:duration=0.500:offset=118.433[vx1];[vx1][v3_norm]xfade=transition=fade:duration=0.500:offset=234.367[vx2];[vx2][v4_norm]xfade=transition=fade:duration=0.500:offset=350.300[vx3];[vx3][v5_norm]xfade=transition=fade:duration=0.500:offset=466.233[vx4];[vx4][v6_norm]xfade=transition=fade:duration=0.500:offset=582.167[vx5];[vx5][v7_norm]xfade=transition=fade:duration=0.500:offset=698.100[out] -map [out] -c:v libx264 -preset ultrafast -crf 23 -pix_fmt yuv420p -r 30 -an -y E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\temp_video_segment_1-7.mp4
+2025-09-03 21:56:55,007 - ERROR - ❌ Ошибка XFADE внутри папки '1-17': Command '['E:\\pyPROJECT\\FlexMontageStudio.win.dist\\ffmpeg\\ffmpeg.exe', '-v', 'error', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_0_001.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_1_002.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_2_003.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_3_004.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_4_005.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_5_006.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_6_007.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_7_008.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_8_009.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_9_010.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_10_011.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_11_012.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_12_013.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_13_014.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_14_015.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_15_016.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\processed_1-17_16_017.mp4', '-filter_complex', '[0:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v0_norm];[1:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v1_norm];[2:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v2_norm];[3:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v3_norm];[4:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v4_norm];[5:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v5_norm];[6:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v6_norm];[7:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v7_norm];[8:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v8_norm];[9:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v9_norm];[10:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v10_norm];[11:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v11_norm];[12:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v12_norm];[13:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v13_norm];[14:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v14_norm];[15:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v15_norm];[16:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v16_norm];[v0_norm][v1_norm]xfade=transition=fade:duration=0.500:offset=2.500[vx0];[vx0][v2_norm]xfade=transition=fade:duration=0.500:offset=50.567[vx1];[vx1][v3_norm]xfade=transition=fade:duration=0.500:offset=98.633[vx2];[vx2][v4_norm]xfade=transition=fade:duration=0.500:offset=146.700[vx3];[vx3][v5_norm]xfade=transition=fade:duration=0.500:offset=194.767[vx4];[vx4][v6_norm]xfade=transition=fade:duration=0.500:offset=242.833[vx5];[vx5][v7_norm]xfade=transition=fade:duration=0.500:offset=290.900[vx6];[vx6][v8_norm]xfade=transition=fade:duration=0.500:offset=338.967[vx7];[vx7][v9_norm]xfade=transition=fade:duration=0.500:offset=387.033[vx8];[vx8][v10_norm]xfade=transition=fade:duration=0.500:offset=435.100[vx9];[vx9][v11_norm]xfade=transition=fade:duration=0.500:offset=483.167[vx10];[vx10][v12_norm]xfade=transition=fade:duration=0.500:offset=531.233[vx11];[vx11][v13_norm]xfade=transition=fade:duration=0.500:offset=579.300[vx12];[vx12][v14_norm]xfade=transition=fade:duration=0.500:offset=627.367[vx13];[vx13][v15_norm]xfade=transition=fade:duration=0.500:offset=675.433[vx14];[vx14][v16_norm]xfade=transition=fade:duration=0.500:offset=723.500[out]', '-map', '[out]', '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23', '-pix_fmt', 'yuv420p', '-r', '30', '-an', '-y', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\temp_video_segment_1-17.mp4']' timed out after 300 seconds
+2025-09-03 21:56:55,009 - WARNING - ⚠️ XFADE не удался для папки '1-17', используем простую конкатенацию
+2025-09-03 21:56:55,018 - INFO - 📼 Простая конкатенация видеоряда (17 файлов) без аудио для: temp_video_segment_1-17.mp4
+2025-09-03 21:56:55,200 - DEBUG - Простая конкатенация видеоряда CMD: E:\pyPROJECT\FlexMontageStudio.win.dist\ffmpeg\ffmpeg.exe -f concat -safe 0 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\2\temp\concat_list_temp_video_segment_1-17.txt -c:v libx264 -preset ultrafast -crf 23 -pix_fmt yuv420p -r 30 -an -y E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\2\temp\temp_video_segment_1-17.mp4
+2025-09-03 21:57:06,804 - ERROR - ❌ Ошибка XFADE внутри папки '1-7': Command '['E:\\pyPROJECT\\FlexMontageStudio.win.dist\\ffmpeg\\ffmpeg.exe', '-v', 'error', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\processed_1-7_0_001.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\processed_1-7_1_002.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\processed_1-7_2_003.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\processed_1-7_3_004.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\processed_1-7_4_005.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\processed_1-7_5_006.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\processed_1-7_6_007.mp4', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\processed_1-7_7_008.mp4', '-filter_complex', '[0:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v0_norm];[1:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v1_norm];[2:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v2_norm];[3:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v3_norm];[4:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v4_norm];[5:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v5_norm];[6:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v6_norm];[7:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p[v7_norm];[v0_norm][v1_norm]xfade=transition=fade:duration=0.500:offset=2.500[vx0];[vx0][v2_norm]xfade=transition=fade:duration=0.500:offset=118.433[vx1];[vx1][v3_norm]xfade=transition=fade:duration=0.500:offset=234.367[vx2];[vx2][v4_norm]xfade=transition=fade:duration=0.500:offset=350.300[vx3];[vx3][v5_norm]xfade=transition=fade:duration=0.500:offset=466.233[vx4];[vx4][v6_norm]xfade=transition=fade:duration=0.500:offset=582.167[vx5];[vx5][v7_norm]xfade=transition=fade:duration=0.500:offset=698.100[out]', '-map', '[out]', '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23', '-pix_fmt', 'yuv420p', '-r', '30', '-an', '-y', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\temp_video_segment_1-7.mp4']' timed out after 300 seconds
+2025-09-03 21:57:06,806 - WARNING - ⚠️ XFADE не удался для папки '1-7', используем простую конкатенацию
+2025-09-03 21:57:06,806 - INFO - 📼 Простая конкатенация видеоряда (8 файлов) без аудио для: temp_video_segment_1-7.mp4
+2025-09-03 21:57:06,997 - DEBUG - Простая конкатенация видеоряда CMD: E:\pyPROJECT\FlexMontageStudio.win.dist\ffmpeg\ffmpeg.exe -f concat -safe 0 -i E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\concat_list_temp_video_segment_1-7.txt -c:v libx264 -preset ultrafast -crf 23 -pix_fmt yuv420p -r 30 -an -y E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\temp_video_segment_1-7.mp4
+2025-09-03 22:01:55,499 - ERROR - ❌ Таймаут при простой конкатенации видеоряда.
+2025-09-03 22:01:55,518 - ERROR - ❌ Критическая ошибка при обработке сегмента папки '1-17': name 'ProcessingError' is not defined
+2025-09-03 22:01:55,520 - ERROR -    Папка: 1-17, целевая длительность: 780.0975510000003с
+2025-09-03 22:01:55,521 - ERROR -    Медиафайлов: 17
+2025-09-03 22:01:55,522 - ERROR -    Аудиофайл: E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\2\temp\folder_audio_segment_1-17.wav
+2025-09-03 22:01:55,526 - ERROR -    Детали ошибки: Traceback (most recent call last):
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\video_processing.py", line 1596, in _concatenate_simple_no_audio
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\video_processing.py", line 26, in run_subprocess_hidden
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\subprocess.py", line 503, in run
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\subprocess.py", line 1149, in communicate
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\subprocess.py", line 1525, in _communicate
+subprocess.TimeoutExpired: Command '['E:\\pyPROJECT\\FlexMontageStudio.win.dist\\ffmpeg\\ffmpeg.exe', '-f', 'concat', '-safe', '0', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\concat_list_temp_video_segment_1-17.txt', '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23', '-pix_fmt', 'yuv420p', '-r', '30', '-an', '-y', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\2\\temp\\temp_video_segment_1-17.mp4']' timed out after 300 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\video_processing.py", line 1270, in process_single_folder_segment
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\video_processing.py", line 1602, in _concatenate_simple_no_audio
+NameError: name 'ProcessingError' is not defined
+
+2025-09-03 22:01:55,527 - ERROR - ❌ Ошибка создания видеосегмента для папки '1-17'
+2025-09-03 22:01:55,527 - INFO - 🔗 Конкатенация готовых видеосегментов
+2025-09-03 22:01:55,528 - ERROR - ❌ Нет готовых видеосегментов для конкатенации!
+2025-09-03 22:01:55,528 - INFO - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-03 22:01:55,528 - ERROR - ❌ Видео 2 не удалось обработать - метод вернул: False
+2025-09-03 22:01:55,528 - INFO - === 📊 Итоговая статистика ===
+2025-09-03 22:01:55,529 - INFO - Канал: 1 STORIES ON THE EDGE
+2025-09-03 22:01:55,529 - INFO - Успешно обработано: 0
+2025-09-03 22:01:55,529 - INFO - Ошибок: 1
+2025-09-03 22:01:55,529 - INFO - Время обработки: 0:12:13.310813
+2025-09-03 22:01:55,529 - INFO - Завершено: 2025-09-03 22:01:55
+2025-09-03 22:01:55,529 - WARNING - ⚠️ Обнаружены проблемы при обработке 1 видео
+2025-09-03 22:01:55,529 - ERROR - [МОНТАЖ-1 STORIES ON THE EDGE_video_2_214942] ❌ РЕАЛЬНЫЙ монтаж завершен с ОШИБКОЙ
+2025-09-03 22:01:55,560 - ERROR - [PARALLEL-1 STORIES ON THE EDGE_video_2_214942] ❌ Видео 2 канала 1 STORIES ON THE EDGE - ошибка монтажа
+❌ ❌ Видео 2 канала 1 STORIES ON THE EDGE - ошибка монтажа
+2025-09-03 22:01:55,538 - ERROR - ❌ [МОНТАЖ-1 STORIES ON THE EDGE_video_2_214942] Завершено с ошибкой
+2025-09-03 22:02:07,043 - ERROR - ❌ Таймаут при простой конкатенации видеоряда.
+2025-09-03 22:02:07,043 - ERROR - ❌ Критическая ошибка при обработке сегмента папки '1-7': name 'ProcessingError' is not defined
+2025-09-03 22:02:07,043 - ERROR -    Папка: 1-7, целевая длительность: 817.9395910000002с
+2025-09-03 22:02:07,044 - ERROR -    Медиафайлов: 8
+2025-09-03 22:02:07,044 - ERROR -    Аудиофайл: E:\pyPROJECT\.venv\YOUTUBE\source\1 STORIES ON THE EDGE\final_video\1\temp\folder_audio_segment_1-7.wav
+2025-09-03 22:02:07,044 - ERROR -    Детали ошибки: Traceback (most recent call last):
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\video_processing.py", line 1596, in _concatenate_simple_no_audio
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\video_processing.py", line 26, in run_subprocess_hidden
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\subprocess.py", line 503, in run
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\subprocess.py", line 1149, in communicate
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\subprocess.py", line 1525, in _communicate
+subprocess.TimeoutExpired: Command '['E:\\pyPROJECT\\FlexMontageStudio.win.dist\\ffmpeg\\ffmpeg.exe', '-f', 'concat', '-safe', '0', '-i', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\concat_list_temp_video_segment_1-7.txt', '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '23', '-pix_fmt', 'yuv420p', '-r', '30', '-an', '-y', 'E:\\pyPROJECT\\.venv\\YOUTUBE\\source\\1 STORIES ON THE EDGE\\final_video\\1\\temp\\temp_video_segment_1-7.mp4']' timed out after 300 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\video_processing.py", line 1270, in process_single_folder_segment
+  File "E:\pyPROJECT\FlexMontageStudio.win.dist\video_processing.py", line 1602, in _concatenate_simple_no_audio
+NameError: name 'ProcessingError' is not defined
+
+2025-09-03 22:02:07,044 - ERROR - ❌ Ошибка создания видеосегмента для папки '1-7'
+2025-09-03 22:02:07,044 - INFO - 🔗 Конкатенация готовых видеосегментов
+2025-09-03 22:02:07,044 - ERROR - ❌ Нет готовых видеосегментов для конкатенации!
+2025-09-03 22:02:07,044 - INFO - 🔍 DEBUG: processor.process() вернул: False (тип: <class 'bool'>)
+2025-09-03 22:02:07,044 - ERROR - ❌ Видео 1 не удалось обработать - метод вернул: False
+2025-09-03 22:02:07,044 - INFO - === 📊 Итоговая статистика ===
+2025-09-03 22:02:07,045 - INFO - Канал: 1 STORIES ON THE EDGE
+2025-09-03 22:02:07,045 - INFO - Успешно обработано: 0
+2025-09-03 22:02:07,045 - INFO - Ошибок: 1
+2025-09-03 22:02:07,045 - INFO - Время обработки: 0:12:24.828362
+2025-09-03 22:02:07,045 - INFO - Завершено: 2025-09-03 22:02:07
+2025-09-03 22:02:07,045 - WARNING - ⚠️ Обнаружены проблемы при обработке 1 видео
+2025-09-03 22:02:07,045 - ERROR - [МОНТАЖ-1 STORIES ON THE EDGE_video_1_214942] ❌ РЕАЛЬНЫЙ монтаж завершен с ОШИБКОЙ
+2025-09-03 22:02:07,055 - ERROR - [PARALLEL-1 STORIES ON THE EDGE_video_1_214942] ❌ Видео 1 канала 1 STORIES ON THE EDGE - ошибка монтажа
+❌ ❌ Видео 1 канала 1 STORIES ON THE EDGE - ошибка монтажа
+2025-09-03 22:02:07,045 - ERROR - ❌ [МОНТАЖ-1 STORIES ON THE EDGE_video_1_214942] Завершено с ошибкой
+2025-09-03 22:02:07,046 - INFO - 🏁 Параллельный монтаж завершен: 0/2 успешно

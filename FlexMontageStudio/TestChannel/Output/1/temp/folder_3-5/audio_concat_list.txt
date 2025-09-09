@@ -1,0 +1,6 @@
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_3-5/processed_003.wav'
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_3-5/silence_0.wav'
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_3-5/processed_004.wav'
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_3-5/silence_1.wav'
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_3-5/processed_005.wav'
+file '/Users/mikman/PycharmProjects/PythonProject/FlexMontageStudio/TestChannel/Output/1/temp/folder_3-5/silence_2.wav'
