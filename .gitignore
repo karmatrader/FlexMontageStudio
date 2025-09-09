@@ -1,0 +1,28 @@
+# FFmpeg binaries (too large for GitHub)
+ffmpeg/
+*.exe
+**/ffmpeg
+**/ffprobe
+**/ffplay
+
+# Large media files
+*.mov
+*.mp4
+*.avi
+*.mkv
+
+# Cache and temporary files
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+.vscode/
+.idea/
+
+# Log files
+*.log
+*.txt
+
+# Build artifacts
+build/
+dist/

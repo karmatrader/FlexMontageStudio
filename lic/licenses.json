@@ -1,0 +1,18 @@
+[
+    {
+        "key": "myEx-k2w9-ZlS5-6pgy",
+        "data": "gAAAAABoH54pntE_wuIBa8Fsbs2IOyOmy_td1wcAobFB6TcUFUwwVhMWP2ahf0stgNN48CSaxcr5BscVb1Bn3GWjAodqFfff2at9uISYKjrRdlmQl4oWo3UGHf2acVKbkH2Py5O65_47iKiCFP3yc7o4keSKPqakDQ83jKGauC7gMiteGNL53oy9GBgbnCzXI2CKg0Qpv3qPrc_GtlR_E1Ec5IvYKPZ-sPb_mwy7i5hbTdwLIU0Q3nAawEhcGt1N4m_OPxFrLfLRXPrGNA48IX7sIQnTngUEsM1IVekGJ5_UoZqhT-lvXLM=",
+        "hmac": "df00f66311b1202fef12c97e568ac22c256a3a315b1d034c41e63b30def11ce3",
+        "status": "revoked",
+        "user_id": "мик1",
+        "created_at": "2025-05-10T21:42:49.645619"
+    },
+    {
+        "key": "cNzZ-a9pQ-0X4z-aaiT",
+        "data": "gAAAAABoMOQyVNUHYIohPKyI4PhqUVeP7YCi8IqgRoMemL9Lg2PxD34utVt8Oyngp_omcUYUsTeOQRqz-AcrGeHh0iVorNrYbYO9cKtuP3dSXfl68FwVnThj4mH5AaetZuGuiLA6HCIliFomILnbYJQBcxSQb9xHhrlvII8YrDX2zJTlvSWc27S7BUHmfp5lOWINXKmXuA-hPUGP_D3OILWWtmbeKOrwpTsSaVIoh3dmRyrHdJFBZQVSdjfWyKXsw__Uk6LTUS7ECP1fU-hRyO7kmLE3oTNh4nN3QlodOxDbVU437t4OvHQ=",
+        "hmac": "c46897045df5801de4c1b2d2af0db2caca855bf6d129a096a6b49d3c2782d2db",
+        "status": "active",
+        "user_id": "мик777",
+        "created_at": "2025-05-24T00:10:10.277901"
+    }
+]

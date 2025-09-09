@@ -1,0 +1,791 @@
+/* Общий стиль для всех виджетов, чтобы гарантировать серый фон и цвет текста */
+QWidget {
+    background-color: #303030;
+    color: #B8B8B8;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+}
+
+/* Стиль для главного окна */
+QMainWindow {
+    background-color: #303030;
+}
+
+/* Стиль для меток */
+QLabel {
+    color: #B8B8B8;
+    font-size: 14px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    padding: 0; /* Убрали padding, чтобы управлять отступами через spacing */
+}
+
+QLabel#bold {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-weight: bold;
+    padding: 0; /* Убрали padding */
+}
+
+QLabel#subgroup {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-weight: bold;
+    padding: 0; /* Убрали padding */
+    margin: 0; /* Убрали margin */
+}
+
+/* Специальные стили для заголовков визуальных редакторов */
+QLabel#visual-editor-title {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* Стиль для вкладок - принудительно убираем отступы */
+QTabWidget::pane {
+    border: none;
+    background: #303030;
+    margin: 0px;
+    padding: 0px;
+}
+
+QTabWidget {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Скрываем оригинальные табы QTabWidget */
+QTabBar::tab {
+    height: 0px;
+    width: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background: transparent;
+}
+
+QTabBar {
+    height: 0px;
+}
+
+/* Стиль для области прокрутки - принудительно убираем отступы */
+QScrollArea {
+    background: #303030;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Явно задаём стиль для виджетов внутри QScrollArea */
+QScrollArea QWidget {
+    background: #303030;
+    color: #B8B8B8;
+}
+
+/* Минимальные отступы для визуальных редакторов */
+QWidget[objectName="scroll_widget"] {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Центрирование для фиксированных групп */
+QWidget[objectName="fixed_scroll_widget"] {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Принудительное обнуление отступов для визуальных редакторов */
+QWidget[objectName="LogoPositionEditor"] {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+/* Дополнительные стили для минимизации отступов вокруг LogoPositionEditor */
+LogoPositionEditor {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+QWidget[objectName="SubtitlePreviewWidget"] {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+/* Обнуление отступов для QGraphicsView внутри редакторов */
+QWidget[objectName="LogoPositionEditor"] QGraphicsView {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+QWidget[objectName="SubtitlePreviewWidget"] QGraphicsView {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+/* Стиль для полос прокрутки */
+QScrollBar:vertical {
+    border: none;
+    background: #303030;
+    width: 10px;
+    margin: 0px 0px 0px 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: #454545;
+    min-height: 20px;
+    border-radius: 5px; /* Закругление для macOS */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background: none;
+    height: 0px;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+/* Стиль для текстового поля */
+QTextEdit {
+    background: #303030;
+    color: #B8B8B8;
+    border: none;
+    padding: 8px;
+    font-size: 13px;
+}
+
+/* Стиль для разделителя */
+QFrame#separator {
+    background: #454545;
+    height: 1px;
+}
+
+/* Стиль для чекбоксов */
+QCheckBox {
+    color: #B8B8B8;
+    font-size: 13px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    spacing: 5px;
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #555555;
+    background: #4A4A4A;
+    border-radius: 3px; /* Закругление для macOS */
+}
+
+QCheckBox::indicator:checked {
+    background: #12BAC4;
+    border: 1px solid #0F9AA3;
+}
+
+QCheckBox::indicator:unchecked {
+    background: #4A4A4A;
+    border: 1px solid #555555;
+}
+
+QCheckBox::indicator:hover {
+    background: #555555;
+    border: 1px solid #666666;
+}
+
+QCheckBox::indicator:checked:hover {
+    background: #15D4E0;
+    border: 1px solid #12BAC4;
+}
+
+/* Стиль для текстовых полей ввода */
+QLineEdit {
+    background-color: #353535;
+    color: #B8B8B8;
+    border: 1px solid #454545;
+    padding: 4px;
+    font-size: 13px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    border-radius: 5px; /* Закругление для macOS */
+}
+
+QLineEdit:focus {
+    background-color: #404040;
+    border: 1px solid #555555;
+}
+
+/* Стиль для выпадающего списка */
+QComboBox {
+    background-color: #353535;
+    color: #B8B8B8;
+    border: none;
+    padding: 6px;
+    font-size: 14px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    border-radius: 5px; /* Закругление для macOS */
+}
+
+QComboBox::drop-down {
+    border-left: 1px solid #454545;
+    width: 20px;
+}
+
+QComboBox::down-arrow {
+    width: 10px;
+    height: 10px;
+    border-width: 0;
+    image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABKElEQVRIx+2TsUoDQRSFvzEkyIIgNkqS2CgtBC1EsLHTxspOEBs7O7HSRszcwF+gY2Vjo+ws/Aeew4hNyC5yLu+9c2fm5r15zExFRCyAEnA/AU4B+yWArzQ/Aj4BbgL7pYAHwH4J4C8NXkTEkkrFApnO5dUqFeAD4BHgF7AD6A1eAH6hUqls5XL5mQvAu1Kp/GMMvG/f92fXdf0VCoVJkiRJxhgDOB7n7yZJ8q1Wq3/dbre/MAb+GIbR5zAMa8YY+CX4syzLWhmG8XMMwzAMw6c0TNLp9K8kSfq1Xq//bDabz5IkqVarz1Kp1F8kSdpqtVq/z+cXz/P9tV6vH5Ik/VqW5XvdbvdfTdO0lV6v/9lsNj/TNP2aJOm5Xq//VCoVvyRJ+j8S8a/1er0vL5eL+x7hOQAAAABJRU5ErkJggg==);
+}
+
+QComboBox::down-arrow:on {
+    border: none;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #353535;
+    color: #B8B8B8;
+    selection-background-color: #454545;
+    selection-color: #FFFFFF;
+}
+
+/* Стиль для кнопок */
+QPushButton {
+    background-color: #454545;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    border-radius: 5px; /* Закругление для macOS */
+}
+
+QPushButton:hover {
+    background-color: #555555;
+}
+
+QPushButton:pressed {
+    background-color: #353535;
+}
+
+QPushButton:disabled {
+    background-color: #353535;
+    color: #666666;
+}
+
+QPushButton#browse {
+    background-color: #454545;
+    color: #FFFFFF;
+    border: none;
+    padding: 6px;
+    border-radius: 5px; /* Закругление для macOS */
+}
+
+QPushButton#browse:hover {
+    background-color: #555555;
+}
+
+QPushButton#browse:pressed {
+    background-color: #353535;
+}
+
+QPushButton#dialog {
+    background-color: #454545;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    border-radius: 5px; /* Закругление для macOS */
+}
+
+QPushButton#dialog:hover {
+    background-color: #555555;
+}
+
+QPushButton#dialog:pressed {
+    background-color: #353535;
+}
+
+/* Поддержка тёмной темы на macOS */
+@media (prefers-color-scheme: dark) {
+    QWidget {
+        background-color: #303030;
+        color: #B8B8B8;
+    }
+    QMainWindow {
+        background-color: #303030;
+    }
+    QLabel {
+        color: #B8B8B8;
+    }
+    QTextEdit {
+        background: #303030;
+        color: #B8B8B8;
+    }
+    QComboBox {
+        background-color: #353535;
+        color: #B8B8B8;
+    }
+    QPushButton {
+        background-color: #454545;
+        color: #FFFFFF;
+    }
+}
+
+/* ============================================
+   СТИЛИ ДЛЯ ВИДЖЕТА ВЫБОРА ГОЛОСОВ
+   ============================================ */
+
+/* Основной контейнер виджета выбора голосов */
+VoiceSelectorWidget {
+    background-color: #303030;
+    border: 1px solid #454545;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Заголовки секций в виджете голосов */
+VoiceSelectorWidget QLabel {
+    color: #B8B8B8;
+    font-size: 13px;
+}
+
+/* Заголовок виджета */
+VoiceSelectorWidget QLabel#voice-header {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Фильтры */
+VoiceSelectorWidget QComboBox {
+    background-color: #353535;
+    color: #B8B8B8;
+    border: 1px solid #454545;
+    border-radius: 4px;
+    padding: 4px 8px;
+    min-height: 20px;
+    font-size: 12px;
+}
+
+VoiceSelectorWidget QComboBox:focus {
+    border-color: #66FF33;
+    background-color: #404040;
+}
+
+VoiceSelectorWidget QComboBox::drop-down {
+    border-left: 1px solid #454545;
+    width: 18px;
+    border-radius: 0px 4px 4px 0px;
+}
+
+VoiceSelectorWidget QComboBox::down-arrow {
+    width: 10px;
+    height: 10px;
+}
+
+VoiceSelectorWidget QComboBox QAbstractItemView {
+    background-color: #353535;
+    color: #B8B8B8;
+    selection-background-color: #454545;
+    selection-color: #FFFFFF;
+    border: 1px solid #454545;
+}
+
+/* Поле быстрого поиска */
+VoiceSelectorWidget QLineEdit {
+    background-color: #353535;
+    color: #B8B8B8;
+    border: 1px solid #454545;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+VoiceSelectorWidget QLineEdit:focus {
+    border-color: #66FF33;
+    background-color: #404040;
+}
+
+/* Главный выпадающий список голосов */
+VoiceSelectorWidget QComboBox#main-voice-combo {
+    background-color: #353535;
+    color: #B8B8B8;
+    border: 2px solid #454545;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    min-height: 30px;
+}
+
+VoiceSelectorWidget QComboBox#main-voice-combo:focus {
+    border-color: #66FF33;
+}
+
+VoiceSelectorWidget QComboBox#main-voice-combo::drop-down {
+    border-left: 2px solid #454545;
+    width: 22px;
+}
+
+/* Информационная панель о голосе */
+VoiceSelectorWidget QLabel#voice-info {
+    background-color: #353535;
+    border: 1px solid #454545;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 11px;
+    color: #B8B8B8;
+    margin: 5px 0px;
+}
+
+/* Кнопки действий */
+VoiceSelectorWidget QPushButton {
+    background-color: #454545;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    min-height: 24px;
+}
+
+VoiceSelectorWidget QPushButton:hover {
+    background-color: #555555;
+}
+
+VoiceSelectorWidget QPushButton:pressed {
+    background-color: #353535;
+}
+
+VoiceSelectorWidget QPushButton:disabled {
+    background-color: #353535;
+    color: #666666;
+}
+
+/* Основная кнопка "Использовать этот голос" */
+VoiceSelectorWidget QPushButton#use-voice-button {
+    background-color: #66FF33;
+    color: #000000;
+    font-weight: bold;
+    padding: 8px 16px;
+}
+
+VoiceSelectorWidget QPushButton#use-voice-button:hover {
+    background-color: #5AE02A;
+}
+
+VoiceSelectorWidget QPushButton#use-voice-button:pressed {
+    background-color: #4DC721;
+}
+
+VoiceSelectorWidget QPushButton#use-voice-button:disabled {
+    background-color: #353535;
+    color: #666666;
+}
+
+/* Кнопка обновления */
+VoiceSelectorWidget QPushButton#refresh-button {
+    background-color: #454545;
+    color: #FFFFFF;
+    padding: 6px 10px;
+}
+
+VoiceSelectorWidget QPushButton#refresh-button:hover {
+    background-color: #555555;
+}
+
+/* Прогресс-бар для загрузки голосов */
+VoiceSelectorWidget QProgressBar {
+    border: 1px solid #454545;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #353535;
+    color: #B8B8B8;
+    font-size: 11px;
+}
+
+VoiceSelectorWidget QProgressBar::chunk {
+    background-color: #66FF33;
+    border-radius: 3px;
+}
+
+/* Статусная строка */
+VoiceSelectorWidget QLabel#status-label {
+    color: #888888;
+    font-size: 11px;
+    font-style: italic;
+    padding: 3px 5px;
+}
+
+/* Диалог подробностей голоса */
+VoiceDetailsDialog {
+    background-color: #303030;
+}
+
+VoiceDetailsDialog QGroupBox {
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid #454545;
+    border-radius: 4px;
+    margin-top: 8px;
+    padding-top: 5px;
+}
+
+VoiceDetailsDialog QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 8px;
+    padding: 0 5px 0 5px;
+}
+
+VoiceDetailsDialog QLabel {
+    color: #B8B8B8;
+    font-size: 12px;
+}
+
+VoiceDetailsDialog QLineEdit {
+    background-color: #353535;
+    color: #B8B8B8;
+    border: 1px solid #454545;
+    border-radius: 3px;
+    padding: 3px 6px;
+    font-size: 11px;
+}
+
+VoiceDetailsDialog QTextEdit {
+    background-color: #353535;
+    color: #B8B8B8;
+    border: 1px solid #454545;
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 11px;
+}
+
+VoiceDetailsDialog QPushButton {
+    background-color: #454545;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+VoiceDetailsDialog QPushButton:hover {
+    background-color: #555555;
+}
+
+VoiceDetailsDialog QPushButton:pressed {
+    background-color: #353535;
+}
+
+/* =============================================
+   СТИЛИ ДЛЯ ПОЛЗУНКОВ НАСТРОЕК ГОЛОСА
+   ============================================= */
+
+/* Основной виджет настроек голоса */
+VoiceSettingsWidget {
+    background-color: #303030;
+    border: 1px solid #454545;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 5px 0px;
+}
+
+/* Заголовок настроек голоса */
+VoiceSettingsWidget QLabel#voice-settings-header {
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Стили для ползунков */
+VoiceSettingsWidget QSlider#voice-setting-slider {
+    height: 20px;
+}
+
+VoiceSettingsWidget QSlider#voice-setting-slider::groove:horizontal {
+    border: none;
+    height: 1px;
+    background: #353535;
+    margin: 8px 0;
+    border-radius: 0px;
+}
+
+/* VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal {
+    background: #12BAC4;
+    border: 1px solid #0F9AA3;
+    width: 16px;
+    height: 16px;
+    margin: -6px 0;
+    border-radius: 8px;
+} */
+
+/* VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal:hover {
+    background: #15D4E0;
+    border: 1px solid #12BAC4;
+} */
+
+/* VoiceSettingsWidget QSlider#voice-setting-slider::handle:horizontal:pressed {
+    background: #0F9AA3;
+    border: 1px solid #12BAC4;
+} */
+
+VoiceSettingsWidget QSlider#voice-setting-slider::sub-page:horizontal {
+    background: #12BAC4;
+    border: none;
+    height: 1px;
+    border-radius: 0px;
+}
+
+/* Общие стили для всех слайдеров в приложении - делаем их зелеными */
+QSlider {
+    background: transparent;
+    outline: none;
+}
+
+/* QSlider::handle:horizontal {
+    background: #12BAC4;
+    border: 1px solid #0F9AA3;
+    width: 16px;
+    height: 16px;
+    margin: -6px 0;
+    border-radius: 8px;
+} */
+
+/* QSlider::handle:horizontal:hover {
+    background: #15D4E0;
+    border: 1px solid #12BAC4;
+} */
+
+/* QSlider::handle:horizontal:pressed {
+    background: #0F9AA3;
+    border: 1px solid #12BAC4;
+} */
+
+QSlider::sub-page:horizontal {
+    background: #12BAC4;
+    border: none;
+    height: 1px;
+    border-radius: 0px;
+}
+
+QSlider::groove:horizontal {
+    border: none;
+    height: 1px;
+    background: #353535;
+    margin: 8px 0;
+    border-radius: 0px;
+}
+
+QSlider::add-page:horizontal {
+    background: #353535;
+    border: none;
+    height: 1px;
+    border-radius: 0px;
+}
+
+VoiceSettingsWidget QSlider#voice-setting-slider::add-page:horizontal {
+    background: #353535;
+    border: none;
+    height: 1px;
+    border-radius: 0px;
+}
+
+/* Метки на ползунках */
+VoiceSettingsWidget QSlider#voice-setting-slider::tick:horizontal {
+    background: #666666;
+    width: 1px;
+    height: 1px;
+}
+
+/* Кнопка сброса настроек */
+VoiceSettingsWidget QPushButton#reset-voice-settings {
+    background-color: #555555;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    min-height: 20px;
+}
+
+VoiceSettingsWidget QPushButton#reset-voice-settings:hover {
+    background-color: #666666;
+}
+
+VoiceSettingsWidget QPushButton#reset-voice-settings:pressed {
+    background-color: #444444;
+}
+
+/* Обновленные стили для виджета выбора голосов */
+VoiceSelectorWidget QComboBox#main-voice-combo {
+    background-color: #353535;
+    color: #B8B8B8;
+    border: 2px solid #454545;
+    border-radius: 6px;
+    padding: 10px 12px;  /* Увеличили вертикальные отступы */
+    font-size: 13px;
+    min-height: 35px;  /* Увеличили минимальную высоту */
+    line-height: 1.2;  /* Улучшили межстрочный интервал */
+}
+
+VoiceSelectorWidget QComboBox#main-voice-combo::drop-down {
+    border-left: 2px solid #454545;
+    width: 25px;
+}
+
+VoiceSelectorWidget QComboBox#main-voice-combo QAbstractItemView {
+    background-color: #353535;
+    color: #B8B8B8;
+    selection-background-color: #454545;
+    selection-color: #FFFFFF;
+    border: 1px solid #454545;
+    outline: none;
+    padding: 2px;
+}
+
+VoiceSelectorWidget QComboBox#main-voice-combo QAbstractItemView::item {
+    padding: 6px 8px;  /* Увеличили отступы элементов */
+    border: none;
+    min-height: 18px;  /* Минимальная высота элемента */
+}
+
+VoiceSelectorWidget QComboBox#main-voice-combo QAbstractItemView::item:selected {
+    background-color: #66FF33;
+    color: #000000;
+}
+
+VoiceSelectorWidget QComboBox#main-voice-combo QAbstractItemView::item:disabled {
+    color: #888888;
+    background-color: #404040;
+    font-weight: bold;
+    padding: 4px 8px;
+}
+
+/* Информационная панель - увеличенная высота */
+VoiceSelectorWidget QLabel#voice-info {
+    background-color: #353535;
+    border: 1px solid #454545;
+    border-radius: 4px;
+    padding: 10px;  /* Увеличили отступы */
+    font-size: 11px;
+    color: #B8B8B8;
+    margin: 5px 0px;
+    min-height: 50px;  /* Минимальная высота */
+    line-height: 1.3;  /* Улучшили межстрочный интервал */
+}
