@@ -1,17 +1,30 @@
 """
-Рабочие потоки для UI
+Рабочие потоки для UI - исправленная версия
 """
 import asyncio
 import logging
 import traceback
 import sys
 import gc
+import os
 from typing import Dict, List, Any
+from pathlib import Path
 from PySide6.QtCore import QThread, Signal, QObject
 
 from core.config_manager import ConfigManager
 from core.logging_config import LoggingConfig
 from core.task_manager import AsyncTaskManager
+
+# Статический импорт main для совместимости с Nuitka
+try:
+    # Если запущено из startup.py, импортируем через main модуль
+    import main
+    process_auto_montage = main.process_auto_montage
+    MAIN_IMPORT_SUCCESS = True
+except (ImportError, AttributeError) as e:
+    # Если статический импорт не удался, будем пытаться динамический
+    MAIN_IMPORT_SUCCESS = False
+    process_auto_montage = None
 
 logger = logging.getLogger(__name__)
 
@@ -62,6 +75,16 @@ class MontageThread(QThread):
         self.channel_name = channel_name
         self.config = config
         self.preserve_clip_audio_videos = preserve_clip_audio_videos or []
+        self._stop_flag = False  # Флаг для мягкой остановки
+
+    def stop(self):
+        """Мягкая остановка монтажа"""
+        self._stop_flag = True
+        logger.info(f"🛑 Запрос на остановку монтажа для канала: {self.channel_name}")
+
+    def is_stopped(self):
+        """Проверка остановки"""
+        return self._stop_flag
 
     def run(self):
         """Выполнение монтажа в отдельном потоке с детальным логированием"""
@@ -74,6 +97,7 @@ class MontageThread(QThread):
             logger.info(f"🖥️  Система: {sys.platform}")
             logger.info(f"🐍 Python версия: {sys.version}")
             logger.info(f"📊 Использование памяти перед стартом: {self._get_memory_usage()}")
+            logger.info(f"📁 Текущая директория: {os.getcwd()}")
 
             # Проверяем конфигурацию
             logger.info(f"📋 Конфигурация содержит {len(self.config)} параметров:")
@@ -92,37 +116,59 @@ class MontageThread(QThread):
             self._validate_paths()
 
             # Проверяем импорт модуля main
-            logger.info("📦 Попытка импорта main.process_auto_montage...")
-            try:
-                from main import process_auto_montage
-                logger.info("✅ Импорт main.process_auto_montage успешен")
-            except ImportError as e:
-                logger.error(f"❌ Ошибка импорта main.process_auto_montage: {e}")
-                raise
-            except Exception as e:
-                logger.error(f"❌ Неожиданная ошибка при импорте: {e}")
-                logger.error(f"Стектрейс: {traceback.format_exc()}")
-                raise
+            logger.info("📦 Проверяем импорт функции process_auto_montage...")
+            
+            # Инициализируем переменную для избежания UnboundLocalError
+            current_process_auto_montage = process_auto_montage
+            
+            if MAIN_IMPORT_SUCCESS and process_auto_montage is not None:
+                logger.info("✅ Статический импорт process_auto_montage успешен")
+                current_process_auto_montage = process_auto_montage
+            else:
+                # Пытаемся динамический импорт как fallback
+                logger.info("🔄 Пытаемся динамический импорт process_auto_montage...")
+                try:
+                    import main
+                    current_process_auto_montage = main.process_auto_montage
+                    logger.info("✅ Динамический импорт process_auto_montage успешен")
+                except (ImportError, AttributeError) as e:
+                    logger.error(f"❌ Ошибка импорта process_auto_montage: {e}")
+                    raise
+                except Exception as e:
+                    logger.error(f"❌ Неожиданная ошибка при импорте: {e}")
+                    logger.error(f"Стектрейс: {traceback.format_exc()}")
+                    raise
 
             # Проверяем функцию
-            if not callable(process_auto_montage):
+            if not callable(current_process_auto_montage):
                 raise ValueError("process_auto_montage не является функцией")
 
             logger.info("🎬 Запуск process_auto_montage...")
             self.progress_updated.emit("Выполняется обработка видео...")
+
+            # Проверка остановки перед основным процессом
+            if self._stop_flag:
+                logger.info("🛑 Монтаж остановлен перед запуском process_auto_montage")
+                return
 
             # Принудительная сборка мусора перед началом
             gc.collect()
             logger.info(f"🗑️  Сборка мусора выполнена, память: {self._get_memory_usage()}")
 
             # Запускаем процесс монтажа
-            process_auto_montage(
+            current_process_auto_montage(
                 self.channel_name,
                 preserve_clip_audio_videos=self.preserve_clip_audio_videos
             )
 
             logger.info("✅ process_auto_montage завершен успешно")
             logger.info(f"📊 Использование памяти после завершения: {self._get_memory_usage()}")
+
+            # Проверка остановки после завершения
+            if self._stop_flag:
+                logger.info("🛑 Монтаж был остановлен во время выполнения")
+                self.progress_updated.emit(f"Монтаж канала {self.channel_name} остановлен")
+                return
 
             self.progress_updated.emit(f"Монтаж канала {self.channel_name} завершен")
             logger.info(f"🎉 Монтаж канала {self.channel_name} завершен успешно!")
@@ -181,7 +227,7 @@ class MontageThread(QThread):
                 path_value = self.config[path_key]
                 if path_value:
                     from pathlib import Path
-                    
+
                     # Для channel_folder нужно строить полный путь
                     if path_key == 'channel_folder':
                         base_path = self.config.get('base_path', '')
@@ -253,7 +299,8 @@ class VoiceoverWorker(QObject):
             logger.info(f"🎬 НАЧАЛО ОЗВУЧКИ для канала: {self.channel_name}")
             logger.info(f"   📋 Канал: {self.channel_name}")
             logger.info(f"   🔧 Платформа: {sys.platform}")
-            
+            logger.info(f"   📁 Текущая директория: {os.getcwd()}")
+
             # Импорт здесь для избежания циклических зависимостей
             logger.info("📦 Импорт voice_proxy модуля...")
             try:
@@ -262,13 +309,13 @@ class VoiceoverWorker(QObject):
             except ImportError as e:
                 logger.error(f"❌ Ошибка импорта voice_proxy: {e}")
                 raise
-            
+
             # Проверяем доступность функции
             if not callable(process_voice_and_proxy):
                 error_msg = "process_voice_and_proxy не является функцией"
                 logger.error(f"❌ {error_msg}")
                 raise ValueError(error_msg)
-            
+
             logger.info(f"🚀 Запуск процесса озвучки для канала {self.channel_name}...")
             self.progress.emit(f"Начинается озвучка канала {self.channel_name}")
 
@@ -287,7 +334,7 @@ class VoiceoverWorker(QObject):
             logger.info(f"❌ Задача озвучки для канала {self.channel_name} ПРЕРВАНА")
             self.progress.emit(f"Озвучка канала {self.channel_name} прервана")
             self.stopped.emit(self.channel_name)
-            
+
         except ImportError as e:
             error_msg = f"Ошибка импорта модулей для озвучки канала {self.channel_name}: {e}"
             logger.error(f"❌ {error_msg}")
@@ -297,14 +344,14 @@ class VoiceoverWorker(QObject):
                 self.error_occurred.emit(self.channel_name, error_msg)
             else:
                 self.stopped.emit(self.channel_name)
-                
+
         except Exception as e:
             error_msg = f"Критическая ошибка при озвучке канала {self.channel_name}: {e}"
             logger.error(f"❌ {error_msg}")
             logger.error(f"Тип ошибки: {type(e).__name__}")
             logger.error(f"Полная трассировка ошибки:")
             logger.error(traceback.format_exc())
-            
+
             # Диагностика типа ошибки
             if "license" in str(e).lower():
                 logger.error(f"🔑 Проблема с лицензией в канале {self.channel_name}")
@@ -314,7 +361,7 @@ class VoiceoverWorker(QObject):
                 logger.error(f"🌐 Проблема с сетевым подключением в канале {self.channel_name}")
             elif "api" in str(e).lower():
                 logger.error(f"🔌 Проблема с API в канале {self.channel_name}")
-            
+
             self.progress.emit(f"Ошибка в озвучке канала {self.channel_name}: {str(e)[:100]}")
             if not self._stop_flag:
                 self.error_occurred.emit(self.channel_name, error_msg)
@@ -344,15 +391,15 @@ class MassVoiceoverManager(QThread):
             logger.info("="*60)
             logger.info("🎙️  НАЧАЛО МАССОВОЙ ОЗВУЧКИ")
             logger.info("="*60)
-            
+
             logger.info(f"🎯 Каналы для озвучки: {self.channel_names}")
             logger.info(f"📊 Количество каналов: {len(self.channel_names)}")
             logger.info(f"🔧 Система: {sys.platform}")
             logger.info(f"📊 Использование памяти перед стартом: {self._get_memory_usage()}")
-            
+
             # Проверяем зависимости
             self._validate_dependencies()
-            
+
             # Создаём цикл событий в отдельном потоке
             logger.info("🔄 Создание цикла событий для массовой озвучки...")
             loop = self.task_manager.create_loop()
@@ -366,14 +413,14 @@ class MassVoiceoverManager(QThread):
                     break
 
                 logger.info(f"📋 Создание задачи {i}/{len(self.channel_names)} для канала: {channel_name}")
-                
+
                 worker = VoiceoverWorker(channel_name, self.task_manager)
                 worker.finished.connect(self.on_task_finished)
                 worker.stopped.connect(self.on_task_stopped)
                 worker.error_occurred.connect(self.on_task_error)
                 worker.progress.connect(self.progress.emit)
                 self.workers.append(worker)
-                
+
                 logger.info(f"🎬 Запуск воркера для канала: {channel_name}")
                 worker.start()
                 logger.info(f"✅ Воркер для канала {channel_name} запущен")
@@ -391,7 +438,7 @@ class MassVoiceoverManager(QThread):
             logger.error(f"❌ {error_msg}")
             logger.error(f"Стектрейс: {traceback.format_exc()}")
             self.error_occurred.emit("ImportError", error_msg)
-            
+
         except Exception as e:
             error_msg = f"Критическая ошибка в менеджере массовой озвучки: {e}"
             logger.error(f"❌ {error_msg}")
@@ -409,7 +456,7 @@ class MassVoiceoverManager(QThread):
                     logger.info("✅ Цикл событий закрыт")
             except Exception as e:
                 logger.error(f"❌ Ошибка при закрытии цикла событий: {e}")
-            
+
             # Останавливаем все воркеры принудительно
             try:
                 for worker in self.workers:
@@ -417,7 +464,7 @@ class MassVoiceoverManager(QThread):
                         worker._stop_flag = True
             except Exception as e:
                 logger.error(f"❌ Ошибка при остановке воркеров: {e}")
-            
+
             # Принудительная сборка мусора
             gc.collect()
             logger.info("🗑️  Сборка мусора выполнена")
@@ -461,13 +508,13 @@ class MassVoiceoverManager(QThread):
     def on_task_error(self, channel_name: str, error: str):
         """Обработка ошибки задачи с детальным логированием"""
         self._completed_tasks += 1
-        
+
         logger.error(f"❌ ОШИБКА в задаче для канала {channel_name}")
         logger.error(f"   📋 Канал: {channel_name}")
         logger.error(f"   ⚠️  Ошибка: {error}")
         logger.error(f"   📊 Завершено задач: {self._completed_tasks}/{len(self.workers)}")
         logger.error(f"   📊 Использование памяти при ошибке: {self._get_memory_usage()}")
-        
+
         # Проверяем, связана ли ошибка с конкретными проблемами
         if "license" in error.lower():
             logger.error(f"   🔑 Проблема с лицензией в канале {channel_name}")
@@ -477,7 +524,7 @@ class MassVoiceoverManager(QThread):
             logger.error(f"   ⚙️  Проблема с конфигурацией в канале {channel_name}")
         elif "network" in error.lower() or "api" in error.lower():
             logger.error(f"   🌐 Проблема с сетью/API в канале {channel_name}")
-        
+
         self.error_occurred.emit(channel_name, error)
 
         if self._completed_tasks == len(self.workers):
@@ -488,29 +535,21 @@ class MassVoiceoverManager(QThread):
                 logger.info("🏁 Все задачи завершены (с ошибками)")
                 self.finished.emit()
             self.task_manager.stop_loop()
-    
+
     def _validate_dependencies(self):
         """Проверка зависимостей для озвучки"""
         logger.info("🔍 Проверка зависимостей для озвучки...")
-        
+
         # Проверяем импорт voice_proxy
-        try:
-            import voice_proxy
-            logger.info("✅ voice_proxy импортирован успешно")
-        except ImportError as e:
-            logger.error(f"❌ Ошибка импорта voice_proxy: {e}")
-            raise
-        
-        # Проверяем наличие функции process_voice_and_proxy
         try:
             from voice_proxy import process_voice_and_proxy
             if callable(process_voice_and_proxy):
-                logger.info("✅ process_voice_and_proxy доступна")
+                logger.info("✅ voice_proxy импортирован и process_voice_and_proxy доступна")
             else:
                 logger.error("❌ process_voice_and_proxy не является функцией")
                 raise ValueError("process_voice_and_proxy не является функцией")
         except ImportError as e:
-            logger.error(f"❌ Ошибка импорта process_voice_and_proxy: {e}")
+            logger.error(f"❌ Ошибка импорта voice_proxy: {e}")
             raise
         
         # Проверяем AsyncTaskManager

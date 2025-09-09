@@ -9,7 +9,7 @@ from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, 
     QGraphicsView, QGraphicsScene, QGraphicsItem,
     QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsTextItem,
-    QPushButton, QFileDialog, QFrame
+    QPushButton, QFileDialog, QFrame, QSizePolicy, QLabel
 )
 from PySide6.QtCore import Qt, QRectF, Signal, QPointF
 from PySide6.QtGui import (
@@ -249,6 +249,17 @@ class LogoPositionEditor(QWidget):
         # Элементы логотипов
         self.logo_items: Dict[str, ResizableLogoItem] = {}
         
+        # Настройка политики размера для корректного масштабирования (точно как у SubtitlePreviewWidget)
+        # Используем Preferred по высоте для лучшего поведения при изменении размера окна
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        
+        # Устанавливаем максимальную высоту, чтобы виджет не расширялся бесконечно (идентично SubtitlePreviewWidget)
+        self.setMaximumHeight(324 + 80 + 60)  # 324 (graphics view) + 80 (info panel) + 60 (buttons and margins)
+        
+        # Убираем все возможные отступы на уровне виджета
+        self.setContentsMargins(0, 0, 0, 0)
+        self.setStyleSheet("QWidget { margin: 0px; padding: 0px; border: none; }")
+        
         self.setup_ui()
         
     def setup_ui(self):
@@ -264,9 +275,16 @@ class LogoPositionEditor(QWidget):
         self.view = QGraphicsView(self.scene)
         self.view.setMinimumHeight(324)  # Точно под размер сцены: 1080 * 0.3 = 324
         
-        # Центрируем по горизонтали, прижимаем к верху - убираем только отступы сверху и снизу
+        # Настройка политики размера для корректного масштабирования (точно как у SubtitlePreviewWidget)
+        # Используем Preferred по высоте, чтобы view корректно масштабировался в контексте других элементов
+        self.view.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        
+        # Центрируем по горизонтали, прижимаем к верху - убираем только отступы сверху и снизу (точно как у SubtitlePreviewWidget)
         self.view.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter)
         self.view.setContentsMargins(0, 0, 0, 0)
+        
+        # Дополнительно убираем все возможные отступы и делаем виджет максимально плотным
+        self.view.setAttribute(Qt.WidgetAttribute.WA_LayoutUsesWidgetRect, True)
         
         # Дополнительные настройки для минимизации отступов
         self.view.setViewportMargins(0, 0, 0, 0)
@@ -282,10 +300,18 @@ class LogoPositionEditor(QWidget):
         self.view.setMouseTracking(True)
         self.view.setDragMode(QGraphicsView.DragMode.NoDrag)  # Отключаем стандартное перетаскивание view
         
+        # Настройки для устранения визуальных артефактов (идентично SubtitlePreviewWidget)
+        self.view.setOptimizationFlag(QGraphicsView.OptimizationFlag.DontSavePainterState, True)
+        self.view.setOptimizationFlag(QGraphicsView.OptimizationFlag.DontAdjustForAntialiasing, True)
+        self.view.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.FullViewportUpdate)
+        
         # Настройка сцены (пропорции 16:9)
         scene_width = self.video_width * self.scale_factor
         scene_height = self.video_height * self.scale_factor
         self.scene.setSceneRect(0, 0, scene_width, scene_height)
+        
+        # Дополнительные настройки для убирания отступов сцены
+        self.scene.setItemIndexMethod(QGraphicsScene.ItemIndexMethod.NoIndex)  # Убираем индексацию для более плотного layout
         
         # Фон сцены (имитация экрана)
         bg_rect = QGraphicsRectItem(0, 0, scene_width, scene_height)
@@ -300,27 +326,61 @@ class LogoPositionEditor(QWidget):
         size_text.setPos(10, 10)
         self.scene.addItem(size_text)
         
-        layout.addWidget(self.view)
-        
-        # Кнопки управления
+        # Кнопки управления (перенесены вверх, над визуальным редактором)
         button_layout = QHBoxLayout()
-        button_layout.setContentsMargins(0, 0, 0, 0)
-        button_layout.setSpacing(4)  # Минимальный spacing между кнопками
+        button_layout.setContentsMargins(0, 0, 0, 4)  # Небольшой отступ снизу
+        button_layout.setSpacing(8)  # Увеличенное расстояние между кнопками
         
-        # Кнопки загрузки логотипов убраны - теперь логотипы загружаются автоматически
-        # при выборе каналов через метод set_logo_image
+        button_layout.addStretch()  # Прижимаем кнопки к правой стороне
         
-        button_layout.addStretch()
-        
+        # Кнопки с одинаковым размером
         self.reset_btn = QPushButton("Сбросить позиции")
+        self.reset_btn.setMinimumWidth(160)  # Фиксированная ширина для одинакового размера
+        self.reset_btn.setMaximumWidth(160)  # Фиксированная максимальная ширина
+        self.reset_btn.setMinimumHeight(32)  # Фиксированная высота
+        self.reset_btn.setMaximumHeight(32)  # Фиксированная максимальная высота
+        self.reset_btn.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.reset_btn.clicked.connect(self.reset_positions)
         button_layout.addWidget(self.reset_btn)
         
         self.save_btn = QPushButton("Сохранить позиции")
+        self.save_btn.setMinimumWidth(160)  # Фиксированная ширина для одинакового размера
+        self.save_btn.setMaximumWidth(160)  # Фиксированная максимальная ширина
+        self.save_btn.setMinimumHeight(32)  # Фиксированная высота
+        self.save_btn.setMaximumHeight(32)  # Фиксированная максимальная высота
+        self.save_btn.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         self.save_btn.clicked.connect(self.save_positions)
         button_layout.addWidget(self.save_btn)
         
-        layout.addLayout(button_layout)
+        layout.addLayout(button_layout, 0)  # Stretch factor 0 для кнопок
+        
+        # Визуальный редактор
+        layout.addWidget(self.view, 1)  # Stretch factor 1 для контролируемого роста
+        
+        # Добавляем стабилизирующий элемент как в SubtitlePreviewWidget для правильного масштабирования
+        stabilizer_layout = QVBoxLayout()
+        stabilizer_layout.setContentsMargins(0, 4, 0, 4)
+        stabilizer_layout.setSpacing(2)
+        
+        # Информационная панель (аналогично text edit в SubtitlePreviewWidget)
+        info_label = QLabel("Перетащите логотипы для изменения позиции")
+        info_label.setMinimumHeight(50)  # Минимальная высота как у text edit
+        info_label.setMaximumHeight(80)  # Максимальная высота как у text edit  
+        info_label.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)  # Идентично text edit
+        info_label.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignVCenter)
+        info_label.setStyleSheet("""
+            QLabel {
+                background-color: #2B2B2B;
+                color: #CCCCCC;
+                border: 1px solid #12BAC4;
+                border-radius: 4px;
+                padding: 4px;
+                font-size: 11px;
+            }
+        """)
+        stabilizer_layout.addWidget(info_label)
+        
+        layout.addLayout(stabilizer_layout, 0)  # Stretch factor 0 для стабилизирующего элемента
         
     def load_logo(self, logo_id: str):
         """Загрузка логотипа из файла или папки"""
@@ -528,6 +588,14 @@ class LogoPositionEditor(QWidget):
             logger.debug("Все логотипы очищены из редактора")
         except Exception as e:
             logger.error(f"Ошибка при очистке логотипов: {e}")
+    
+    def resizeEvent(self, event):
+        """Переопределяем resizeEvent для принудительного обновления layout"""
+        super().resizeEvent(event)
+        # Принудительно обновляем view при изменении размера
+        if hasattr(self, 'view'):
+            self.view.update()
+            self.view.viewport().update()
 
 
 def convert_ffmpeg_coords_to_pixels(expression: str, video_width: int = 1920, video_height: int = 1080, 

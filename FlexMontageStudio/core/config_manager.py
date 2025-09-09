@@ -1,11 +1,14 @@
 """
-Менеджер конфигурации каналов
+Менеджер конфигурации каналов с File API
 """
 import json
 import ast
 import logging
+import sys
 from typing import Dict, List, Optional, Any
 from pathlib import Path
+from utils.app_paths import get_config_file_path
+from core.file_api import file_api
 
 logger = logging.getLogger(__name__)
 
@@ -80,83 +83,35 @@ class ConfigManager:
         self.validator = ConfigValidator()
 
     def _find_config_file(self, filename: str) -> str:
-        """Поиск файла конфигурации в правильной директории"""
-        import sys
-        
-        # Определяем базовую директорию в зависимости от режима запуска
-        if getattr(sys, 'frozen', False):
-            # Запущено из .app bundle или .exe
-            if sys.platform == "darwin" and '.app' in sys.executable:
-                # Для macOS .app - ищем сначала рядом с .app, потом в _internal
-                app_bundle_path = Path(sys.executable)
-                while app_bundle_path.suffix != '.app' and app_bundle_path.parent != app_bundle_path:
-                    app_bundle_path = app_bundle_path.parent
-                
-                if app_bundle_path.suffix == '.app':
-                    logger.debug(f"Обнаружен .app bundle: {app_bundle_path}")
-                    
-                    # Сначала ищем рядом с .app (для пользовательского редактирования)
-                    external_config = app_bundle_path.parent / filename
-                    logger.debug(f"Проверяем внешний путь: {external_config} (существует: {external_config.exists()})")
-                    if external_config.exists():
-                        logger.info(f"Найден внешний {filename}: {external_config}")
-                        return str(external_config)
-                    
-                    # Затем ищем в _internal (встроенный файл)
-                    internal_config = Path(sys.executable).parent / "_internal" / filename
-                    logger.debug(f"Проверяем встроенный путь: {internal_config} (существует: {internal_config.exists()})")
-                    if internal_config.exists():
-                        logger.info(f"Найден встроенный {filename}: {internal_config}")
-                        return str(internal_config)
-                    
-                    # Fallback - рядом с .app
-                    base_dir = app_bundle_path.parent
-                    logger.debug(f"Fallback директория: {base_dir}")
-                else:
-                    base_dir = Path(sys.executable).parent
-            else:
-                # Для Windows .exe
-                base_dir = Path(sys.executable).parent
-        else:
-            # Запущено из Python скрипта
-            base_dir = Path(__file__).parent.parent  # Поднимаемся из core/ в корень проекта
-        
-        config_file = base_dir / filename
-        
-        logger.info(f"🔍 Поиск {filename} в: {config_file}")
-        logger.info(f"   Существует: {'✅' if config_file.exists() else '❌'}")
-        
-        return str(config_file)
+        """Поиск файла конфигурации используя общую утилиту"""
+        return str(get_config_file_path(filename))
 
     def load_config(self) -> Dict[str, Any]:
-        """Загрузка конфигурации с кешированием"""
+        """Загрузка конфигурации через File API с автоматическим кешированием"""
         if self._config_cache is None:
             try:
-                with open(self.config_path, "r", encoding="utf-8") as f:
-                    self._config_cache = json.load(f)
-                logger.info(f"Конфигурация загружена из {self.config_path}")
+                # File API автоматически кэширует и проверяет изменения файла
+                self._config_cache = file_api.read_json(self.config_path, default={})
+                logger.info(f"Конфигурация загружена через File API из {self.config_path}")
             except FileNotFoundError:
                 logger.error(f"Файл {self.config_path} не найден!")
                 raise FileNotFoundError(f"Файл {self.config_path} не найден!")
-            except json.JSONDecodeError as e:
+            except (json.JSONDecodeError, ValueError) as e:
                 logger.error(f"Ошибка парсинга {self.config_path}: {e}")
                 raise ValueError(f"Ошибка парсинга {self.config_path}: {e}")
         return self._config_cache
 
     def save_config(self, config: Dict[str, Any]) -> None:
-        """Сохранение конфигурации"""
+        """Сохранение конфигурации через File API"""
         try:
-            # Создаем резервную копию
-            if self.config_path.exists():
-                backup_path = self.config_path.with_suffix('.json.backup')
-                backup_path.write_text(self.config_path.read_text(encoding='utf-8'), encoding='utf-8')
-
-            # Сохраняем новую конфигурацию
-            with open(self.config_path, "w", encoding="utf-8") as f:
-                json.dump(config, f, indent=4, ensure_ascii=False)
-
-            self._config_cache = config
-            logger.debug(f"Конфигурация сохранена в {self.config_path}")
+            # File API автоматически создает backup и инвалидирует кэш
+            success = file_api.write_json(self.config_path, config, backup=True)
+            
+            if success:
+                self._config_cache = config
+                logger.debug(f"Конфигурация сохранена через File API в {self.config_path}")
+            else:
+                raise IOError("Не удалось сохранить конфигурацию через File API")
 
         except Exception as e:
             logger.error(f"Не удалось сохранить конфигурацию: {e}")
@@ -418,7 +373,7 @@ class ConfigManager:
         logger.info("Кэш конфигурации очищен")
 
 
-# Функции для обратной совместимости с voice_proxy.py
+# Функции для обратной совместимости с voice_proxy_OG.py
 _config_manager = ConfigManager()
 
 

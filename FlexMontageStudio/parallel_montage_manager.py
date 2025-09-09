@@ -57,6 +57,8 @@ class ParallelMontageManager(QObject):
         self.active_tasks: Dict[str, MontageTask] = {}
         self.completed_tasks: List[MontageResult] = []
         self.config_manager = ConfigManager()
+        self._stop_requested = False  # Флаг остановки
+        self._active_executors = []  # Список активных executor'ов
         
     def set_max_concurrent_montages(self, max_concurrent: int):
         """Установка максимального количества параллельных монтажей"""
@@ -131,6 +133,16 @@ class ParallelMontageManager(QObject):
         logger.info(f"🎬 Начало параллельного монтажа: {len(tasks)} задач")
         self.completed_tasks.clear()
         
+        # Проверяем ГЛОБАЛЬНЫЙ флаг остановки перед запуском
+        import montage_control
+        if montage_control.check_stop_flag("ParallelMontageManager.process_tasks_parallel начало"):
+            return []
+            
+        # Проверяем флаг остановки перед запуском
+        if self._stop_requested:
+            logger.warning("🛑 Монтаж остановлен до запуска задач")
+            return []
+            
         # Создаем корутины для всех задач
         coroutines = [self._process_single_task(task) for task in tasks]
         
@@ -180,6 +192,16 @@ class ParallelMontageManager(QObject):
             MontageResult: Результат выполнения
         """
         async with self.semaphore:  # Ограничиваем количество параллельных задач
+            # Проверяем флаг остановки
+            if self._stop_requested:
+                logger.warning(f"🛑 [МОНТАЖ-{task.task_id}] Задача отменена по запросу пользователя")
+                return MontageResult(
+                    task=task,
+                    success=False,
+                    error_message="Остановлено пользователем",
+                    end_time=datetime.now()
+                )
+                
             start_time = datetime.now()
             
             try:
@@ -198,8 +220,12 @@ class ParallelMontageManager(QObject):
                 
                 # Запускаем монтаж в executor для избежания блокировки
                 loop = asyncio.get_event_loop()
-                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-                    success = await loop.run_in_executor(
+                executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+                self._active_executors.append(executor)  # Регистрируем executor
+                
+                try:
+                    # КРИТИЧЕСКИ ВАЖНО: Создаем Future для мониторинга выполнения
+                    future = loop.run_in_executor(
                         executor,
                         self._run_montage_sync,
                         task.channel_name,
@@ -207,6 +233,37 @@ class ParallelMontageManager(QObject):
                         task.preserve_clip_audio_videos,
                         task.task_id
                     )
+                    
+                    # Проверяем флаг остановки каждые 0.5 секунд
+                    while not future.done():
+                        try:
+                            import montage_control
+                            if montage_control.check_stop_flag(f"monitoring task {task.task_id}"):
+                                logger.error(f"🛑 МЯГКАЯ ОСТАНОВКА задачи {task.task_id}")
+                                # НЕ ИСПОЛЬЗУЕМ future.cancel() - может заблокировать GUI!
+                                # Вместо этого просто ждем завершения с коротким таймаутом
+                                try:
+                                    success = await asyncio.wait_for(future, timeout=2.0)
+                                except asyncio.TimeoutError:
+                                    logger.warning(f"⏰ Таймаут ожидания завершения {task.task_id}")
+                                    success = False
+                                
+                                return MontageResult(
+                                    task=task,
+                                    success=False,
+                                    error_message="ОСТАНОВЛЕНО ПОЛЬЗОВАТЕЛЕМ",
+                                    end_time=datetime.now()
+                                )
+                        except:
+                            pass
+                        await asyncio.sleep(0.5)
+                    
+                    success = await future
+                finally:
+                    # Убираем executor из списка активных
+                    if executor in self._active_executors:
+                        self._active_executors.remove(executor)
+                    executor.shutdown(wait=False)
                     
                 end_time = datetime.now()
                 duration = (end_time - start_time).total_seconds()
@@ -271,7 +328,13 @@ class ParallelMontageManager(QObject):
         Returns:
             bool: True если монтаж успешен, False если ошибка
         """
+        logger.info(f"🔍 DEBUG parallel_montage: канал='{channel_name}', видео={video_number}, preserve_clip_audio_videos={preserve_clip_audio_videos}")
         try:
+            # ПРОВЕРКА ФЛАГА ОСТАНОВКИ В НАЧАЛЕ
+            import montage_control
+            if montage_control.check_stop_flag(f"ParallelMontageManager._run_montage_sync для {task_id}"):
+                return False
+                
             logger.info(f"[МОНТАЖ-{task_id}] Начало РЕАЛЬНОГО монтажа видео {video_number} (прямой вызов)")
             
             # ОКОНЧАТЕЛЬНОЕ ИСПРАВЛЕНИЕ v2.0: Прямой вызов функции монтажа
@@ -334,8 +397,31 @@ class ParallelMontageManager(QObject):
     def stop_all_tasks(self):
         """Остановка всех активных задач"""
         logger.warning("⏹️ Получен запрос на остановку всех задач монтажа")
-        # Здесь можно добавить логику принудительной остановки
-        # Пока просто логируем - реализация зависит от архитектуры main.py
+        self._stop_requested = True
+        
+        # КРИТИЧЕСКИ ВАЖНО: Устанавливаем глобальный флаг остановки
+        try:
+            import montage_control
+            montage_control.set_stop_montage_flag()
+            logger.error("🛑 УСТАНОВЛЕН ГЛОБАЛЬНЫЙ ФЛАГ ОСТАНОВКИ в ParallelMontageManager!")
+        except:
+            pass
+        
+        # Принудительно завершаем все FFmpeg процессы
+        try:
+            from final_assembly import kill_all_ffmpeg_processes
+            kill_all_ffmpeg_processes()
+        except Exception as e:
+            logger.error(f"Ошибка при принудительном завершении FFmpeg: {e}")
+            
+        # Останавливаем активные executor'ы
+        for executor in self._active_executors:
+            try:
+                logger.warning(f"🔥 Принудительно останавливаем executor: {executor}")
+                executor.shutdown(wait=False)
+            except Exception as e:
+                logger.error(f"Ошибка при остановке executor: {e}")
+        self._active_executors.clear()
     
     @staticmethod
     def parse_video_numbers(video_numbers_str: str) -> List[int]:
@@ -396,10 +482,29 @@ class ParallelMontageThread(QThread):
         self.max_concurrent = max_concurrent
         self.manager: Optional[ParallelMontageManager] = None
         self.results: List[MontageResult] = []
+        self._stop_requested = False
+    
+    def stop_all_tasks(self):
+        """Остановка всех задач из GUI"""
+        logger.warning("🛑 ParallelMontageThread.stop_all_tasks() вызвана")
+        self._stop_requested = True
+        if self.manager:
+            self.manager.stop_all_tasks()
+        # НЕ используем terminate() - это может повредить состояние Qt
+        # Поток завершится сам когда process_tasks_parallel завершится
     
     def run(self):
         """Запуск параллельного монтажа в отдельном потоке"""
         try:
+            # КРИТИЧЕСКАЯ ПРОВЕРКА ОСТАНОВКИ В НАЧАЛЕ!
+            try:
+                import montage_control
+                if montage_control.check_stop_flag("ParallelMontageThread.run начало"):
+                    logger.error("🛑 ОСТАНОВКА до запуска ParallelMontageThread!")
+                    return
+            except:
+                pass
+                
             # Создаем менеджер
             self.manager = ParallelMontageManager(self.max_concurrent)
             

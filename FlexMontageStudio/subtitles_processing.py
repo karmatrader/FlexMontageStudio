@@ -186,6 +186,9 @@ class SubtitleSegmentProcessor:
 
             # Применяем смещение времени
             start_shifted = max(0, start_time + time_offset)
+            # DEBUG: About to call min() on end_shifted calculation
+            logger.debug(f"DEBUG: About to call min() on end_shifted calculation")
+            logger.debug(f"DEBUG: start_shifted: {start_shifted}, duration: {duration}, max_duration: {max_duration}")
             end_shifted = min(start_shifted + duration, max_duration)
 
             if end_shifted <= start_shifted:
@@ -212,6 +215,9 @@ class SubtitleSegmentProcessor:
                 # Пропорциональное распределение времени
                 chunk_duration = duration * chunk_word_count / total_words
                 chunk_start = start_shifted + (i / total_words) * duration
+                # DEBUG: About to call min() on chunk_end calculation
+                logger.debug(f"DEBUG: About to call min() on chunk_end calculation")
+                logger.debug(f"DEBUG: chunk_start: {chunk_start}, chunk_duration: {chunk_duration}, max_duration: {max_duration}")
                 chunk_end = min(chunk_start + chunk_duration, max_duration)
 
                 if chunk_end > chunk_start:

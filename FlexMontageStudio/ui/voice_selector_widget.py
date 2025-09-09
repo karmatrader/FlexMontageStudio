@@ -5,16 +5,30 @@ import asyncio
 import logging
 import tempfile
 import subprocess
+import os
+import sys
 from pathlib import Path
 from typing import List, Optional, Dict, Any
+
+# Функция для скрытия окон консоли на Windows
+def run_subprocess_hidden(*args, **kwargs):
+    """Запуск subprocess с скрытой консолью на Windows"""
+    try:
+        # Более универсальная проверка Windows (включая скомпилированные приложения)
+        if (os.name == 'nt' or 'win' in sys.platform.lower()) and hasattr(subprocess, 'CREATE_NO_WINDOW'):
+            kwargs['creationflags'] = subprocess.CREATE_NO_WINDOW
+    except Exception:
+        pass  # Если не удалось определить ОС, продолжаем без флагов
+    return subprocess.run(*args, **kwargs)
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QPushButton,
     QLabel, QLineEdit, QProgressBar, QMessageBox, QDialog,
     QTextEdit, QGroupBox, QGridLayout
 )
 from PySide6.QtCore import QThread, Signal, Qt
-from voice_library_manager import VoiceLibraryManager, VoiceInfo
+from voice_library_manager import VoiceLibraryManager, VoiceInfo, APIKeyManager
 from ffmpeg_utils import get_ffmpeg_path
+from core.config_manager import ConfigManager
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +110,11 @@ class VoicePreviewThread(QThread):
                     )
                 )
 
-                if audio_data:
+                if audio_data == "LIMIT_REACHED":
+                    self.error_occurred.emit("VOICE_LIMIT_REACHED")
+                elif audio_data == "QUOTA_EXCEEDED":
+                    self.error_occurred.emit("QUOTA_EXCEEDED")
+                elif audio_data:
                     self.progress_updated.emit("Предпросмотр готов")
                     self.preview_ready.emit(audio_data)
                 else:
@@ -332,7 +350,7 @@ class VoiceSelectorWidget(QWidget):
         self.details_button.setEnabled(False)
         buttons_layout.addWidget(self.details_button)
 
-        self.preview_button = QPushButton("🔊 Предпросмотр")
+        self.preview_button = QPushButton("Предпросмотр")
         self.preview_button.setToolTip("Прослушать образец голоса")
         self.preview_button.clicked.connect(self.preview_voice)
         self.preview_button.setEnabled(False)
@@ -373,10 +391,16 @@ class VoiceSelectorWidget(QWidget):
 
     def refresh_voices(self, force: bool = False):
         """Обновление списка голосов"""
-        if not self.current_api_key:
+        # Пытаемся получить API ключ из настроек канала
+        api_key = self._get_api_key_from_config()
+        
+        if not api_key:
             QMessageBox.warning(self, "Предупреждение",
-                                "Сначала укажите API ключ в настройках канала")
+                                "Сначала укажите API ключ в настройках канала (путь к файлу API ключей)")
             return
+            
+        # Обновляем текущий ключ
+        self.current_api_key = api_key
 
         # Останавливаем предыдущую загрузку
         if self.voice_loader_thread and self.voice_loader_thread.isRunning():
@@ -403,6 +427,59 @@ class VoiceSelectorWidget(QWidget):
 
         # Запускаем загрузку
         self.voice_loader_thread.start()
+
+    def _get_api_key_from_config(self) -> str:
+        """Получение API ключа из конфигурации текущего канала"""
+        try:
+            # Находим главное окно и определяем выбранный канал
+            main_window = self.window()
+            logger.debug(f"Main window найдено: {type(main_window).__name__}")
+            
+            # Получаем список выбранных каналов из channel_combo
+            selected_channels = []
+            if hasattr(main_window, 'channel_combo'):
+                selected_channels = main_window.channel_combo.checkedItems()
+                logger.debug(f"✅ Найдены выбранные каналы через channel_combo: {selected_channels}")
+            else:
+                logger.warning("main_window.channel_combo не найден")
+                return ""
+            
+            logger.info(f"Выбранные каналы: {selected_channels}")
+            if not selected_channels:
+                logger.warning("Канал не выбран")
+                return ""
+            
+            current_channel_name = selected_channels[0]  # Берем первый выбранный
+            logger.info(f"✅ Определен выбранный канал: {current_channel_name}")
+            
+            # Получаем конфигурацию канала
+            config_manager = ConfigManager()
+            channel_config = config_manager.get_channel_config(current_channel_name)
+            
+            if not channel_config:
+                logger.warning(f"Конфигурация канала '{current_channel_name}' не найдена")
+                return ""
+            
+            # Получаем путь к CSV файлу с API ключами
+            csv_file_path = channel_config.get("csv_file_path", "")
+            if not csv_file_path:
+                logger.warning("Не указан путь к файлу с API ключами в настройках канала")
+                return ""
+            
+            # Получаем API ключ из файла
+            api_key_manager = APIKeyManager(csv_file_path)
+            api_key = api_key_manager.get_api_key()
+            
+            if not api_key:
+                logger.warning("Не удалось получить API ключ из файла")
+                return ""
+            
+            logger.info(f"API ключ получен из конфигурации канала: {api_key[:8]}...{api_key[-4:]}")
+            return api_key
+            
+        except Exception as e:
+            logger.error(f"Ошибка получения API ключа из конфигурации: {e}")
+            return ""
 
     def on_voices_loaded(self, voices: List[VoiceInfo]):
         """Обработка успешной загрузки голосов"""
@@ -566,9 +643,11 @@ class VoiceSelectorWidget(QWidget):
             QMessageBox.information(self, "Информация", "Выберите голос из списка")
             return
 
-        if not self.current_api_key:
+        # Получаем актуальный API ключ из конфигурации
+        api_key = self._get_api_key_from_config()
+        if not api_key:
             QMessageBox.warning(self, "Предупреждение",
-                                "Сначала укажите API ключ в настройках канала")
+                                "Сначала укажите API ключ в настройках канала (путь к файлу API ключей)")
             return
 
         # Останавливаем предыдущий предпросмотр
@@ -579,7 +658,7 @@ class VoiceSelectorWidget(QWidget):
         # Создаем поток для генерации предпросмотра
         self.preview_thread = VoicePreviewThread(
             voice.voice_id,
-            self.current_api_key,
+            api_key,  # Используем актуальный API ключ
             self.current_proxy_config,
             self.voice_manager
         )
@@ -631,8 +710,18 @@ class VoiceSelectorWidget(QWidget):
         self.preview_button.setEnabled(True)
         self.progress_bar.setVisible(False)
 
-        QMessageBox.critical(self, "Ошибка предпросмотра",
-                             f"Не удалось сгенерировать предпросмотр:\n{error}")
+        if error == "VOICE_LIMIT_REACHED":
+            QMessageBox.information(self, "Лимит операций с голосами",
+                                  "Достигнут месячный лимит операций с голосами ElevenLabs.\n"
+                                  "Предпросмотр голосов временно недоступен.\n\n"
+                                  "Вы можете продолжить использовать выбранные голоса для генерации озвучки.")
+        elif error == "QUOTA_EXCEEDED":
+            QMessageBox.warning(self, "Превышена квота API",
+                               "Превышена квота API ключа для предпросмотра голосов.\n"
+                               "Попробуйте обновить список голосов для получения нового API ключа.")
+        else:
+            QMessageBox.critical(self, "Ошибка предпросмотра",
+                                f"Не удалось сгенерировать предпросмотр:\n{error}")
 
     def play_audio_file(self, file_path: str):
         """Воспроизведение аудиофайла"""
@@ -641,7 +730,7 @@ class VoiceSelectorWidget(QWidget):
             system = platform.system()
 
             if system == "Darwin":  # macOS
-                subprocess.run(["afplay", file_path], check=True)
+                run_subprocess_hidden(["afplay", file_path], check=True)
             elif system == "Windows":
                 import winsound
                 winsound.PlaySound(file_path, winsound.SND_FILENAME)
@@ -650,7 +739,7 @@ class VoiceSelectorWidget(QWidget):
                 players = ["paplay", "aplay", "mpg123", get_ffmpeg_path().replace("ffmpeg", "ffplay")]
                 for player in players:
                     try:
-                        subprocess.run([player, file_path], check=True,
+                        run_subprocess_hidden([player, file_path], check=True,
                                        stdout=subprocess.DEVNULL,
                                        stderr=subprocess.DEVNULL)
                         break

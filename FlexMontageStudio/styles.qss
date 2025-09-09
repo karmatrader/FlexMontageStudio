@@ -32,6 +32,19 @@ QLabel#subgroup {
     font-family: 'Arial', 'Helvetica', sans-serif;
     font-weight: bold;
     padding: 0; /* Убрали padding */
+    margin: 0; /* Убрали margin */
+}
+
+/* Специальные стили для заголовков визуальных редакторов */
+QLabel#visual-editor-title {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /* Стиль для вкладок - принудительно убираем отступы */
@@ -47,17 +60,18 @@ QTabWidget {
     padding: 0px;
 }
 
+/* Скрываем оригинальные табы QTabWidget */
 QTabBar::tab {
-    background: #353535;
-    color: #B8B8B8;
-    padding: 12px 24px;
-    font-size: 14px;
-    min-width: 80px; /* Минимальная ширина для macOS */
+    height: 0px;
+    width: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background: transparent;
 }
 
-QTabBar::tab:selected {
-    background: #454545;
-    color: #FFFFFF;
+QTabBar {
+    height: 0px;
 }
 
 /* Стиль для области прокрутки - принудительно убираем отступы */
@@ -80,11 +94,26 @@ QWidget[objectName="scroll_widget"] {
     padding: 0px;
 }
 
+/* Центрирование для фиксированных групп */
+QWidget[objectName="fixed_scroll_widget"] {
+    margin: 0px;
+    padding: 0px;
+}
+
 /* Принудительное обнуление отступов для визуальных редакторов */
 QWidget[objectName="LogoPositionEditor"] {
     margin: 0px;
     padding: 0px;
     border: none;
+}
+
+/* Дополнительные стили для минимизации отступов вокруг LogoPositionEditor */
+LogoPositionEditor {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 QWidget[objectName="SubtitlePreviewWidget"] {

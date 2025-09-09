@@ -8,6 +8,11 @@ import numpy as np
 import logging
 from pathlib import Path
 from typing import Tuple, Optional, Union, List
+import os
+
+# Подавляем OpenCV warnings для imread (они не критичны когда есть fallback)
+os.environ['OPENCV_IO_ENABLE_OPENEXR'] = '0'
+os.environ['OPENCV_IO_MAX_IMAGE_PIXELS'] = '1073741824'  # 1GB limit
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +37,162 @@ class ImageProcessorCV:
         """Инициализация процессора изображений"""
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
+    def _safe_imread(self, image_path: str) -> Optional[np.ndarray]:
+        """
+        Безопасная загрузка изображений для Windows с Unicode путями
+        
+        Args:
+            image_path: Путь к файлу изображения
+            
+        Returns:
+            np.ndarray или None при ошибке
+        """
+        try:
+            # Метод 1: Стандартный cv2.imread (может выдать warning для проблемных путей)
+            img = cv2.imread(image_path, cv2.IMREAD_COLOR)
+            if img is not None:
+                return img
+            
+            # Метод 2: Загрузка через numpy для путей с Unicode (Windows)
+            import sys
+            if sys.platform == "win32":
+                try:
+                    # Читаем файл в память и декодируем через cv2.imdecode
+                    with open(image_path, 'rb') as f:
+                        file_bytes = f.read()
+                    
+                    # Конвертируем в numpy array
+                    nparr = np.frombuffer(file_bytes, np.uint8)
+                    
+                    # Декодируем изображение
+                    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+                    if img is not None:
+                        self.logger.debug(f"Загружено через imdecode: {image_path}")
+                        return img
+                    
+                except Exception as e:
+                    self.logger.debug(f"Метод imdecode не сработал для {image_path}: {e}")
+            
+            # Метод 3: Попытка с PIL как fallback
+            try:
+                from PIL import Image
+                pil_image = Image.open(image_path)
+                
+                # Конвертируем PIL в OpenCV формат
+                if pil_image.mode == 'RGBA':
+                    pil_image = pil_image.convert('RGB')
+                elif pil_image.mode == 'P':
+                    pil_image = pil_image.convert('RGB')
+                elif pil_image.mode == 'L':
+                    pil_image = pil_image.convert('RGB')
+                
+                # PIL использует RGB, OpenCV - BGR
+                opencv_image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
+                self.logger.debug(f"Загружено через PIL fallback: {image_path}")
+                return opencv_image
+                
+            except ImportError:
+                self.logger.debug("PIL не доступен для fallback")
+            except Exception as e:
+                self.logger.debug(f"PIL fallback не сработал для {image_path}: {e}")
+            
+            return None
+            
+        except Exception as e:
+            self.logger.error(f"Все методы загрузки не сработали для {image_path}: {e}")
+            return None
+    
+    def _safe_imwrite(self, output_path: str, image: np.ndarray, encode_params: list) -> bool:
+        """
+        Безопасное сохранение изображений для Windows с Unicode путями
+        
+        Args:
+            output_path: Путь для сохранения
+            image: Изображение для сохранения
+            encode_params: Параметры кодирования
+            
+        Returns:
+            bool: True если успешно сохранено
+        """
+        try:
+            # Метод 1: Стандартный cv2.imwrite
+            success = cv2.imwrite(output_path, image, encode_params)
+            if success:
+                return True
+            
+            # Метод 2: Сохранение через imencode для путей с Unicode (Windows)
+            import sys
+            if sys.platform == "win32":
+                try:
+                    ext = Path(output_path).suffix.lower()
+                    
+                    # Выбираем формат для imencode
+                    if ext in ['.jpg', '.jpeg']:
+                        ext_for_encode = '.jpg'
+                    elif ext == '.png':
+                        ext_for_encode = '.png'
+                    elif ext == '.webp':
+                        ext_for_encode = '.webp'
+                    else:
+                        ext_for_encode = '.jpg'  # fallback
+                    
+                    # Кодируем изображение в память
+                    success, encoded_img = cv2.imencode(ext_for_encode, image, encode_params)
+                    if success:
+                        # Записываем в файл
+                        with open(output_path, 'wb') as f:
+                            f.write(encoded_img.tobytes())
+                        self.logger.debug(f"Сохранено через imencode: {output_path}")
+                        return True
+                    
+                except Exception as e:
+                    self.logger.debug(f"Метод imencode не сработал для {output_path}: {e}")
+            
+            # Метод 3: PIL fallback
+            try:
+                from PIL import Image
+                
+                # Конвертируем BGR в RGB для PIL
+                rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                pil_image = Image.fromarray(rgb_image)
+                
+                # Определяем параметры сохранения для PIL
+                ext = Path(output_path).suffix.lower()
+                if ext in ['.jpg', '.jpeg']:
+                    # Для JPEG извлекаем качество из encode_params
+                    quality = 95  # default
+                    for i in range(0, len(encode_params), 2):
+                        if encode_params[i] == cv2.IMWRITE_JPEG_QUALITY:
+                            quality = encode_params[i + 1]
+                            break
+                    pil_image.save(output_path, 'JPEG', quality=quality)
+                elif ext == '.png':
+                    pil_image.save(output_path, 'PNG')
+                elif ext == '.webp':
+                    # Для WebP извлекаем качество
+                    quality = 95  # default
+                    for i in range(0, len(encode_params), 2):
+                        if encode_params[i] == cv2.IMWRITE_WEBP_QUALITY:
+                            quality = encode_params[i + 1]
+                            break
+                    pil_image.save(output_path, 'WEBP', quality=quality)
+                else:
+                    pil_image.save(output_path)
+                
+                self.logger.debug(f"Сохранено через PIL fallback: {output_path}")
+                return True
+                
+            except ImportError:
+                self.logger.debug("PIL не доступен для fallback сохранения")
+            except Exception as e:
+                self.logger.debug(f"PIL fallback не сработал для {output_path}: {e}")
+            
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Все методы сохранения не сработали для {output_path}: {e}")
+            return False
+    
     def load_image(self, image_path: Union[str, Path]) -> Optional[np.ndarray]:
         """
         Загрузка изображения с использованием OpenCV
@@ -44,10 +205,42 @@ class ImageProcessorCV:
         """
         try:
             image_path = str(image_path)
-            img = cv2.imread(image_path, cv2.IMREAD_COLOR)
+            
+            # Проверяем существование файла перед попыткой загрузки
+            if not Path(image_path).exists():
+                self.logger.error(f"Файл изображения не существует: {image_path}")
+                return None
+            
+            # Дополнительная диагностика для Windows
+            if not Path(image_path).is_file():
+                self.logger.error(f"Путь не является файлом: {image_path}")
+                return None
+            
+            # Безопасная загрузка для Windows с Unicode путями
+            img = self._safe_imread(image_path)
             
             if img is None:
-                self.logger.error(f"Не удалось загрузить изображение: {image_path}")
+                self.logger.error(f"OpenCV не смог загрузить изображение: {image_path}")
+                self.logger.error(f"Размер файла: {Path(image_path).stat().st_size} байт")
+                
+                # Дополнительная диагностика для Windows
+                try:
+                    with open(image_path, 'rb') as f:
+                        header = f.read(16)
+                        self.logger.error(f"Заголовок файла: {header.hex()[:32]}")
+                        
+                        # Проверяем магические числа
+                        if header.startswith(b'\xff\xd8\xff'):
+                            self.logger.error("Файл выглядит как JPEG")
+                        elif header.startswith(b'\x89PNG'):
+                            self.logger.error("Файл выглядит как PNG")
+                        elif header.startswith(b'RIFF') and b'WEBP' in header:
+                            self.logger.error("Файл выглядит как WebP")
+                        else:
+                            self.logger.error("Неизвестный формат файла")
+                except Exception as diagnostic_e:
+                    self.logger.error(f"Ошибка диагностики файла: {diagnostic_e}")
+                
                 return None
                 
             self.logger.debug(f"Загружено изображение {image_path}: {img.shape}")
@@ -86,7 +279,8 @@ class ImageProcessorCV:
             else:
                 encode_params = []
             
-            success = cv2.imwrite(output_path, image, encode_params)
+            # Безопасное сохранение для Windows с Unicode путями
+            success = self._safe_imwrite(output_path, image, encode_params)
             
             if success:
                 self.logger.debug(f"Изображение сохранено: {output_path}")

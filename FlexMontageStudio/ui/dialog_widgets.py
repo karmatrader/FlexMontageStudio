@@ -39,7 +39,7 @@ class AddChannelDialog(QDialog):
 
         # Поле столбца канала
         self.channel_column_input = QLineEdit()
-        self.channel_column_input.setPlaceholderText("Введите букву столбца (B, C, D и т.д.)")
+        self.channel_column_input.setPlaceholderText("Введите букву столбца Excel (B, C, D и т.д.)")
         self.form_layout.addRow("Столбец канала:", self.channel_column_input)
 
         # Поля путей
@@ -53,9 +53,9 @@ class AddChannelDialog(QDialog):
         """Создание полей для путей"""
         paths = [
             ("global_xlsx_file_path", "Путь к общему Excel-файлу:", True),
-            ("base_path", "Базовый путь:", False),
+            ("base_path", "Корневая папка:", False),
             ("channel_folder", "Папка канала:", False),
-            ("csv_file_path", "Путь к CSV-файлу:", True),
+            ("csv_file_path", "Путь к файлу API ключей:", True),
             ("output_directory", "Папка для вывода:", False),
             ("photo_folder", "Папка с фото:", False),
             ("audio_folder", "Папка с аудио:", False),

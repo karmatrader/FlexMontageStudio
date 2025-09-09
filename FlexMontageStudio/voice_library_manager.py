@@ -1,5 +1,5 @@
 """
-Менеджер библиотеки голосов ElevenLabs
+Менеджер библиотеки голосов ElevenLabs с File API
 Отвечает за загрузку, кэширование и управление публичными голосами
 ДОБАВЛЕНА АВТООЧИСТКА ВРЕМЕННЫХ ГОЛОСОВ ДЛЯ ПРЕДОТВРАЩЕНИЯ ПЕРЕПОЛНЕНИЯ ЛИМИТА
 """
@@ -13,64 +13,122 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
+from core.file_api import file_api
 
 logger = logging.getLogger(__name__)
 
 
 class APIKeyManager:
-    """Менеджер API ключей из CSV файла"""
+    """Менеджер API ключей из файла (CSV/TXT)"""
 
     def __init__(self, csv_file_path: str):
         self.csv_file_path = Path(csv_file_path)
         if not self.csv_file_path.exists():
-            raise FileNotFoundError(f"CSV файл не найден: {csv_file_path}")
+            raise FileNotFoundError(f"Файл API ключей не найден: {csv_file_path}")
+        self._exhausted_keys = set()  # Отслеживание исчерпанных ключей
 
     def get_api_key(self) -> Optional[str]:
         """
-        Получение API ключа из CSV файла
+        Получение API ключа из файла (CSV или TXT)
 
         Returns:
             Optional[str]: API ключ или None если не найден
         """
         try:
-            logger.info(f"Получение API ключа из {self.csv_file_path}")
+            # Определяем тип файла по расширению
+            if str(self.csv_file_path).endswith('.txt'):
+                return self._get_api_key_from_txt()
+            else:
+                return self._get_api_key_from_csv()
+        except Exception as e:
+            logger.error(f"Ошибка получения API ключа: {e}")
+            return None
+    
+    def _get_api_key_from_txt(self) -> Optional[str]:
+        """Получение API ключа из TXT файла"""
+        try:
+            logger.info(f"Получение API ключа из TXT файла: {self.csv_file_path}")
+            
+            with open(self.csv_file_path, 'r', encoding='utf-8') as f:
+                lines = [line.strip() for line in f if line.strip()]
+            
+            if not lines:
+                logger.warning("TXT файл пуст")
+                return None
+            
+            one_month_ago = datetime.now().date() - timedelta(days=31)
+            
+            # УПРОЩЕННАЯ логика: используем любой доступный ключ (кроме исчерпанных)
+            logger.info(f"Ищем доступные ключи в TXT файле (исключенных: {len(self._exhausted_keys)})")
+            
+            for line in lines:
+                api_key = None
+                if ',' in line:
+                    # Формат: api_key,date
+                    parts = line.split(',', 1)
+                    api_key = parts[0].strip()
+                else:
+                    # Формат: просто api_key
+                    api_key = line.strip()
+                
+                # Проверяем что это валидный ключ и он не исчерпан
+                if api_key and api_key not in self._exhausted_keys and (api_key.startswith('sk-') or api_key.startswith('sk_')):
+                    logger.info(f"✅ API ключ найден: {api_key[:8]}...{api_key[-4:]}")
+                    return api_key
+            
+            logger.warning("Не найдено подходящих API ключей в TXT файле")
+            return None
+            
+        except Exception as e:
+            logger.error(f"Ошибка чтения TXT файла: {e}")
+            return None
+
+    def _get_api_key_from_csv(self) -> Optional[str]:
+        """Получение API ключа из файла CSV"""
+        try:
+            logger.info(f"Получение API ключа из файла CSV: {self.csv_file_path}")
 
             current_date = datetime.now().strftime('%d.%m.%Y')
             one_month_ago = datetime.now().date() - timedelta(days=31)
 
-            # Читаем CSV файл
-            rows = []
+            # Читаем файл через File API
+            csv_data = file_api.read_csv(self.csv_file_path)
+            
+            if not csv_data:
+                logger.error("Файл API ключей пуст")
+                return None
+                
+            # Проверяем наличие необходимых столбцов
+            if not csv_data[0] or 'API' not in csv_data[0] or 'Date' not in csv_data[0]:
+                logger.error("Файл API ключей должен содержать столбцы 'API' и 'Date'")
+                return None
+
+            rows = csv_data
             api_key = None
 
-            with open(self.csv_file_path, mode='r', encoding='utf-8') as csv_file:
-                reader = csv.DictReader(csv_file)
-                fieldnames = reader.fieldnames
+            # Сначала ищем ключи старше месяца (исключая исчерпанные)
+            logger.info(f"Ищем ключи старше {one_month_ago} (исключенных: {len(self._exhausted_keys)})")
+            for row in rows:
+                key = row.get('API')
+                if key and not api_key and key not in self._exhausted_keys:
+                    try:
+                        row_date = datetime.strptime(row.get('Date', ''), '%d.%m.%Y').date()
+                        # Ищем ключи старше месяца
+                        if row_date <= one_month_ago:
+                            api_key = key
+                            row['Date'] = current_date
+                            logger.info(f"✅ Найден API ключ старше месяца: {api_key[:12]}..., дата: {row_date}")
+                            break
+                    except ValueError as e:
+                        logger.warning(f"Некорректная дата в строке: {row.get('Date', '')}")
+                        continue
 
-                if not fieldnames or 'API' not in fieldnames or 'Date' not in fieldnames:
-                    logger.error("CSV файл должен содержать столбцы 'API' и 'Date'")
-                    return None
-
-                for row in reader:
-                    rows.append(row)
-
-                    # Ищем подходящий API ключ (сначала старые)
-                    if row.get('API') and not api_key:
-                        try:
-                            row_date = datetime.strptime(row.get('Date', ''), '%d.%m.%Y').date()
-                            # Ищем ключи старше месяца
-                            if row_date <= one_month_ago:
-                                api_key = row.get('API')
-                                row['Date'] = current_date
-                                logger.debug(f"Найден подходящий API ключ (старше месяца), дата: {row_date}")
-                        except ValueError as e:
-                            logger.warning(f"Некорректная дата в строке: {row.get('Date', '')}")
-                            continue
-
-                # Если не найден старый ключ, используем любой доступный
-                if not api_key:
-                    logger.info("Ключи старше месяца не найдены, ищу любой доступный...")
-                    for row in rows:
-                        if row.get('API'):
+            # Если не найден старый ключ, используем любой доступный (исключая исчерпанные)
+            if not api_key:
+                logger.info("Ключи старше месяца не найдены, ищу любой доступный...")
+                for row in rows:
+                    key = row.get('API')
+                    if key and key not in self._exhausted_keys:
                             try:
                                 # ИСПРАВЛЕНО: попытаемся парсить дату, но даже если не получится - возьмем ключ
                                 try:
@@ -85,10 +143,10 @@ class APIKeyManager:
                             except Exception:
                                 continue
 
-            # Обновляем CSV файл если нашли ключ
+            # Обновляем файл API ключей если нашли ключ
             if api_key:
-                self._update_csv_file(fieldnames, rows)
-                logger.info("API ключ успешно получен")
+                self._update_csv_file_with_file_api(rows)
+                logger.info("API ключ успешно получен через File API")
             else:
                 logger.warning("Подходящий API ключ не найден")
 
@@ -98,8 +156,31 @@ class APIKeyManager:
             logger.error(f"Ошибка получения API ключа: {e}")
             return None
 
+    def mark_key_as_exhausted(self, api_key: str):
+        """Помечает API ключ как исчерпанный"""
+        if api_key:
+            self._exhausted_keys.add(api_key)
+            logger.info(f"🔒 API ключ помечен как исчерпанный: {api_key[:12]}... (всего исчерпанных: {len(self._exhausted_keys)})")
+        else:
+            logger.warning("Попытка пометить пустой API ключ как исчерпанный")
+
+    def _update_csv_file_with_file_api(self, rows: List[Dict[str, str]]):
+        """Обновление файла API ключей через File API"""
+        try:
+            # File API автоматически обрабатывает атомарность и резервное копирование
+            success = file_api.write_csv(self.csv_file_path, rows)
+            
+            if success:
+                logger.debug("Файл API ключей обновлён через File API")
+            else:
+                raise Exception("Не удалось обновить файл API ключей через File API")
+
+        except Exception as e:
+            logger.error(f"Ошибка обновления файла API ключей: {e}")
+            raise e
+
     def _update_csv_file(self, fieldnames: List[str], rows: List[Dict[str, str]]):
-        """Обновление CSV файла"""
+        """Обновление файла API ключей (старый метод для совместимости)"""
         temp_file_path = self.csv_file_path.with_suffix('.tmp')
 
         try:
@@ -110,7 +191,7 @@ class APIKeyManager:
 
             # Атомарно заменяем файл
             shutil.move(str(temp_file_path), str(self.csv_file_path))
-            logger.debug("CSV файл обновлен")
+            logger.debug("Файл API ключей обновлён")
 
         except Exception as e:
             # Удаляем временный файл в случае ошибки
@@ -373,6 +454,84 @@ class VoiceLibraryManager:
 
         return False
 
+    async def cleanup_all_custom_voices(self, api_key: str, proxy_config: Optional[Dict] = None) -> bool:
+        """
+        Агрессивная очистка - удаляет ВСЕ пользовательские голоса без исключений
+        """
+        try:
+            logger.warning("🔥 АГРЕССИВНАЯ ОЧИСТКА: Удаляем ВСЕ пользовательские голоса")
+            
+            # Настройка прокси
+            connector = aiohttp.TCPConnector(ssl=False)
+            timeout = aiohttp.ClientTimeout(total=30)
+
+            proxy_url = None
+            proxy_auth = None
+
+            if proxy_config and proxy_config.get("use_proxy", False):
+                proxy_url = proxy_config.get("proxy")
+                if proxy_config.get("proxy_login") and proxy_config.get("proxy_password"):
+                    proxy_auth = aiohttp.BasicAuth(
+                        proxy_config["proxy_login"],
+                        proxy_config["proxy_password"]
+                    )
+
+            async with aiohttp.ClientSession(
+                connector=connector,
+                timeout=timeout,
+                headers={"User-Agent": "FlexMontage-Studio/1.0"}
+            ) as session:
+
+                # Получаем список всех голосов
+                url = f"{self.BASE_URL}/voices"
+                headers = {"xi-api-key": api_key}
+
+                async with session.get(
+                    url,
+                    headers=headers,
+                    proxy=proxy_url,
+                    proxy_auth=proxy_auth
+                ) as response:
+                    
+                    if response.status == 200:
+                        data = await response.json()
+                        voices = data.get("voices", [])
+                        
+                        deleted_count = 0
+                        # Удаляем все пользовательские голоса (не премиум)
+                        for voice in voices:
+                            voice_id = voice.get("voice_id")
+                            voice_name = voice.get("name")
+                            category = voice.get("category", "")
+                            
+                            # Удаляем только пользовательские голоса (не премиум/встроенные)
+                            if category not in ["premade", "professional"] and voice_id:
+                                delete_url = f"{self.BASE_URL}/voices/{voice_id}"
+                                
+                                async with session.delete(
+                                    delete_url,
+                                    headers=headers,
+                                    proxy=proxy_url,
+                                    proxy_auth=proxy_auth
+                                ) as delete_response:
+                                    
+                                    if delete_response.status == 200:
+                                        logger.debug(f"Удален пользовательский голос: {voice_name} ({voice_id})")
+                                        deleted_count += 1
+                                        self.created_preview_voices.discard(voice_id)
+                                    else:
+                                        logger.warning(f"Не удалось удалить голос {voice_name}: {delete_response.status}")
+
+                        logger.info(f"🧹 Агрессивная очистка завершена: удалено {deleted_count} пользовательских голосов")
+                        return True
+                    else:
+                        logger.error(f"Не удалось получить список голосов для агрессивной очистки: {response.status}")
+                        return False
+                        
+        except Exception as e:
+            logger.error(f"Ошибка агрессивной очистки голосов: {e}")
+            return False
+
     async def get_public_voices(self, api_key: str, proxy_config: Optional[Dict] = None,
                                force_refresh: bool = False) -> List[VoiceInfo]:
         """
@@ -585,9 +744,10 @@ class VoiceLibraryManager:
         try:
             logger.info(f"Генерация предпросмотра голоса {voice_id}")
 
-            # Периодически очищаем временные голоса
-            if len(self.created_preview_voices) > 2:  # Если накопилось много временных голосов
-                await self.cleanup_temporary_voices(api_key, proxy_config)
+            # ПРИНУДИТЕЛЬНО очищаем ВСЕ пользовательские голоса перед каждым предпросмотром
+            # Это предотвращает превышение лимита голосов
+            logger.info("🧹 Принудительная очистка ВСЕХ пользовательских голосов перед предпросмотром...")
+            await self.cleanup_all_custom_voices(api_key, proxy_config)
 
             # Настройка прокси
             connector = aiohttp.TCPConnector(ssl=False)
@@ -645,10 +805,27 @@ class VoiceLibraryManager:
                         error_text = await response.text()
                         logger.error(f"Ошибка генерации предпросмотра: {error_text}")
 
-                        # Если ошибка связана с лимитом голосов, пытаемся очистить
-                        if "voice_limit_reached" in error_text:
-                            logger.info("Попытка очистки временных голосов из-за превышения лимита...")
-                            await self.cleanup_temporary_voices(api_key, proxy_config)
+                        # Пытаемся парсить JSON ответ для более точной обработки ошибок
+                        try:
+                            import json
+                            error_data = json.loads(error_text)
+                            error_status = error_data.get("detail", {}).get("status", "")
+                            
+                            if error_status == "quota_exceeded":
+                                logger.error("Превышена квота API для предпросмотра")
+                                return "QUOTA_EXCEEDED"  # Специальный маркер для UI
+                            elif error_status == "voice_add_edit_limit_reached":
+                                logger.warning("Достигнут месячный лимит операций с голосами. Предпросмотр отключен.")
+                                return "LIMIT_REACHED"  # Специальный маркер для UI
+                            elif error_status == "voice_limit_reached" or "voice_limit_reached" in error_text:
+                                logger.info("Попытка очистки временных голосов из-за превышения лимита...")
+                                await self.cleanup_temporary_voices(api_key, proxy_config)
+                                return None
+                        except (json.JSONDecodeError, KeyError):
+                            # Если не JSON или нет нужных ключей, обрабатываем как обычно
+                            if "voice_limit_reached" in error_text:
+                                logger.info("Попытка очистки временных голосов из-за превышения лимита...")
+                                await self.cleanup_temporary_voices(api_key, proxy_config)
 
                         return None
 
