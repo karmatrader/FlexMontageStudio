@@ -1,0 +1,1069 @@
+{% extends "base.html" %}
+{% block title %}— Планер{% endblock %}
+
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px;">
+    <div class="page-title" style="margin-bottom:0;">📅 SMM-Планер</div>
+    <div style="display:flex; gap:8px; align-items:center;">
+        <button class="btn btn-ghost btn-sm" onclick="prevMonth()">←</button>
+        <span id="month-label" style="font-size:15px; color:var(--text-secondary); min-width:160px; text-align:center;"></span>
+        <button class="btn btn-ghost btn-sm" onclick="nextMonth()">→</button>
+        <button class="btn btn-primary btn-sm" onclick="openDrawer(null)">+ Добавить пост</button>
+    </div>
+</div>
+
+<p class="page-desc" style="margin-top:-16px;">Планируй публикации на месяц вперёд — добавляй посты на конкретные даты, прикладывай фото и отслеживай статус каждой записи.</p>
+
+<!-- Календарь -->
+<div class="card" style="padding:16px;">
+    <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:2px; margin-bottom:8px;">
+        <div style="text-align:center; font-size:12px; color:var(--text-muted); padding:4px;">Пн</div>
+        <div style="text-align:center; font-size:12px; color:var(--text-muted); padding:4px;">Вт</div>
+        <div style="text-align:center; font-size:12px; color:var(--text-muted); padding:4px;">Ср</div>
+        <div style="text-align:center; font-size:12px; color:var(--text-muted); padding:4px;">Чт</div>
+        <div style="text-align:center; font-size:12px; color:var(--text-muted); padding:4px;">Пт</div>
+        <div style="text-align:center; font-size:12px; color:var(--text-muted); padding:4px;">Сб</div>
+        <div style="text-align:center; font-size:12px; color:var(--text-muted); padding:4px;">Вс</div>
+    </div>
+    <div id="calendar-grid" style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px;"></div>
+</div>
+
+<!-- Drawer (боковая панель) -->
+<div id="drawer-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:150;" onclick="closeDrawer()"></div>
+<div id="drawer" style="display:none; position:fixed; top:0; right:0; width:min(480px,100vw); height:100vh;
+     background:var(--bg-card); border-left:1px solid var(--border); z-index:160; overflow-y:auto; padding:28px 24px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <div style="font-size:16px; font-weight:600; color:var(--text-primary);" id="drawer-title">Новый пост</div>
+        <button onclick="closeDrawer()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:22px;">✕</button>
+    </div>
+
+    <div id="drawer-posts-list" style="display:none; margin-bottom:20px;">
+        <!-- Список постов на выбранный день -->
+    </div>
+
+    <div id="drawer-form">
+        <div class="form-group">
+            <label>Текст поста</label>
+            <div class="fmt-toolbar" data-target="post-text">
+                <button type="button" class="fmt-btn" data-wrap="**" title="Жирный"><b>Ж</b></button>
+                <button type="button" class="fmt-btn" data-wrap="_" title="Курсив"><i>К</i></button>
+                <button type="button" class="fmt-btn" data-wrap="__" title="Подчёркнутый"><u>П</u></button>
+                <button type="button" class="fmt-btn" data-wrap="~~" title="Зачёркнутый"><s>З</s></button>
+                <button type="button" class="fmt-btn" data-wrap="||" title="Спойлер">👁</button>
+                <button type="button" class="fmt-btn" data-wrap="`" title="Моноширинный">mono</button>
+                <button type="button" class="fmt-btn" data-wrap="```\n" data-wrap-end="\n```" title="Блок кода">{ }</button>
+                <div class="fmt-sep"></div>
+                <button type="button" class="fmt-btn" data-action="link" title="Гиперссылка">🔗</button>
+                <button type="button" class="fmt-btn" data-action="clear" title="Убрать форматирование">✕</button>
+            </div>
+            <textarea id="post-text" rows="8" placeholder="Напиши текст поста..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Дата и время публикации</label>
+            <input type="datetime-local" id="post-datetime" style="width:100%;">
+        </div>
+        <div class="form-group">
+            <label>Фото (необязательно)</label>
+            <input type="file" id="post-media" accept="image/jpeg,image/png,image/gif,image/webp"
+                   style="display:none;">
+            <div onclick="document.getElementById('post-media').click()"
+                 id="file-btn"
+                 style="display:flex; align-items:center; gap:8px; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; color:var(--text-muted); font-size:13px; cursor:pointer; transition:all 0.15s;"
+                 onmouseover="this.style.borderColor='var(--accent)'; this.style.color='var(--text-secondary)'"
+                 onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-muted)'">
+                <span>📎</span>
+                <span id="file-btn-label">Выберите изображение...</span>
+            </div>
+            <div id="media-preview" style="margin-top:8px; display:none;">
+                <img id="media-img" style="max-width:100%; border-radius:8px; max-height:200px; object-fit:cover;">
+            </div>
+        </div>
+        <!-- Генерация превью -->
+        <div class="form-group" style="margin-top:8px;">
+            <label>🖼 Превью через Gemini</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:8px;">
+                <select id="drawer-preview-category" style="background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text-primary); font-size:13px;">
+                    <option value="expert">Экспертный</option>
+                    <option value="opinion">Мнение</option>
+                    <option value="personal">Личный</option>
+                    <option value="motivational">Мотивационный</option>
+                    <option value="story">История</option>
+                    <option value="engaging">Вовлекающий</option>
+                    <option value="entertaining">Развлекательный</option>
+                    <option value="trend">Тренд (без лица)</option>
+                    <option value="report">Обзор (без лица)</option>
+                </select>
+                <select id="drawer-preview-ratio" style="background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text-primary); font-size:13px;">
+                    <option value="">авто</option>
+                    <option value="1:1">1:1</option>
+                    <option value="4:5">4:5</option>
+                    <option value="16:9">16:9</option>
+                </select>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                <label class="toggle" style="margin:0;">
+                    <input type="checkbox" id="drawer-show-text" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+                <span style="font-size:13px; color:var(--text-secondary);">Текст на изображении</span>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="drawer-preview-btn" onclick="generateDrawerPreview()">🖼 Сгенерировать</button>
+            <div id="drawer-preview-result" style="display:none; margin-top:10px;">
+                <img id="drawer-preview-img" style="max-width:100%; border-radius:8px; max-height:220px; object-fit:cover;">
+                <div style="display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;">
+                    <button class="btn btn-ghost btn-sm" onclick="useDrawerPreview()">✅ Использовать как фото</button>
+                    <button class="btn btn-ghost btn-sm" onclick="generateDrawerPreview()">🔄 Ещё раз</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подпись -->
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; margin-top:4px;">
+            <label class="toggle" style="margin:0;">
+                <input type="checkbox" id="drawer-add-signature">
+                <span class="toggle-slider"></span>
+            </label>
+            <span style="font-size:13px; color:var(--text-secondary);">Добавить подпись к посту</span>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:4px;">
+            <button class="btn btn-primary" onclick="submitPost()" id="submit-btn">Добавить в планер</button>
+            <button class="btn btn-ghost" onclick="closeDrawer()">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модал редактирования поста -->
+<div id="post-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:flex-start; justify-content:center; padding:20px; overflow-y:auto;">
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:24px; width:min(580px,100%); margin:auto;">
+
+        <!-- Шапка -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div style="font-size:15px; font-weight:600;">📝 Пост</div>
+            <button onclick="closePostModal()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:22px;">✕</button>
+        </div>
+
+        <!-- Статус + время -->
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+            <span id="modal-status"></span>
+            <span id="modal-time" style="font-size:12px; color:var(--text-muted);"></span>
+        </div>
+
+        <!-- Фото если есть -->
+        <div id="modal-media" style="margin-bottom:12px; display:none;">
+            <img id="modal-img" style="max-width:100%; border-radius:8px; max-height:200px; object-fit:cover;">
+        </div>
+
+        <!-- Текст — редактируемый -->
+        <div class="form-group" style="margin-bottom:14px;">
+            <label>Текст поста</label>
+            <div class="fmt-toolbar" data-target="modal-text-edit">
+                <button type="button" class="fmt-btn" data-wrap="**" title="Жирный"><b>Ж</b></button>
+                <button type="button" class="fmt-btn" data-wrap="_" title="Курсив"><i>К</i></button>
+                <button type="button" class="fmt-btn" data-wrap="__" title="Подчёркнутый"><u>П</u></button>
+                <button type="button" class="fmt-btn" data-wrap="~~" title="Зачёркнутый"><s>З</s></button>
+                <button type="button" class="fmt-btn" data-wrap="||" title="Спойлер">👁</button>
+                <button type="button" class="fmt-btn" data-wrap="`" title="Моноширинный">mono</button>
+                <button type="button" class="fmt-btn" data-wrap="```\n" data-wrap-end="\n```" title="Блок кода">{ }</button>
+                <div class="fmt-sep"></div>
+                <button type="button" class="fmt-btn" data-action="link" title="Гиперссылка">🔗</button>
+                <button type="button" class="fmt-btn" data-action="clear" title="Убрать форматирование">✕</button>
+            </div>
+            <textarea id="modal-text-edit" rows="8"
+                style="width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px;
+                       padding:12px 14px; color:var(--text-primary); font-size:14px; line-height:1.7;
+                       resize:vertical; outline:none; font-family:inherit;"></textarea>
+        </div>
+
+        <!-- Дата и время -->
+        <div class="form-group" style="margin-bottom:18px;">
+            <label>Дата и время публикации</label>
+            <input type="datetime-local" id="modal-datetime"
+                style="width:100%; background:var(--input-bg); border:1px solid var(--border);
+                       border-radius:8px; padding:10px 12px; color:var(--text-primary); font-size:14px; outline:none;">
+        </div>
+
+        <!-- Быстрый перенос -->
+        <div style="margin-bottom:18px;">
+            <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">Быстрый перенос:</div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button class="btn btn-ghost btn-sm" onclick="shiftTime(1)">+1 час</button>
+                <button class="btn btn-ghost btn-sm" onclick="shiftTime(3)">+3 часа</button>
+                <button class="btn btn-ghost btn-sm" onclick="shiftTime(24)">+1 день</button>
+                <button class="btn btn-ghost btn-sm" onclick="shiftTime(48)">+2 дня</button>
+                <button class="btn btn-ghost btn-sm" onclick="shiftTime(168)">+1 нед.</button>
+            </div>
+        </div>
+
+        <!-- Изображение в модале: загрузка с ПК или генерация -->
+        <div style="margin-bottom:18px; border-top:1px solid var(--border); padding-top:16px;">
+            <div style="font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:12px;">🖼 Изображение к посту</div>
+
+            <!-- Загрузка с ПК -->
+            <input type="file" id="modal-media-upload" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none;">
+            <div onclick="document.getElementById('modal-media-upload').click()"
+                 id="modal-upload-btn"
+                 style="display:flex; align-items:center; gap:8px; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; color:var(--text-muted); font-size:13px; cursor:pointer; margin-bottom:10px; transition:all 0.15s;"
+                 onmouseover="this.style.borderColor='var(--accent)'; this.style.color='var(--text-secondary)'"
+                 onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-muted)'">
+                <span>📎</span>
+                <span id="modal-upload-label">Загрузить с компьютера...</span>
+            </div>
+
+            <!-- Разделитель -->
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+                <div style="flex:1; height:1px; background:var(--border);"></div>
+                <span style="font-size:11px; color:var(--text-muted);">или сгенерировать</span>
+                <div style="flex:1; height:1px; background:var(--border);"></div>
+            </div>
+
+            <!-- Настройки генерации -->
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:8px;">
+                <select id="modal-preview-category" style="background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text-primary); font-size:13px;">
+                    <option value="expert">Экспертный</option>
+                    <option value="opinion">Мнение</option>
+                    <option value="personal">Личный</option>
+                    <option value="motivational">Мотивационный</option>
+                    <option value="story">История</option>
+                    <option value="engaging">Вовлекающий</option>
+                    <option value="entertaining">Развлекательный</option>
+                    <option value="trend">Тренд (без лица)</option>
+                    <option value="report">Обзор (без лица)</option>
+                </select>
+                <select id="modal-preview-ratio" style="background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:7px 10px; color:var(--text-primary); font-size:13px;">
+                    <option value="">авто</option>
+                    <option value="1:1">1:1</option>
+                    <option value="4:5">4:5</option>
+                    <option value="16:9">16:9</option>
+                </select>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                <label class="toggle" style="margin:0;">
+                    <input type="checkbox" id="modal-show-text" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+                <span style="font-size:13px; color:var(--text-secondary);">Текст на изображении</span>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="modal-preview-btn" onclick="generateModalPreview()">🖼 Сгенерировать</button>
+
+            <div id="modal-preview-result" style="display:none; margin-top:10px;">
+                <img id="modal-preview-img" style="max-width:100%; border-radius:8px; max-height:220px; object-fit:cover; margin-bottom:6px;">
+                <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button class="btn btn-ghost btn-sm" onclick="attachModalPreview()">✅ Прикрепить к посту</button>
+                    <button class="btn btn-ghost btn-sm" onclick="generateModalPreview()">🔄 Ещё раз</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подпись -->
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <label class="toggle" style="margin:0;">
+                <input type="checkbox" id="modal-add-signature">
+                <span class="toggle-slider"></span>
+            </label>
+            <span style="font-size:13px; color:var(--text-secondary);">Добавить подпись к посту</span>
+        </div>
+
+        <!-- Кнопки действий -->
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="modal-save-btn" onclick="savePostChanges()">💾 Сохранить</button>
+            <button class="btn btn-ghost" onclick="copyModalText()">📋 Копировать</button>
+            <button class="btn btn-danger btn-sm" id="modal-delete-btn" onclick="deleteModalPost()" style="margin-left:auto;">🗑 Удалить</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+/* ── Тулбар форматирования ── */
+.fmt-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 5px 7px;
+    align-items: center;
+}
+.fmt-btn {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 3px 7px;
+    line-height: 1.4;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+    white-space: nowrap;
+    font-family: inherit;
+}
+.fmt-btn:hover {
+    background: var(--bg-card);
+    border-color: var(--border);
+    color: var(--text-primary);
+}
+.fmt-btn:active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+.fmt-sep {
+    width: 1px;
+    height: 18px;
+    background: var(--border);
+    margin: 0 3px;
+}
+/* Убираем скругление снизу у textarea когда есть тулбар */
+.fmt-toolbar + textarea {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+#post-text {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text-primary);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 14px;
+    line-height: 1.7;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-height: 160px;
+}
+#post-text::placeholder {
+    color: var(--text-faint);
+    font-style: italic;
+}
+#post-text:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124, 111, 224, 0.15);
+}
+
+.cal-day {
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    min-height: 90px;
+    padding: 6px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+}
+.cal-day:hover { border-color: #3a3a4a; }
+.cal-day.today { border-color: #7c6fe0; }
+.cal-day.other-month { opacity: 0.35; }
+.cal-day-num {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+.cal-day.today .cal-day-num { color: #7c6fe0; font-weight: 600; }
+.cal-post-chip {
+    font-size: 11px;
+    border-radius: 4px;
+    padding: 2px 5px;
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.chip-pending { background: rgba(240,192,64,0.15); color: #f0c040; }
+.chip-published { background: rgba(96,192,96,0.15); color: #60c060; }
+.chip-failed { background: rgba(224,96,96,0.15); color: #e06060; }
+.add-btn {
+    position: absolute; bottom: 4px; right: 4px;
+    background: none; border: none; color: #333; cursor: pointer;
+    font-size: 16px; padding: 0; line-height: 1;
+    transition: color 0.15s;
+}
+.cal-day:hover .add-btn { color: #7c6fe0; }
+
+@media (max-width: 768px) {
+    .cal-day { min-height: 60px; padding: 4px; border-radius: 6px; }
+    .cal-day-num { font-size: 11px; }
+    .cal-post-chip { font-size: 10px; padding: 1px 4px; }
+    .add-btn { font-size: 13px; }
+    #drawer { width: 100vw !important; }
+}
+</style>
+<script>
+let currentYear, currentMonth;
+let monthPosts = [];
+let _userSignature = '';
+
+async function init() {
+    const now = new Date();
+    currentYear = now.getFullYear();
+    currentMonth = now.getMonth(); // 0-based
+    // Загружаем подпись пользователя
+    try {
+        const r = await api('GET', '/api/curator/signature');
+        if (r.ok) _userSignature = r.signature || '';
+    } catch(e) {}
+    loadMonth();
+}
+
+function applySignature(text, checked) {
+    if (!checked) return text;
+    if (!_userSignature || !_userSignature.trim()) {
+        showToast('Подпись не задана — сохрани её в Настройках', 'error');
+        return text;
+    }
+    const sig = _userSignature.trim();
+    // Убираем старую если уже есть, добавляем свежую
+    const clean = text.includes(sig) ? text.replace(sig, '').trimEnd() : text.trimEnd();
+    return clean + '\n\n' + sig;
+}
+
+function stripSignature(text) {
+    if (!_userSignature || !_userSignature.trim()) return text;
+    const sig = _userSignature.trim();
+    return text.includes(sig) ? text.replace(sig, '').trimEnd() : text;
+}
+
+async function loadMonth() {
+    const pad = n => String(n).padStart(2, '0');
+    const monthStr = `${currentYear}-${pad(currentMonth + 1)}`;
+    document.getElementById('month-label').textContent =
+        new Date(currentYear, currentMonth, 1).toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
+
+    monthPosts = await api('GET', `/api/planner/posts?month=${monthStr}`);
+    renderCalendar();
+}
+
+function renderCalendar() {
+    const grid = document.getElementById('calendar-grid');
+    grid.innerHTML = '';
+
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const today = new Date();
+
+    // Начинаем с понедельника (0=пн)
+    let startDow = firstDay.getDay(); // 0=вс, 1=пн...
+    startDow = startDow === 0 ? 6 : startDow - 1;
+
+    // Дни предыдущего месяца
+    for (let i = 0; i < startDow; i++) {
+        const d = new Date(currentYear, currentMonth, -startDow + i + 1);
+        grid.appendChild(makeDay(d, true));
+    }
+
+    // Дни текущего месяца
+    for (let d = 1; d <= lastDay.getDate(); d++) {
+        const date = new Date(currentYear, currentMonth, d);
+        const isToday = date.toDateString() === today.toDateString();
+        grid.appendChild(makeDay(date, false, isToday));
+    }
+
+    // Дополняем до полных рядов
+    const total = startDow + lastDay.getDate();
+    const remaining = (7 - (total % 7)) % 7;
+    for (let i = 1; i <= remaining; i++) {
+        const d = new Date(currentYear, currentMonth + 1, i);
+        grid.appendChild(makeDay(d, true));
+    }
+}
+
+function makeDay(date, otherMonth, isToday = false) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-day' + (otherMonth ? ' other-month' : '') + (isToday ? ' today' : '');
+
+    const num = document.createElement('div');
+    num.className = 'cal-day-num';
+    num.textContent = date.getDate();
+    cell.appendChild(num);
+
+    // Посты на этот день — используем локальную дату, не UTC
+    const pad2 = n => String(n).padStart(2, '0');
+    const dateStr = `${date.getFullYear()}-${pad2(date.getMonth()+1)}-${pad2(date.getDate())}`;
+    const dayPosts = monthPosts.filter(p => {
+        // scheduled_at может быть в разных форматах — нормализуем к локальной дате
+        const d = new Date(p.scheduled_at);
+        const dStr = `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+        return dStr === dateStr;
+    });
+
+    dayPosts.slice(0, 3).forEach(post => {
+        const chip = document.createElement('div');
+        chip.className = `cal-post-chip chip-${post.status}`;
+        chip.textContent = post.text.slice(0, 30) + (post.text.length > 30 ? '…' : '');
+        chip.addEventListener('click', e => { e.stopPropagation(); openPostModal(post); });
+        cell.appendChild(chip);
+    });
+
+    if (dayPosts.length > 3) {
+        const more = document.createElement('div');
+        more.style.cssText = 'font-size:10px; color:var(--text-muted); margin-top:2px;';
+        more.textContent = `+${dayPosts.length - 3} ещё`;
+        cell.appendChild(more);
+    }
+
+    // Кнопка + добавить
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-btn';
+    addBtn.textContent = '+';
+    addBtn.title = 'Добавить пост';
+    addBtn.addEventListener('click', e => { e.stopPropagation(); openDrawer(date); });
+    cell.appendChild(addBtn);
+
+    cell.addEventListener('click', () => openDrawer(date));
+    return cell;
+}
+
+function prevMonth() {
+    currentMonth--;
+    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+    loadMonth();
+}
+
+function nextMonth() {
+    currentMonth++;
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    loadMonth();
+}
+
+// ─── Drawer ──────────────────────────────────────────────────────────────────
+
+function openDrawer(date) {
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    const title = document.getElementById('drawer-title');
+    const postsList = document.getElementById('drawer-posts-list');
+    const form = document.getElementById('drawer-form');
+
+    // Сброс формы
+    document.getElementById('post-text').value = '';
+    document.getElementById('post-media').value = '';
+    document.getElementById('media-preview').style.display = 'none';
+    document.getElementById('drawer-preview-result').style.display = 'none';
+    document.getElementById('file-btn-label').textContent = 'Выберите изображение...';
+    _drawerPreviewPath = null;
+    _drawerPreviewFile = null;
+
+    if (date) {
+        const pad2 = n => String(n).padStart(2, '0');
+        const dateStr = `${date.getFullYear()}-${pad2(date.getMonth()+1)}-${pad2(date.getDate())}`;
+        title.textContent = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+        // Установить дефолтное время
+        const dt = new Date(date);
+        dt.setHours(12, 0, 0, 0);
+        document.getElementById('post-datetime').value = toLocalISOString(dt);
+
+        // Показать посты на этот день — нормализуем к локальной дате
+        const dayPosts = monthPosts.filter(p => {
+            const d = new Date(p.scheduled_at);
+            const dStr = `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+            return dStr === dateStr;
+        });
+        if (dayPosts.length) {
+            postsList.style.display = 'block';
+            postsList.innerHTML = `<div style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">Запланировано на этот день (${dayPosts.length}):</div>` +
+                dayPosts.map(p => `
+                <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:8px; padding:10px; margin-bottom:6px; cursor:pointer;"
+                     onclick="openPostModal(${JSON.stringify(p).replace(/"/g, '&quot;')})">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <span class="cal-post-chip chip-${p.status}" style="display:inline;">${p.status}</span>
+                        <span style="font-size:11px; color:var(--text-muted);">${fmtTime(p.scheduled_at)}</span>
+                    </div>
+                    <div style="font-size:12px; color:var(--text-secondary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escHtml(p.text.slice(0, 80))}</div>
+                </div>`).join('');
+        } else {
+            postsList.style.display = 'none';
+        }
+    } else {
+        title.textContent = 'Новый пост';
+        postsList.style.display = 'none';
+        const now = new Date();
+        now.setHours(now.getHours() + 4, 0, 0, 0);
+        document.getElementById('post-datetime').value = toLocalISOString(now);
+    }
+
+    drawer.style.display = 'block';
+    overlay.style.display = 'block';
+}
+
+function closeDrawer() {
+    document.getElementById('drawer').style.display = 'none';
+    document.getElementById('drawer-overlay').style.display = 'none';
+}
+
+// Превью фото
+document.getElementById('post-media').addEventListener('change', function() {
+    const file = this.files[0];
+    const label = document.getElementById('file-btn-label');
+    if (!file) {
+        document.getElementById('media-preview').style.display = 'none';
+        label.textContent = 'Выберите изображение...';
+        return;
+    }
+    label.textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById('media-img').src = e.target.result;
+        document.getElementById('media-preview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+});
+
+async function submitPost() {
+    let text = document.getElementById('post-text').value.trim();
+    const datetimeVal = document.getElementById('post-datetime').value;
+    if (!text) { showToast('Введи текст поста', 'error'); return; }
+    if (!datetimeVal) { showToast('Выбери дату и время', 'error'); return; }
+
+    // Применяем подпись
+    const addSig = document.getElementById('drawer-add-signature').checked;
+    text = applySignature(text, addSig);
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Сохраняю...';
+
+    const dt = new Date(datetimeVal);
+    const iso = dt.toISOString();
+
+    const form = new FormData();
+    form.append('text', text);
+    form.append('scheduled_at', iso);
+    const mediaFile = document.getElementById('post-media').files[0];
+    if (mediaFile) form.append('media', mediaFile);
+
+    try {
+        const r = await fetch('/api/planner/posts', { method: 'POST', body: form });
+        const data = await r.json();
+        if (data.ok) {
+            showToast('Пост добавлен в планер!');
+            closeDrawer();
+            loadMonth();
+        } else {
+            showToast(data.error || 'Ошибка', 'error');
+        }
+    } catch(e) {
+        showToast('Ошибка сети', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Добавить в планер';
+    }
+}
+
+// ─── Модал поста ─────────────────────────────────────────────────────────────
+
+let _currentPost = null;
+
+function openPostModal(post) {
+    // Всегда берём свежие данные из monthPosts по id (если есть)
+    const fresh = monthPosts.find(p => p.id === post.id);
+    _currentPost = fresh || post;
+    const statusLabels = { pending: '⏳ Ожидает', published: '✅ Опубликован', failed: '❌ Ошибка' };
+    const statusColors = { pending: '#f0c040', published: '#60c060', failed: '#e06060' };
+
+    document.getElementById('modal-status').innerHTML =
+        `<span style="background:${statusColors[post.status]}22; color:${statusColors[post.status]}; font-size:12px; padding:3px 8px; border-radius:10px;">${statusLabels[post.status] || post.status}</span>`;
+    document.getElementById('modal-time').textContent = fmtDatetime(post.scheduled_at);
+    document.getElementById('modal-text-edit').value = post.text;
+
+    // Дата/время в локальный datetime-local input
+    const dt = new Date(post.scheduled_at);
+    document.getElementById('modal-datetime').value = toLocalISOString(dt);
+
+    // Сброс превью
+    document.getElementById('modal-preview-result').style.display = 'none';
+    _modalPreviewPath = null;
+    _modalPreviewFile = null;
+
+    // Чекбокс подписи — ставим если подпись уже есть в тексте
+    const hasSig = _userSignature && post.text.includes(_userSignature.trim());
+    document.getElementById('modal-add-signature').checked = hasSig;
+
+    // Медиа
+    const mediaDiv = document.getElementById('modal-media');
+    if (post.media_path) {
+        document.getElementById('modal-img').src = `/media/${post.media_path}`;
+        mediaDiv.style.display = 'block';
+    } else {
+        mediaDiv.style.display = 'none';
+    }
+
+    // Кнопка удаления — только для pending
+    const delBtn = document.getElementById('modal-delete-btn');
+    delBtn.style.display = post.status === 'pending' ? 'inline-flex' : 'none';
+
+    // Сохранить — только для pending
+    const saveBtn = document.getElementById('modal-save-btn');
+    saveBtn.style.display = post.status === 'pending' ? 'inline-flex' : 'none';
+
+    document.getElementById('post-modal').style.display = 'flex';
+}
+
+function closePostModal() {
+    document.getElementById('post-modal').style.display = 'none';
+    _currentPost = null;
+}
+
+function shiftTime(hours) {
+    const input = document.getElementById('modal-datetime');
+    if (!input.value) return;
+    const dt = new Date(input.value);
+    dt.setHours(dt.getHours() + hours);
+    input.value = toLocalISOString(dt);
+    // Обновляем отображение времени
+    document.getElementById('modal-time').textContent = fmtDatetime(dt.toISOString());
+}
+
+async function savePostChanges() {
+    if (!_currentPost) return;
+    let text = document.getElementById('modal-text-edit').value.trim();
+    const datetimeVal = document.getElementById('modal-datetime').value;
+    if (!text) { showToast('Текст не может быть пустым', 'error'); return; }
+    if (!datetimeVal) { showToast('Укажи дату', 'error'); return; }
+
+    // Применяем/убираем подпись
+    const addSig = document.getElementById('modal-add-signature').checked;
+    text = stripSignature(text);   // сначала убираем старую
+    text = applySignature(text, addSig);  // добавляем если нужно
+
+    const scheduled_at = new Date(datetimeVal).toISOString();
+    const btn = document.getElementById('modal-save-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳';
+
+    const res = await api('PUT', `/api/curator/queue/${_currentPost.id}`, { text, scheduled_at });
+    btn.disabled = false;
+    btn.textContent = '💾 Сохранить';
+
+    if (res.ok) {
+        showToast('Сохранено!');
+        if (_currentPost) _currentPost.text = text; // обновляем локальный кеш
+        closePostModal();
+        loadMonth();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+async function deleteModalPost() {
+    if (!_currentPost) return;
+    if (!confirm('Удалить пост из очереди?')) return;
+    const res = await api('DELETE', `/api/curator/queue/${_currentPost.id}`);
+    if (res.ok) { showToast('Удалён'); closePostModal(); loadMonth(); }
+    else showToast(res.error || 'Ошибка', 'error');
+}
+
+function copyModalText() {
+    const text = document.getElementById('modal-text-edit').value;
+    navigator.clipboard.writeText(text).then(() => showToast('Скопировано!'));
+}
+
+document.getElementById('post-modal').addEventListener('click', function(e) {
+    if (e.target === this) closePostModal();
+});
+
+// Загрузка фото с ПК в модале
+document.getElementById('modal-media-upload').addEventListener('change', async function() {
+    const file = this.files[0];
+    if (!file || !_currentPost) return;
+
+    const label = document.getElementById('modal-upload-label');
+    label.textContent = '⏳ Загружаю...';
+
+    try {
+        const form = new FormData();
+        form.append('media', file);
+        const r = await fetch('/api/planner/upload-media', { method: 'POST', body: form });
+        const data = await r.json();
+        if (data.ok) {
+            // Показываем в шапке модала
+            document.getElementById('modal-img').src = data.url + '?t=' + Date.now();
+            document.getElementById('modal-media').style.display = 'block';
+            label.textContent = file.name;
+            // Сохраняем сразу
+            await api('PUT', `/api/curator/queue/${_currentPost.id}`, {
+                media_path: data.file_path,
+                text: document.getElementById('modal-text-edit').value.trim() || _currentPost.text,
+                scheduled_at: _currentPost.scheduled_at,
+            });
+            _currentPost.media_path = data.file_path;
+            showToast('Фото прикреплено!');
+            loadMonth();
+        } else {
+            label.textContent = 'Загрузить с компьютера...';
+            showToast(data.error || 'Ошибка загрузки', 'error');
+        }
+    } catch(e) {
+        label.textContent = 'Загрузить с компьютера...';
+        showToast('Ошибка сети', 'error');
+    }
+});
+
+// ─── Генерация превью (Drawer — новый пост) ──────────────────────────────────
+
+let _drawerPreviewPath = null;   // URL для показа (/media/previews/xxx.png)
+let _drawerPreviewFile = null;   // путь на диске (data/media/previews/xxx.png)
+
+async function generateDrawerPreview() {
+    const text = document.getElementById('post-text').value.trim();
+    if (!text) { showToast('Сначала введи текст поста', 'error'); return; }
+
+    const category = document.getElementById('drawer-preview-category').value;
+    const ratio = document.getElementById('drawer-preview-ratio').value;
+    const btn = document.getElementById('drawer-preview-btn');
+    const result = document.getElementById('drawer-preview-result');
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Генерирую...';
+    result.style.display = 'none';
+    _drawerPreviewPath = null;
+    _drawerPreviewFile = null;
+
+    try {
+        const showText = document.getElementById('drawer-show-text').checked;
+        const body = { text, category, format: category, aspect_ratio: ratio || null, show_text: showText };
+        const r = await fetch('/api/generate-preview-free', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        });
+        const data = await r.json();
+        if (data.ok && data.preview_url) {
+            _drawerPreviewPath = data.preview_url;
+            _drawerPreviewFile = data.file_path;
+            document.getElementById('drawer-preview-img').src = data.preview_url + '?t=' + Date.now();
+            result.style.display = 'block';
+            showToast('Превью готово!');
+        } else {
+            showToast('Ошибка: ' + (data.error || 'неизвестно'), 'error');
+        }
+    } catch(e) {
+        showToast('Ошибка сети', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🖼 Сгенерировать';
+    }
+}
+
+async function useDrawerPreview() {
+    // Скачиваем превью и подставляем в file input как медиа
+    if (!_drawerPreviewPath) return;
+    try {
+        const r = await fetch(_drawerPreviewPath);
+        const blob = await r.blob();
+        const filename = _drawerPreviewPath.split('/').pop();
+        const file = new File([blob], filename, { type: 'image/png' });
+
+        // Подставляем в file input через DataTransfer
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        const input = document.getElementById('post-media');
+        input.files = dt.files;
+
+        // Показываем превью в разделе фото
+        document.getElementById('file-btn-label').textContent = filename;
+        document.getElementById('media-img').src = _drawerPreviewPath;
+        document.getElementById('media-preview').style.display = 'block';
+
+        showToast('Превью установлено как фото поста!');
+    } catch(e) {
+        showToast('Не удалось прикрепить файл', 'error');
+    }
+}
+
+// ─── Генерация превью (Модал — редактирование поста) ─────────────────────────
+
+let _modalPreviewPath = null;    // URL для показа
+let _modalPreviewFile = null;    // путь на диске
+
+async function generateModalPreview() {
+    if (!_currentPost) return;
+    const text = document.getElementById('modal-text-edit').value.trim();
+    if (!text) { showToast('Текст поста пустой', 'error'); return; }
+
+    const category = document.getElementById('modal-preview-category').value;
+    const ratio = document.getElementById('modal-preview-ratio').value;
+    const btn = document.getElementById('modal-preview-btn');
+    const result = document.getElementById('modal-preview-result');
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Генерирую...';
+    result.style.display = 'none';
+    _modalPreviewPath = null;
+    _modalPreviewFile = null;
+
+    try {
+        const showText = document.getElementById('modal-show-text').checked;
+        const body = { text, category, format: category, aspect_ratio: ratio || null, show_text: showText };
+        const r = await fetch('/api/generate-preview-free', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        });
+        const data = await r.json();
+        if (data.ok && data.preview_url) {
+            _modalPreviewPath = data.preview_url;
+            _modalPreviewFile = data.file_path;
+            document.getElementById('modal-preview-img').src = data.preview_url + '?t=' + Date.now();
+            result.style.display = 'block';
+            showToast('Превью готово!');
+        } else {
+            showToast('Ошибка: ' + (data.error || 'неизвестно'), 'error');
+        }
+    } catch(e) {
+        showToast('Ошибка сети', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🖼 Сгенерировать';
+    }
+}
+
+async function attachModalPreview() {
+    // Сохраняем пост с превью как media_path через отдельный API
+    if (!_currentPost || !_modalPreviewPath) return;
+    const text = document.getElementById('modal-text-edit').value.trim();
+    const datetimeVal = document.getElementById('modal-datetime').value;
+    const scheduled_at = datetimeVal ? new Date(datetimeVal).toISOString() : null;
+
+    const btn = document.querySelector('#modal-preview-result .btn-ghost');
+
+    try {
+        const res = await api('PUT', `/api/curator/queue/${_currentPost.id}`, {
+            text,
+            scheduled_at,
+            media_path: _modalPreviewFile,   // путь на диске для БД
+        });
+        if (res.ok) {
+            showToast('Превью прикреплено к посту!');
+            // Показываем в шапке модала
+            document.getElementById('modal-img').src = _modalPreviewPath + '?t=' + Date.now();
+            document.getElementById('modal-media').style.display = 'block';
+            _currentPost.media_path = _modalPreviewFile;
+            loadMonth();
+        } else {
+            showToast(res.error || 'Ошибка', 'error');
+        }
+    } catch(e) {
+        showToast('Ошибка сети', 'error');
+    }
+}
+
+// ─── Тулбар форматирования ───────────────────────────────────────────────────
+
+document.querySelectorAll('.fmt-toolbar').forEach(toolbar => {
+    const targetId = toolbar.dataset.target;
+
+    toolbar.addEventListener('mousedown', e => {
+        // Не даём потерять фокус с textarea
+        e.preventDefault();
+    });
+
+    toolbar.addEventListener('click', e => {
+        const btn = e.target.closest('.fmt-btn');
+        if (!btn) return;
+
+        const ta = document.getElementById(targetId);
+        if (!ta) return;
+        ta.focus();
+
+        const start = ta.selectionStart;
+        const end   = ta.selectionEnd;
+        const sel   = ta.value.slice(start, end);
+        const action = btn.dataset.action;
+
+        if (action === 'link') {
+            // Гиперссылка — спрашиваем URL
+            const url = prompt('Введи URL:');
+            if (!url) return;
+            const linkText = sel || 'текст';
+            const insert = `[${linkText}](${url})`;
+            replaceSelection(ta, start, end, insert);
+            ta.selectionStart = ta.selectionEnd = start + insert.length;
+            return;
+        }
+
+        if (action === 'clear') {
+            // Убираем все маркеры форматирования из выделения
+            const cleaned = sel
+                .replace(/\*\*([\s\S]*?)\*\*/g, '$1')
+                .replace(/__([\s\S]*?)__/g, '$1')
+                .replace(/_([\s\S]*?)_/g, '$1')
+                .replace(/~~([\s\S]*?)~~/g, '$1')
+                .replace(/\|\|([\s\S]*?)\|\|/g, '$1')
+                .replace(/```\n?([\s\S]*?)\n?```/g, '$1')
+                .replace(/`([^`]*)`/g, '$1');
+            replaceSelection(ta, start, end, cleaned);
+            return;
+        }
+
+        // Обычный wrap
+        const wrapStart = (btn.dataset.wrap || '').replace(/\\n/g, '\n');
+        const wrapEnd   = (btn.dataset.wrapEnd || wrapStart).replace(/\\n/g, '\n');
+
+        // Если уже обёрнуто — снимаем
+        const before = ta.value.slice(start - wrapStart.length, start);
+        const after  = ta.value.slice(end, end + wrapEnd.length);
+        if (before === wrapStart && after === wrapEnd) {
+            // Снимаем обёртку
+            const newStart = start - wrapStart.length;
+            const newEnd   = end + wrapEnd.length;
+            replaceSelection(ta, newStart, newEnd, sel);
+            ta.selectionStart = newStart;
+            ta.selectionEnd   = newStart + sel.length;
+        } else {
+            // Добавляем обёртку
+            const insert = wrapStart + (sel || 'текст') + wrapEnd;
+            replaceSelection(ta, start, end, insert);
+            if (!sel) {
+                // Ставим курсор внутрь
+                ta.selectionStart = start + wrapStart.length;
+                ta.selectionEnd   = start + wrapStart.length + 'текст'.length;
+            } else {
+                ta.selectionStart = start;
+                ta.selectionEnd   = start + insert.length;
+            }
+        }
+    });
+});
+
+function replaceSelection(ta, start, end, replacement) {
+    const before = ta.value.slice(0, start);
+    const after  = ta.value.slice(end);
+    ta.value = before + replacement + after;
+    // Триггерим input для возможных слушателей
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+// ─── Утилиты ─────────────────────────────────────────────────────────────────
+
+function toLocalISOString(date) {
+    const pad = n => String(n).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function fmtDatetime(iso) {
+    if (!iso) return '—';
+    return new Date(iso).toLocaleString('ru-RU', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+function fmtTime(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleTimeString('ru-RU', { hour:'2-digit', minute:'2-digit' });
+}
+
+function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+init();
+</script>
+{% endblock %}

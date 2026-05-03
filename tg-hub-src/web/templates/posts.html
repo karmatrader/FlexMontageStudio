@@ -1,0 +1,389 @@
+{% extends "base.html" %}
+{% block title %}— Посты{% endblock %}
+
+{% block content %}
+<div class="page-title">📋 Посты Curator</div>
+<p class="page-desc">Все посты, собранные из каналов-источников. Ищи по тексту, фильтруй по каналу — выбирай лучшее и генерируй посты для своего канала.</p>
+
+<!-- Кнопка парсинга — десктоп (inline) -->
+<div class="parse-btn-desktop">
+    <button class="btn btn-primary" id="parse-btn" onclick="runParse()">▶ Запустить парсинг</button>
+</div>
+
+<!-- FAB — мобилка -->
+<button class="parse-fab" id="parse-btn-mob" onclick="runParse()" title="Запустить парсинг">▶</button>
+
+<div class="card" style="padding: 16px 24px;">
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+        <div class="form-group">
+            <label>Поиск по тексту</label>
+            <input type="text" id="search" placeholder="Ключевое слово..." style="width: 260px;" oninput="filterPosts()">
+        </div>
+        <div class="form-group">
+            <label>Канал</label>
+            <select id="channel-filter" onchange="filterPosts()" style="width: 200px;">
+                <option value="">Все каналы</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Сортировка</label>
+            <select id="sort" onchange="filterPosts()" style="width: 160px;">
+                <option value="date">По дате</option>
+                <option value="views">По просмотрам</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 1px; color: #555; font-size: 13px;">
+            Показано: <span id="shown-count">0</span> / <span id="total-count">0</span>
+        </div>
+    </div>
+</div>
+
+<div id="posts-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+
+<div style="text-align: center; margin-top: 16px; display: none;" id="load-more-wrap">
+    <button class="btn btn-ghost" onclick="loadMore()">Загрузить ещё</button>
+</div>
+
+<!-- Плавающая панель выбора -->
+<div id="selection-bar" style="display:none; position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+     background:#1a1a2e; border:1px solid #7c6fe0; border-radius:12px; padding:12px 20px;
+     display:none; align-items:center; gap:16px; box-shadow:0 4px 24px rgba(0,0,0,0.5); z-index:100;">
+    <span style="color:var(--text-secondary); font-size:14px;">Выбрано постов: <b id="selected-count">0</b></span>
+    <button class="btn btn-primary btn-sm" onclick="generateFromSelected()" id="gen-btn">✨ Сгенерировать пост</button>
+    <button onclick="clearSelection()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:18px; padding:0;">✕</button>
+</div>
+
+<!-- Модальное окно с черновиком -->
+<div id="draft-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:center; justify-content:center;">
+    <div style="background:var(--bg-hover); border:1px solid var(--border); border-radius:16px; padding:28px; width:min(680px,95vw); max-height:90vh; overflow-y:auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div style="font-size:16px; font-weight:600; color:var(--text-primary);">✨ Сгенерированный черновик</div>
+            <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:22px;">✕</button>
+        </div>
+        <textarea id="draft-text" rows="12" style="width:100%; background:var(--input-bg); border:1px solid var(--border);
+            border-radius:8px; padding:14px; color:var(--text-primary); font-size:14px; line-height:1.6;
+            resize:vertical; outline:none;"></textarea>
+        <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="addToQueue()">📬 Добавить в очередь</button>
+            <button class="btn btn-ghost" onclick="copyDraft()">📋 Скопировать</button>
+            <button class="btn btn-ghost" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.post-card { position: relative; }
+.post-checkbox {
+    position: absolute; top: 14px; left: 14px;
+    width: 18px; height: 18px; cursor: pointer;
+    accent-color: #7c6fe0;
+}
+.post-card.selected { border-color: #7c6fe0 !important; }
+
+/* Десктопная кнопка парсинга */
+.parse-btn-desktop { margin-bottom: 20px; }
+
+/* FAB — только мобилка */
+.parse-fab {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .parse-btn-desktop { display: none; }
+    .parse-fab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 80px; /* над bottom nav */
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+        z-index: 150;
+        transition: transform 0.15s, background 0.15s;
+    }
+    .parse-fab:active { transform: scale(0.92); background: var(--accent-hover); }
+    .parse-fab.loading {
+        font-size: 0; /* скрываем текст */
+        animation: none;
+    }
+    .parse-fab.loading::after {
+        content: '';
+        width: 22px;
+        height: 22px;
+        border: 3px solid rgba(255,255,255,0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.75s linear infinite;
+    }
+}
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+</style>
+<script>
+let allPosts = [];
+let filtered = [];
+let shown = 0;
+const PAGE = 30;
+let selectedIds = new Set();
+
+async function init() {
+    const data = await api('GET', '/api/posts?limit=200&offset=0');
+    allPosts = data.posts || [];
+    const total = data.total || 0;
+
+    if (total > 200) loadRest(total);
+
+    const channels = [...new Set(allPosts.map(p => p.channel))].sort();
+    const sel = document.getElementById('channel-filter');
+    channels.forEach(ch => {
+        const opt = document.createElement('option');
+        opt.value = ch; opt.textContent = ch;
+        sel.appendChild(opt);
+    });
+
+    document.getElementById('total-count').textContent = total;
+    filterPosts();
+}
+
+async function loadRest(total) {
+    let offset = 200;
+    while (offset < total) {
+        const data = await api('GET', `/api/posts?limit=200&offset=${offset}`);
+        const batch = data.posts || [];
+        if (!batch.length) break;
+        allPosts = allPosts.concat(batch);
+        offset += batch.length;
+        const sel = document.getElementById('channel-filter');
+        const existing = new Set([...sel.options].map(o => o.value));
+        batch.forEach(p => {
+            if (!existing.has(p.channel)) {
+                const opt = document.createElement('option');
+                opt.value = p.channel; opt.textContent = p.channel;
+                sel.appendChild(opt); existing.add(p.channel);
+            }
+        });
+    }
+}
+
+function filterPosts() {
+    const q = document.getElementById('search').value.toLowerCase().trim();
+    const ch = document.getElementById('channel-filter').value;
+    const sort = document.getElementById('sort').value;
+
+    filtered = allPosts.filter(p => {
+        if (ch && p.channel !== ch) return false;
+        if (q && !p.text.toLowerCase().includes(q)) return false;
+        return true;
+    });
+
+    filtered.sort((a, b) => sort === 'views'
+        ? (b.views || 0) - (a.views || 0)
+        : new Date(b.date) - new Date(a.date)
+    );
+
+    shown = 0;
+    document.getElementById('posts-container').innerHTML = '';
+    renderMore();
+}
+
+function renderMore() {
+    const container = document.getElementById('posts-container');
+    const chunk = filtered.slice(shown, shown + PAGE);
+
+    if (shown === 0 && chunk.length === 0) {
+        container.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:40px;">Ничего не найдено</div>';
+        document.getElementById('shown-count').textContent = 0;
+        document.getElementById('load-more-wrap').style.display = 'none';
+        return;
+    }
+
+    chunk.forEach(post => {
+        const date = new Date(post.date).toLocaleDateString('ru-RU', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        });
+        const views = post.views ? `👁 ${post.views.toLocaleString('ru-RU')}` : '';
+        const isLong = post.text.length > 400;
+        const isSelected = selectedIds.has(post.id);
+
+        const card = document.createElement('div');
+        card.className = 'card post-card' + (isSelected ? ' selected' : '');
+        card.style.cssText = 'padding: 20px; padding-left: 44px; transition: border-color 0.15s; min-width:0; overflow:hidden;';
+        card.dataset.id = post.id;
+
+        // Чекбокс
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.className = 'post-checkbox';
+        cb.checked = isSelected;
+        cb.addEventListener('change', () => toggleSelect(post.id, cb.checked, card));
+
+        // Шапка
+        const header = document.createElement('div');
+        header.style.cssText = 'display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; gap:12px;';
+        header.innerHTML = `
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <span style="font-family:monospace; font-size:12px; color:var(--accent); background:rgba(124,111,224,0.12); padding:2px 8px; border-radius:4px; border:1px solid rgba(124,111,224,0.3);">${post.channel}</span>
+                <span style="font-size:12px; color:var(--text-muted);">${date}</span>
+                ${views ? `<span style="font-size:12px; color:var(--text-muted);">${views}</span>` : ''}
+            </div>
+            <a href="${post.url}" target="_blank" style="color:var(--text-muted); font-size:12px; text-decoration:none; white-space:nowrap; flex-shrink:0;">↗ TG</a>
+        `;
+
+        const textEl = document.createElement('div');
+        textEl.style.cssText = 'font-size:14px; line-height:1.6; color:var(--text-secondary); white-space:pre-wrap; word-break:break-word; overflow-wrap:anywhere; min-width:0;';
+        textEl.textContent = isLong ? post.text.slice(0, 400) + '...' : post.text;
+
+        card.appendChild(cb);
+        card.appendChild(header);
+        card.appendChild(textEl);
+
+        if (isLong) {
+            const btn = document.createElement('button');
+            btn.style.cssText = 'background:none; border:none; color:#7c6fe0; cursor:pointer; font-size:13px; margin-top:8px; padding:0; display:block;';
+            btn.textContent = 'Показать полностью ↓';
+            btn.addEventListener('click', () => {
+                if (btn.textContent.startsWith('Показать')) {
+                    textEl.textContent = post.text;
+                    btn.textContent = 'Свернуть ↑';
+                } else {
+                    textEl.textContent = post.text.slice(0, 400) + '...';
+                    btn.textContent = 'Показать полностью ↓';
+                }
+            });
+            card.appendChild(btn);
+        }
+
+        card.addEventListener('mouseenter', () => { if (!card.classList.contains('selected')) card.style.borderColor = '#3a3a4a'; });
+        card.addEventListener('mouseleave', () => { if (!card.classList.contains('selected')) card.style.borderColor = '#2a2a3a'; });
+        container.appendChild(card);
+    });
+
+    shown += chunk.length;
+    document.getElementById('shown-count').textContent = shown;
+    document.getElementById('load-more-wrap').style.display = shown < filtered.length ? 'block' : 'none';
+}
+
+function toggleSelect(id, checked, card) {
+    if (checked) {
+        if (selectedIds.size >= 5) {
+            showToast('Максимум 5 постов', 'error');
+            card.querySelector('.post-checkbox').checked = false;
+            return;
+        }
+        selectedIds.add(id);
+        card.classList.add('selected');
+        card.style.borderColor = '#7c6fe0';
+    } else {
+        selectedIds.delete(id);
+        card.classList.remove('selected');
+        card.style.borderColor = '#2a2a3a';
+    }
+    updateSelectionBar();
+}
+
+function updateSelectionBar() {
+    const bar = document.getElementById('selection-bar');
+    const cnt = document.getElementById('selected-count');
+    cnt.textContent = selectedIds.size;
+    bar.style.display = selectedIds.size > 0 ? 'flex' : 'none';
+}
+
+function clearSelection() {
+    selectedIds.clear();
+    document.querySelectorAll('.post-card').forEach(c => {
+        c.classList.remove('selected');
+        c.style.borderColor = '#2a2a3a';
+        const cb = c.querySelector('.post-checkbox');
+        if (cb) cb.checked = false;
+    });
+    updateSelectionBar();
+}
+
+async function generateFromSelected() {
+    if (!selectedIds.size) return;
+    const btn = document.getElementById('gen-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Генерирую...';
+    const res = await api('POST', '/api/curator/generate-from-posts', { post_ids: [...selectedIds] });
+    btn.disabled = false;
+    btn.textContent = '✨ Сгенерировать пост';
+    if (!res.ok) { showToast(res.error || 'Ошибка генерации', 'error'); return; }
+    document.getElementById('draft-text').value = res.text;
+    document.getElementById('draft-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('draft-modal').style.display = 'none';
+}
+
+function copyDraft() {
+    const text = document.getElementById('draft-text').value;
+    navigator.clipboard.writeText(text).then(() => showToast('Скопировано!'));
+}
+
+async function addToQueue() {
+    const text = document.getElementById('draft-text').value.trim();
+    if (!text) return;
+    // Используем get_next_scheduled_at через API очереди — просто добавляем как pending
+    const now = new Date();
+    now.setHours(now.getHours() + 4);
+    const iso = now.toISOString();
+    const res = await api('PUT', '/api/curator/queue/0', { scheduled_at: iso });
+    // Fallback: добавляем напрямую через planner API
+    const form = new FormData();
+    form.append('text', text);
+    form.append('scheduled_at', iso);
+    const r = await fetch('/api/planner/posts', { method: 'POST', body: form });
+    const data = await r.json();
+    if (data.ok) {
+        showToast('Добавлено в очередь!');
+        closeModal();
+        clearSelection();
+    } else {
+        showToast(data.error || 'Ошибка', 'error');
+    }
+}
+
+function loadMore() { renderMore(); }
+
+async function runParse() {
+    const btn = document.getElementById('parse-btn');
+    const fab = document.getElementById('parse-btn-mob');
+    const setLoading = (on) => {
+        if (btn) { btn.disabled = on; btn.textContent = on ? '⏳ Парсинг...' : '▶ Запустить парсинг'; }
+        if (fab) { fab.disabled = on; fab.textContent = on ? '⟳' : '▶'; fab.classList.toggle('loading', on); }
+    };
+    setLoading(true);
+    const r = await api('POST', '/api/curator/parse');
+    if (!r.ok) { showToast(r.error || 'Ошибка', 'error'); setLoading(false); return; }
+    showToast('Парсинг запущен', 'success');
+    const poll = setInterval(async () => {
+        const s = await api('GET', '/api/curator/parse/status');
+        if (!s.running) {
+            clearInterval(poll);
+            setLoading(false);
+            if (s.error) { showToast('Ошибка: ' + s.error, 'error'); return; }
+            showToast('Парсинг завершён', 'success');
+            await init();
+        }
+    }, 3000);
+}
+
+// Закрытие модала по клику на фон
+document.getElementById('draft-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+init();
+</script>
+{% endblock %}

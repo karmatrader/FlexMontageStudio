@@ -1,0 +1,500 @@
+{% extends "base.html" %}
+{% block title %}— Дашборд{% endblock %}
+
+{% block content %}
+<div class="page-title">Дашборд</div>
+<p class="page-desc">Общая картина твоей автоматизации — расписание дайджестов, настройки куратора и анализ контент-микса канала.</p>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-value">{{ chats_count }}</div>
+        <div class="stat-label" style="display:flex;align-items:center;gap:4px;">Чатов в Digest <span class="tooltip-btn" data-tip="Количество Telegram-чатов и топиков, из которых Digest собирает сообщения для дайджеста.">?</span></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ sources_count }}</div>
+        <div class="stat-label" style="display:flex;align-items:center;gap:4px;">Каналов в Curator <span class="tooltip-btn" data-tip="Количество Telegram-каналов, которые Curator мониторит и берёт посты для переработки.">?</span></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ posts_count }}</div>
+        <div class="stat-label" style="display:flex;align-items:center;gap:4px;">Постов в базе <span class="tooltip-btn" data-tip="Всего постов, собранных из каналов-источников. Чем больше — тем точнее анализ и лучше качество генерации.">?</span></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" id="model-badge" style="font-size:14px; padding-top:8px;">{{ config.anthropic.model }}</div>
+        <div class="stat-label" style="display:flex;align-items:center;gap:4px;">Модель Claude <span class="tooltip-btn" data-tip="Модель Claude, которая используется для генерации постов и дайджестов. Opus — умнее, Haiku — быстрее и дешевле.">?</span></div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" id="dash-top-grid">
+
+    <div class="card">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+            <div class="card-title" style="margin-bottom:0;">📰 Digest — расписание</div>
+            <span class="tooltip-btn" data-tip="Digest — автоматический дайджест: бот собирает сообщения из чатов и раз в день/неделю/месяц отправляет тебе краткое резюме через Claude.">?</span>
+        </div>
+        {% set s = config.digest.schedule %}
+        <table class="table">
+            <tr>
+                <td>
+                    <span>Ежедневный</span>
+                    <span class="tooltip-btn" data-tip="Каждый день в указанное время бот собирает посты за последние 24 часа и присылает краткое резюме.">?</span>
+                </td>
+                <td>{{ s.daily.time }} МСК</td>
+                <td><span class="badge {{ 'badge-high' if s.daily.enabled else 'badge-low' }}">{{ 'Вкл' if s.daily.enabled else 'Откл' }}</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Еженедельный</span>
+                    <span class="tooltip-btn" data-tip="Раз в неделю — более полный дайджест с анализом трендов за 7 дней.">?</span>
+                </td>
+                <td>{{ s.weekly.weekday }} {{ s.weekly.time }} МСК</td>
+                <td><span class="badge {{ 'badge-high' if s.weekly.enabled else 'badge-low' }}">{{ 'Вкл' if s.weekly.enabled else 'Откл' }}</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Ежемесячный</span>
+                    <span class="tooltip-btn" data-tip="Раз в месяц — стратегический обзор: что было важно, какие темы доминировали, что стоит взять в работу.">?</span>
+                </td>
+                <td>{{ s.monthly.day }}-е числа {{ s.monthly.time }} МСК</td>
+                <td><span class="badge {{ 'badge-high' if s.monthly.enabled else 'badge-low' }}">{{ 'Вкл' if s.monthly.enabled else 'Откл' }}</span></td>
+            </tr>
+        </table>
+        <div style="margin-top: 16px;">
+            <a href="/digest" class="btn btn-ghost btn-sm">Управление чатами →</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+            <div class="card-title" style="margin-bottom:0;">✍️ Curator — настройки</div>
+            <span class="tooltip-btn" data-tip="Curator — автоматический контент-менеджер: парсит каналы-источники, отбирает лучшие посты, переписывает их в твоём стиле и публикует в твой канал по расписанию.">?</span>
+        </div>
+        <table class="table">
+            <tr>
+                <td>
+                    <span>Канал публикации</span>
+                    <span class="tooltip-btn" data-tip="Telegram-канал, в который Curator будет публиковать готовые посты из очереди.">?</span>
+                </td>
+                <td><code style="color:#7c6fe0">{{ config.curator.target_channel }}</code></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Автозапуск</span>
+                    <span class="tooltip-btn" data-tip="Время (МСК), в которое бот автоматически парсит каналы-источники и генерирует новые посты для очереди.">?</span>
+                </td>
+                <td>{{ config.curator.schedule.hours | join(', ') }}:00 МСК</td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Постов с канала</span>
+                    <span class="tooltip-btn" data-tip="Сколько последних постов берётся с каждого канала-источника за один парсинг. Больше — точнее отбор, но медленнее.">?</span>
+                </td>
+                <td>{{ config.curator.parsing.posts_per_channel }}</td>
+            </tr>
+        </table>
+        <div style="margin-top: 16px;">
+            <a href="/curator" class="btn btn-ghost btn-sm">Управление источниками →</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="card" id="content-mix-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+            <div class="card-title" style="margin-bottom:0;">📊 Контент-микс моего канала</div>
+            <span class="tooltip-btn" data-tip="Показывает распределение твоих постов по категориям и сравнивает с целевым миксом. Помогает понять, каких типов контента не хватает для роста канала.">?</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <!-- Переключатели вида -->
+            <div class="chart-switcher">
+                <button class="chart-type-btn active" onclick="setChartType('doughnut')" title="Пончик">◎</button>
+                <button class="chart-type-btn" onclick="setChartType('pie')" title="Круговая">●</button>
+                <button class="chart-type-btn" onclick="setChartType('bar')" title="Столбцы">▦</button>
+            </div>
+            <span id="classify-status" style="font-size:13px; color:var(--text-muted);"></span>
+            <label class="btn btn-ghost btn-sm" style="cursor:pointer;">
+                📥 Загрузить JSON
+                <input type="file" id="my-json-file" accept=".json" style="display:none;" onchange="importMyJson(this)">
+            </label>
+            <button class="btn btn-ghost btn-sm" onclick="syncMyChannel()" id="sync-btn">☁️ Синк с TG</button>
+            <button class="btn btn-ghost btn-sm" onclick="classifyMyPosts()" id="classify-btn">🔄 Классифицировать</button>
+        </div>
+    </div>
+
+    <div id="mix-grid" style="display:grid; grid-template-columns: 240px 1fr; gap:32px; align-items:start;">
+
+        <!-- Donut диаграмма -->
+        <div>
+            <canvas id="mixChart" width="220" height="220" style="display:none;"></canvas>
+            <div id="mix-empty" style="text-align:center; color:var(--text-muted); font-size:13px; padding:40px 0; line-height:1.8;">
+                Загрузи JSON из Telegram Desktop<br>или нажми "Синк с TG"<br><span style="color:var(--text-muted); font-size:12px;">чтобы увидеть диаграмму</span>
+            </div>
+        </div>
+
+        <!-- Правая колонка: прогресс-бары + рекомендация -->
+        <div>
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;">
+                <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Реальный vs Целевой микс</div>
+                <span class="tooltip-btn" data-tip="Цветная полоска — твой реальный процент. Цель — рекомендуемый баланс для роста. 🟢 в норме, 🟡 небольшое отклонение, 🔴 нужна коррекция.">?</span>
+            </div>
+            <div id="mix-bars" style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;"></div>
+
+            <!-- Рекомендация -->
+            <div id="recommendation-block" style="display:none; background:var(--bg-hover); border:1px solid var(--border); border-radius:10px; padding:16px;">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+                    <div style="font-size:12px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">💡 Следующий пост</div>
+                    <span class="tooltip-btn" data-tip="Категория, которой не хватает больше всего относительно целевого микса. Напиши пост именно этой категории — и баланс улучшится.">?</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                    <span id="rec-label" style="font-size:16px; font-weight:600; color:var(--text-primary);"></span>
+                    <span id="rec-deficit" style="font-size:12px; color:#e06060;"></span>
+                    <button class="btn btn-primary btn-sm" onclick="generateByCategory()" id="gen-cat-btn">✍️ Сгенерировать пост</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">Быстрые ссылки</div>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="/digest" class="btn btn-primary">📰 Управление чатами Digest</a>
+        <a href="/curator" class="btn btn-primary">✍️ Источники Curator</a>
+        <a href="/settings" class="btn btn-ghost">⚙️ Настройки</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+/* ── Chart switcher ── */
+.chart-switcher {
+    display: flex;
+    gap: 2px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+}
+.chart-type-btn {
+    background: none;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1;
+}
+.chart-type-btn:hover { color: var(--text-secondary); }
+.chart-type-btn.active { background: var(--accent); color: #fff; }
+
+@media (max-width: 768px) {
+    #dash-top-grid { grid-template-columns: 1fr !important; }
+    #mix-grid { grid-template-columns: 1fr !important; }
+    #mixChart { max-width: 200px; margin: 0 auto; }
+}
+</style>
+
+<script>
+const CATEGORIES = {
+    expert:       { label: '🎓 Экспертный',       color: '#7c6fe0', target: 40 },
+    personal:     { label: '🎭 Личный',            color: '#60a0e0', target: 25 },
+    entertaining: { label: '😄 Развлекательный',   color: '#f0c040', target: 15 },
+    motivational: { label: '💡 Мотивационный',     color: '#60c060', target: 10 },
+    promotional:  { label: '📢 Продающий',         color: '#e06060', target: 7  },
+    engaging:     { label: '🔥 Вовлекающий',       color: '#c060c0', target: 3  },
+};
+
+let mixChart = null;
+let currentRecommendation = null;
+let currentChartType = 'doughnut';
+let lastCounts = null;
+let lastKeys = null;
+let lastTotalClassified = 0;
+
+function getChartBorderColor() {
+    return getComputedStyle(document.documentElement).getPropertyValue('--bg-card').trim() || '#17171f';
+}
+
+function setChartType(type) {
+    currentChartType = type;
+    document.querySelectorAll('.chart-type-btn').forEach(b => b.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    if (lastCounts) rebuildChart();
+}
+
+function rebuildChart() {
+    const canvas = document.getElementById('mixChart');
+    const borderColor = getChartBorderColor();
+    if (mixChart) mixChart.destroy();
+
+    const isBar = currentChartType === 'bar';
+    mixChart = new Chart(canvas, {
+        type: isBar ? 'bar' : currentChartType,
+        data: {
+            labels: lastKeys.map(k => CATEGORIES[k].label),
+            datasets: [{
+                data: lastCounts,
+                backgroundColor: lastKeys.map(k => CATEGORIES[k].color + (isBar ? 'cc' : '')),
+                borderColor: isBar ? lastKeys.map(k => CATEGORIES[k].color) : borderColor,
+                borderWidth: isBar ? 2 : 3,
+                hoverOffset: isBar ? 0 : 6,
+                borderRadius: isBar ? 6 : 0,
+            }]
+        },
+        options: {
+            cutout: currentChartType === 'doughnut' ? '65%' : 0,
+            plugins: {
+                legend: { display: isBar },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => {
+                            const pct = lastTotalClassified ? Math.round(ctx.parsed / lastTotalClassified * 100) : 0;
+                            return ` ${ctx.parsed} постов (${pct}%)`;
+                        }
+                    }
+                }
+            },
+            scales: isBar ? {
+                y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#666' } },
+                x: { grid: { display: false }, ticks: { color: '#666', maxRotation: 30 } }
+            } : {},
+            responsive: true,
+            maintainAspectRatio: true,
+        }
+    });
+}
+
+async function loadStats() {
+    const data = await fetch('/api/my-posts/stats').then(r => r.json());
+    renderMix(data);
+}
+
+function renderMix(data) {
+    const stats = data.stats || {};
+    const classified = data.classified || 0;
+    const total = data.total || 0;
+    const rec = data.recommendation || null;
+
+    document.getElementById('classify-status').textContent =
+        total ? `${classified} классифицировано из ${total}` : '';
+
+    const keys = Object.keys(CATEGORIES);
+    const counts = keys.map(k => stats[k] || 0);
+    const totalClassified = counts.reduce((a, b) => a + b, 0);
+
+    // Chart
+    const canvas = document.getElementById('mixChart');
+    if (totalClassified === 0) {
+        canvas.style.display = 'none';
+        document.getElementById('mix-empty').style.display = 'block';
+    } else {
+        canvas.style.display = 'block';
+        document.getElementById('mix-empty').style.display = 'none';
+        lastKeys = keys;
+        lastCounts = counts;
+        lastTotalClassified = totalClassified;
+        rebuildChart();
+    }
+
+    // Прогресс-бары
+    const barsEl = document.getElementById('mix-bars');
+    if (totalClassified === 0) {
+        barsEl.innerHTML = '<div style="color:var(--text-muted); font-size:13px;">Нет классифицированных постов</div>';
+    } else {
+        barsEl.innerHTML = keys.map(k => {
+            const cat = CATEGORIES[k];
+            const count = stats[k] || 0;
+            const real = totalClassified ? Math.round(count / totalClassified * 100) : 0;
+            const diff = Math.abs(real - cat.target);
+            const indicator = diff <= 5 ? '🟢' : diff <= 15 ? '🟡' : '🔴';
+            return `
+            <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                    <span style="font-size:13px; color:var(--text-secondary);">${cat.label}</span>
+                    <span style="font-size:12px; color:var(--text-muted);">${indicator} ${real}% <span style="color:var(--text-muted);">/ цель ${cat.target}%</span></span>
+                </div>
+                <div style="background:var(--bg-hover); border-radius:4px; height:7px; overflow:hidden;">
+                    <div style="width:${Math.min(real,100)}%; background:${cat.color}; height:100%; border-radius:4px; transition:width 0.6s;"></div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    // Рекомендация
+    if (rec && totalClassified > 0) {
+        currentRecommendation = rec.category;
+        document.getElementById('rec-label').textContent = rec.label;
+        document.getElementById('rec-deficit').textContent =
+            rec.deficit_pct > 0 ? `-${rec.deficit_pct}% от цели` : 'в норме';
+        document.getElementById('recommendation-block').style.display = 'block';
+    } else {
+        document.getElementById('recommendation-block').style.display = 'none';
+    }
+}
+
+async function importMyJson(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const status = document.getElementById('classify-status');
+    status.textContent = 'Импортирую...';
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+        const res = await fetch('/api/my-posts/import-json', { method: 'POST', body: formData }).then(r => r.json());
+        if (res.ok) {
+            status.textContent = `Импортировано ${res.imported} постов`;
+            showToast(`Импортировано ${res.imported} постов!`);
+            loadStats();
+        } else {
+            showToast(res.error || 'Ошибка импорта', 'error');
+            status.textContent = '';
+        }
+    } catch(e) {
+        showToast('Ошибка', 'error');
+        status.textContent = '';
+    }
+    input.value = '';
+}
+
+async function syncMyChannel() {
+    const btn = document.getElementById('sync-btn');
+    const status = document.getElementById('classify-status');
+    btn.disabled = true;
+    btn.textContent = '⏳ Синхронизирую...';
+    status.textContent = 'Читаю канал через Telethon...';
+    try {
+        const res = await fetch('/api/my-posts/sync', { method: 'POST' }).then(r => r.json());
+        if (res.ok) {
+            status.textContent = `Синк: ${res.new} новых постов (всего ${res.synced})`;
+            showToast(`Синк завершён: ${res.new} новых постов`);
+            loadStats();
+        } else {
+            showToast(res.error || 'Ошибка синка', 'error');
+            status.textContent = '';
+        }
+    } catch(e) {
+        showToast('Ошибка', 'error');
+        status.textContent = '';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '☁️ Синк с TG';
+    }
+}
+
+async function classifyMyPosts() {
+    const btn = document.getElementById('classify-btn');
+    const status = document.getElementById('classify-status');
+    btn.disabled = true;
+    btn.textContent = '⏳ Классифицирую...';
+    status.textContent = 'Claude анализирует посты...';
+    try {
+        const res = await fetch('/api/my-posts/classify', { method: 'POST' }).then(r => r.json());
+        if (res.ok) {
+            status.textContent = res.classified > 0
+                ? `Классифицировано ${res.classified} постов`
+                : (res.message || 'Все уже классифицированы');
+            showToast(res.classified > 0 ? `Классифицировано ${res.classified} постов!` : 'Все посты уже классифицированы');
+            loadStats();
+        } else {
+            showToast(res.error || 'Ошибка', 'error');
+            status.textContent = '';
+        }
+    } catch(e) {
+        showToast('Ошибка', 'error');
+        status.textContent = '';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🔄 Классифицировать';
+    }
+}
+
+async function generateByCategory() {
+    if (!currentRecommendation) return;
+    const btn = document.getElementById('gen-cat-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Генерирую...';
+    try {
+        const res = await fetch('/api/my-posts/generate-by-category', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ category: currentRecommendation }),
+        }).then(r => r.json());
+        if (res.ok) {
+            showDraftModalSimple(res.text);
+        } else {
+            showToast(res.error || 'Ошибка генерации', 'error');
+        }
+    } catch(e) {
+        showToast('Ошибка', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '✍️ Сгенерировать пост';
+    }
+}
+
+function showDraftModalSimple(text) {
+    const existing = document.getElementById('draft-modal-simple');
+    if (existing) existing.remove();
+    const modal = document.createElement('div');
+    modal.id = 'draft-modal-simple';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;';
+    modal.innerHTML = `
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:640px;width:100%;display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="font-size:16px;font-weight:600;color:var(--text-primary);">✍️ Черновик поста</div>
+                <button onclick="document.getElementById('draft-modal-simple').remove()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;">✕</button>
+            </div>
+            <textarea id="draft-simple-text" style="min-height:260px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text-primary);font-size:14px;resize:vertical;line-height:1.6;">${text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</textarea>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                <button onclick="showSchedulePicker()" class="btn btn-primary">📬 В очередь</button>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('draft-simple-text').value).then(()=>showToast('Скопировано!'))" class="btn btn-ghost">📋 Скопировать</button>
+                <button onclick="document.getElementById('draft-modal-simple').remove()" class="btn btn-ghost">Закрыть</button>
+            </div>
+            <div id="schedule-picker" style="display:none; padding:12px; background:var(--input-bg); border:1px solid var(--border); border-radius:8px;">
+                <div style="font-size:13px; color:var(--text-secondary); margin-bottom:8px;">Время публикации:</div>
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <input type="datetime-local" id="draft-scheduled-at" style="padding:6px 10px; background:var(--bg-hover); border:1px solid var(--border); border-radius:6px; color:var(--text-primary); font-size:13px;">
+                    <button onclick="addDraftSimpleToQueue()" class="btn btn-primary btn-sm">✅ Подтвердить</button>
+                    <button onclick="document.getElementById('schedule-picker').style.display='none'" class="btn btn-ghost btn-sm">Отмена</button>
+                </div>
+            </div>
+        </div>`;
+    document.body.appendChild(modal);
+    // Устанавливаем время по умолчанию: ближайший час
+    const dt = new Date(Math.ceil(Date.now() / 3600000) * 3600000);
+    const local = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+    document.getElementById('draft-scheduled-at').value = local;
+}
+
+function showSchedulePicker() {
+    const picker = document.getElementById('schedule-picker');
+    picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
+}
+
+async function addDraftSimpleToQueue() {
+    const text = document.getElementById('draft-simple-text').value.trim();
+    if (!text) return;
+    const dtInput = document.getElementById('draft-scheduled-at');
+    const scheduled_at = dtInput && dtInput.value
+        ? new Date(dtInput.value).toISOString()
+        : new Date(Math.ceil(Date.now() / 3600000) * 3600000).toISOString();
+    const res = await fetch('/api/curator/queue', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({text, scheduled_at}),
+    }).then(r => r.json());
+    if (res.ok) {
+        showToast('Добавлено в очередь!');
+        document.getElementById('draft-modal-simple').remove();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+loadStats();
+</script>
+{% endblock %}

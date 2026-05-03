@@ -1,0 +1,916 @@
+{% extends "base.html" %}
+{% block title %}— Дайджесты{% endblock %}
+
+{% block content %}
+<div class="page-title">📰 Дайджесты</div>
+<p class="page-desc">Все сгенерированные дайджесты и посты из них — ежедневные, еженедельные и ежемесячные.</p>
+
+<!-- ВКЛАДКИ -->
+<div style="display:flex; gap:4px; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:0;">
+    <button class="tab-btn active" id="tab-digests" onclick="switchTab('digests')">📰 Дайджесты</button>
+    <button class="tab-btn" id="tab-posts" onclick="switchTab('posts')">✍️ Все посты <span id="tab-posts-count" style="font-size:11px; background:var(--bg-hover); padding:1px 6px; border-radius:8px; margin-left:4px;">...</span></button>
+</div>
+
+<!-- СПИСОК ДАЙДЖЕСТОВ -->
+<div id="view-list">
+    <div class="card" style="padding: 16px 24px;">
+        <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap; justify-content:space-between;">
+            <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
+                <div class="form-group">
+                    <label>Тип</label>
+                    <select id="type-filter" onchange="filterDigests()" style="width:160px;">
+                        <option value="">Все</option>
+                        <option value="daily">Ежедневный</option>
+                        <option value="weekly">Еженедельный</option>
+                        <option value="monthly">Ежемесячный</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:1px; color:var(--text-muted); font-size:13px;">
+                    Найдено: <span id="shown-count">0</span>
+                </div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
+                <button class="btn btn-primary btn-sm" onclick="runDigest('daily')">▶ Ежедневный</button>
+                <button class="btn btn-primary btn-sm" onclick="runDigest('weekly')">▶ Еженедельный</button>
+                <button class="btn btn-primary btn-sm" onclick="runDigest('monthly')">▶ Ежемесячный</button>
+            </div>
+        </div>
+        <div id="run-status" style="display:none; margin-top:12px; font-size:13px; color:#a090f0;">
+            ⏳ Дайджест собирается... Это займёт несколько минут.
+        </div>
+    </div>
+
+    <div id="digests-list" style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+        <div style="text-align:center; color:var(--text-muted); padding:40px;">Загрузка...</div>
+    </div>
+</div>
+
+<!-- ДЕТАЛЬНЫЙ ВИД ДАЙДЖЕСТА -->
+<div id="view-detail" style="display:none;">
+    <div style="margin-bottom:16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <button class="btn btn-ghost" onclick="showList()">← Назад</button>
+        <div id="detail-meta" style="font-size:13px; color:var(--text-muted);"></div>
+        <button class="btn btn-primary btn-sm" id="btn-extract" onclick="extractThemes()" style="margin-left:auto;">
+            ✍️ Сгенерировать посты
+        </button>
+    </div>
+
+    <!-- Блок тем и генерации -->
+    <div id="themes-block" style="display:none; margin-bottom:20px;">
+        <div class="card" style="padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+                <div style="font-size:15px; font-weight:600; color:var(--text-primary);">🔥 Горячие темы из дайджеста</div>
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <span style="font-size:12px; color:var(--text-muted);">Выбрано: <b id="selected-themes-count">0</b></span>
+                    <button class="btn btn-primary btn-sm" id="btn-gen-selected" onclick="generateSelected()" disabled>
+                        ⚡ Генерировать выбранные
+                    </button>
+                </div>
+            </div>
+
+            <!-- Фильтры -->
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+                <button class="filter-btn active" data-heat="all" onclick="filterThemes('all', this)">Все</button>
+                <button class="filter-btn" data-heat="hot" onclick="filterThemes('hot', this)">🔴 Горячие</button>
+                <button class="filter-btn" data-heat="warm" onclick="filterThemes('warm', this)">🟡 Тёплые</button>
+                <button class="filter-btn" data-heat="cold" onclick="filterThemes('cold', this)">⚪ Холодные</button>
+            </div>
+
+            <div id="themes-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+    </div>
+
+    <!-- Сгенерированные посты -->
+    <div id="gen-posts-block" style="display:none; margin-bottom:20px;">
+        <div style="font-size:15px; font-weight:600; color:var(--text-primary); margin-bottom:12px;">✅ Сгенерированные посты</div>
+        <div id="gen-posts-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+    </div>
+
+    <!-- Сводки чатов -->
+    <div id="detail-content"></div>
+</div>
+
+<!-- ВСЕ ПОСТЫ -->
+<div id="view-all-posts" style="display:none;">
+    <div class="card" style="padding:16px 20px; margin-bottom:16px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <input type="text" id="posts-search" placeholder="🔍 Поиск по тексту или теме..."
+                oninput="filterAllPosts()"
+                style="flex:1; min-width:200px; background:var(--input-bg); border:1px solid var(--border);
+                       border-radius:8px; padding:8px 12px; color:var(--text-primary); font-size:13px; outline:none;">
+            <select id="posts-status-filter" onchange="filterAllPosts()"
+                style="background:var(--input-bg); border:1px solid var(--border); border-radius:8px;
+                       padding:8px 12px; color:var(--text-primary); font-size:13px;">
+                <option value="">Все статусы</option>
+                <option value="draft">📝 Черновики</option>
+                <option value="queued">✅ В очереди</option>
+            </select>
+            <select id="posts-type-filter" onchange="filterAllPosts()"
+                style="background:var(--input-bg); border:1px solid var(--border); border-radius:8px;
+                       padding:8px 12px; color:var(--text-primary); font-size:13px;">
+                <option value="">Все дайджесты</option>
+                <option value="daily">Ежедневные</option>
+                <option value="weekly">Еженедельные</option>
+                <option value="monthly">Ежемесячные</option>
+            </select>
+        </div>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:10px;">
+            Показано: <span id="posts-shown-count">0</span> из <span id="posts-total-count">0</span>
+        </div>
+    </div>
+    <div id="all-posts-list" style="display:flex; flex-direction:column; gap:10px;">
+        <div style="text-align:center; color:var(--text-muted); padding:40px;">Загрузка...</div>
+    </div>
+</div>
+
+<!-- МОДАЛ ГЕНЕРАЦИИ ОДНОГО ПОСТА -->
+<div id="gen-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:flex-start; justify-content:center; padding:20px; overflow-y:auto;">
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:24px; width:min(640px,100%); margin:auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div style="font-size:16px; font-weight:600;">✍️ Генерация поста</div>
+            <button onclick="closeGenModal()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:22px;">✕</button>
+        </div>
+
+        <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">Тема</div>
+        <div id="modal-theme" style="font-size:14px; font-weight:600; color:var(--text-primary); margin-bottom:16px;"></div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+            <div class="form-group">
+                <label>Формат</label>
+                <select id="modal-format">
+                    <option value="report">📡 Репортаж</option>
+                    <option value="opinion">💬 Мнение</option>
+                    <option value="minto">🧱 Минто</option>
+                    <option value="story">📖 История</option>
+                    <option value="trend">📈 Тренд</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Категория</label>
+                <select id="modal-category">
+                    <option value="expert">🎓 Экспертный</option>
+                    <option value="personal">🎭 Личный</option>
+                    <option value="entertaining">😄 Развлекательный</option>
+                    <option value="motivational">💡 Мотивационный</option>
+                    <option value="promotional">📢 Продающий</option>
+                    <option value="engaging">🔥 Вовлекающий</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:16px;">
+            <label>Твоё личное мнение (необязательно)</label>
+            <textarea id="modal-note" rows="2" placeholder="1-2 предложения от себя — Claude органично вплетёт в пост..."
+                style="width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px;
+                       padding:10px 12px; color:var(--text-primary); font-size:14px; resize:vertical; outline:none; font-family:inherit;"></textarea>
+        </div>
+
+        <button class="btn btn-primary" id="btn-do-generate" onclick="doGenerate()" style="width:100%;">
+            ⚡ Сгенерировать
+        </button>
+    </div>
+</div>
+
+<!-- МОДАЛ ПРОСМОТРА/РЕДАКТИРОВАНИЯ СГЕНЕРИРОВАННОГО ПОСТА -->
+<div id="post-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:flex-start; justify-content:center; padding:20px; overflow-y:auto;">
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:24px; width:min(640px,100%); margin:auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div style="font-size:16px; font-weight:600;">📝 Пост готов</div>
+            <button onclick="closePostModal()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:22px;">✕</button>
+        </div>
+        <div id="post-modal-meta" style="font-size:12px; color:var(--text-muted); margin-bottom:12px;"></div>
+        <textarea id="post-modal-text" rows="10"
+            style="width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px;
+                   padding:14px; color:var(--text-primary); font-size:14px; line-height:1.6; resize:vertical; outline:none; font-family:inherit;"></textarea>
+        <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="enqueuePost()">📬 В очередь</button>
+            <button class="btn btn-ghost" onclick="openPreviewModal()">🖼 Превью</button>
+            <button class="btn btn-ghost" onclick="copyPost()">📋 Скопировать</button>
+            <button class="btn btn-ghost" onclick="savePostText()">💾 Сохранить</button>
+            <button class="btn btn-danger btn-sm" onclick="deletePost()" style="margin-left:auto;">🗑 Удалить</button>
+        </div>
+        <!-- Превью изображения (показывается после генерации) -->
+        <div id="preview-result" style="display:none; margin-top:16px;">
+            <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">🖼 Превью изображение:</div>
+            <img id="preview-img" src="" alt="preview"
+                 style="max-width:100%; border-radius:10px; border:1px solid var(--border);">
+            <div style="font-size:11px; color:var(--text-muted); margin-top:6px;" id="preview-meta"></div>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛ НАСТРОЕК ПРЕВЬЮ -->
+<div id="preview-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:300; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:24px; width:min(480px,100%); margin:auto;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div style="font-size:16px; font-weight:600;">🖼 Создать превью</div>
+            <button onclick="closePreviewModal()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:22px;">✕</button>
+        </div>
+
+        <div class="form-group" style="margin-bottom:16px;">
+            <label>Использовать моё фото</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+                <button class="filter-btn active" id="face-auto" onclick="setFaceMode('auto')">🤖 Авто</button>
+                <button class="filter-btn" id="face-yes" onclick="setFaceMode('yes')">👤 С фото</button>
+                <button class="filter-btn" id="face-no" onclick="setFaceMode('no')">🎨 Без фото</button>
+            </div>
+            <div style="font-size:11px; color:var(--text-muted); margin-top:6px;">
+                Авто = Claude сам решит по типу поста
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:20px;">
+            <label>Формат</label>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+                <button class="filter-btn active" id="ratio-random" onclick="setRatio('random')">🎲 Случайный</button>
+                <button class="filter-btn" id="ratio-1:1" onclick="setRatio('1:1')">⬛ 1:1</button>
+                <button class="filter-btn" id="ratio-4:5" onclick="setRatio('4:5')">📱 4:5</button>
+                <button class="filter-btn" id="ratio-16:9" onclick="setRatio('16:9')">🖥 16:9</button>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" id="btn-gen-preview" onclick="generatePreview()" style="width:100%;">
+            ⚡ Генерировать
+        </button>
+        <div id="preview-gen-status" style="display:none; text-align:center; margin-top:12px; font-size:13px; color:var(--text-muted);">
+            ⏳ Генерация... ~15-30 сек
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+}
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+}
+.filter-btn {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+}
+.filter-btn.active, .filter-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+.theme-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: var(--bg-hover);
+    transition: border-color 0.15s;
+    cursor: default;
+}
+.theme-card.selected {
+    border-color: var(--accent);
+    background: rgba(124,111,224,0.06);
+}
+.heat-hot  { color: #ff6b6b; }
+.heat-warm { color: #ffb347; }
+.heat-cold { color: var(--text-muted); }
+.gen-post-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: border-color 0.15s;
+    cursor: pointer;
+}
+.gen-post-card:hover { border-color: var(--accent); }
+.status-queued { color: #60c060; }
+.status-draft  { color: var(--text-muted); }
+</style>
+<script>
+let allDigests = [];
+let filtered = [];
+let currentDigestId = null;
+let allThemes = [];
+let selectedThemeIdxs = new Set();
+let currentPostId = null;
+let genQueue = []; // очередь тем для батч-генерации
+let allSavedPosts = []; // все посты из всех дайджестов
+let currentTab = 'digests';
+
+const TYPE_LABELS = { daily: '📅 Ежедневный', weekly: '📊 Еженедельный', monthly: '🗓 Ежемесячный' };
+const TYPE_BADGE  = { daily: 'badge-normal', weekly: 'badge-high', monthly: 'badge-topic' };
+const PRIORITY_EMOJI = { high: '🔴', normal: '🔵', low: '⚪️' };
+const HEAT_LABEL = { hot: '🔴 Горячая', warm: '🟡 Тёплая', cold: '⚪ Холодная' };
+const FORMAT_LABELS = { report:'📡 Репортаж', opinion:'💬 Мнение', minto:'🧱 Минто', story:'📖 История', trend:'📈 Тренд' };
+const CAT_LABELS = { expert:'🎓 Экспертный', personal:'🎭 Личный', entertaining:'😄 Развлекательный',
+                     motivational:'💡 Мотивационный', promotional:'📢 Продающий', engaging:'🔥 Вовлекающий' };
+
+// ─── Инициализация ────────────────────────────────────────────────────────────
+
+async function init() {
+    const data = await api('GET', '/api/digests');
+    allDigests = data.digests || [];
+    filterDigests();
+    checkRunStatus();
+    // Фоново подгружаем счётчик постов
+    loadAllPostsCount();
+}
+
+async function loadAllPostsCount() {
+    const res = await api('GET', '/api/digest-posts');
+    allSavedPosts = res.posts || [];
+    document.getElementById('tab-posts-count').textContent = allSavedPosts.length;
+}
+
+// ─── Вкладки ──────────────────────────────────────────────────────────────────
+
+function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('tab-digests').classList.toggle('active', tab === 'digests');
+    document.getElementById('tab-posts').classList.toggle('active', tab === 'posts');
+
+    const showDigests = tab === 'digests';
+    document.getElementById('view-list').style.display = showDigests ? 'block' : 'none';
+    document.getElementById('view-detail').style.display = 'none';
+    document.getElementById('view-all-posts').style.display = showDigests ? 'none' : 'block';
+
+    if (tab === 'posts') {
+        renderAllPosts(allSavedPosts);
+    }
+}
+
+// ─── Запуск дайджеста ─────────────────────────────────────────────────────────
+
+let statusPoller = null;
+
+async function runDigest(type) {
+    const res = await api('POST', '/api/digest/run', { type });
+    if (!res.ok) { showToast(res.error || 'Ошибка', 'error'); return; }
+    showToast(`Запущен ${type} дайджест`);
+    document.getElementById('run-status').style.display = 'block';
+    if (statusPoller) clearInterval(statusPoller);
+    statusPoller = setInterval(checkRunStatus, 5000);
+}
+
+async function checkRunStatus() {
+    const s = await api('GET', '/api/digest/status');
+    const el = document.getElementById('run-status');
+    if (s.running) {
+        el.style.display = 'block';
+        el.style.color = '#a090f0';
+        el.textContent = '⏳ Дайджест собирается... Это займёт несколько минут.';
+    } else {
+        if (statusPoller) { clearInterval(statusPoller); statusPoller = null; }
+        if (s.last) {
+            if (s.error) {
+                el.style.color = '#e06060';
+                el.textContent = `❌ Ошибка (${s.last}): ${s.error}`;
+            } else {
+                el.style.color = '#60c060';
+                el.textContent = `✅ Завершён в ${s.last}`;
+                setTimeout(async () => {
+                    const data = await api('GET', '/api/digests');
+                    allDigests = data.digests || [];
+                    filterDigests();
+                    el.style.display = 'none';
+                }, 1500);
+            }
+        } else { el.style.display = 'none'; }
+    }
+}
+
+// ─── Список дайджестов ────────────────────────────────────────────────────────
+
+function filterDigests() {
+    const type = document.getElementById('type-filter').value;
+    filtered = type ? allDigests.filter(d => d.type === type) : allDigests;
+    document.getElementById('shown-count').textContent = filtered.length;
+    renderList();
+}
+
+function renderList() {
+    const container = document.getElementById('digests-list');
+    if (!filtered.length) {
+        container.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:40px;">Дайджестов пока нет.</div>';
+        return;
+    }
+    container.innerHTML = filtered.map(d => {
+        const dt = new Date(d.created_at);
+        const dateStr = dt.toLocaleDateString('ru-RU', {day:'2-digit', month:'long', year:'numeric'});
+        const timeStr = dt.toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'});
+        const label = TYPE_LABELS[d.type] || d.type;
+        const badge = TYPE_BADGE[d.type] || 'badge-normal';
+        const chats = d.summaries || [];
+        const preview = chats.slice(0, 2).map(s =>
+            `<div style="font-size:13px; color:var(--text-muted); margin-top:6px;">
+                ${PRIORITY_EMOJI[s.priority]||'🔵'} <b style="color:var(--text-secondary)">${escHtml(s.name)}</b>
+                <span> — ${s.message_count} сообщ.</span>
+            </div>`
+        ).join('');
+        return `
+        <div class="card" style="padding:20px; cursor:pointer; transition:border-color 0.15s;"
+             onclick="openDigest('${d.id}')"
+             onmouseenter="this.style.borderColor='#3a3a4a'"
+             onmouseleave="this.style.borderColor=''">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+                <div>
+                    <span class="badge ${badge}" style="font-size:12px;">${label}</span>
+                    <span style="font-size:13px; color:var(--text-muted); margin-left:10px;">${dateStr}, ${timeStr}</span>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <span style="font-size:12px; color:var(--text-muted); white-space:nowrap;">${chats.length} чатов</span>
+                    <span style="font-size:11px; color:var(--accent); border:1px solid var(--accent); padding:2px 7px; border-radius:10px; white-space:nowrap;">✍️ Посты</span>
+                </div>
+            </div>
+            ${preview}
+            ${chats.length > 2 ? `<div style="font-size:12px; color:var(--text-muted); margin-top:6px;">...и ещё ${chats.length - 2} чатов</div>` : ''}
+        </div>`;
+    }).join('');
+}
+
+// ─── Детальный вид дайджеста ──────────────────────────────────────────────────
+
+async function openDigest(id) {
+    currentDigestId = id;
+    allThemes = [];
+    selectedThemeIdxs.clear();
+
+    const d = await api('GET', `/api/digests/${id}`);
+    const dt = new Date(d.created_at);
+    const dateStr = dt.toLocaleDateString('ru-RU', {day:'2-digit', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit'});
+
+    document.getElementById('detail-meta').textContent =
+        `${TYPE_LABELS[d.type]||d.type} • ${dateStr} • ${d.days_back} дн. • ${d.chats_count} чатов`;
+
+    // Сводки чатов
+    const chatsHtml = (d.summaries || []).map(s => `
+        <div class="card" style="margin-bottom:0;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                <span style="font-size:18px;">${PRIORITY_EMOJI[s.priority]||'🔵'}</span>
+                <div>
+                    <div style="font-weight:600; color:var(--text-primary); font-size:15px;">${escHtml(s.name)}</div>
+                    <div style="font-size:12px; color:var(--text-muted);">${s.message_count} сообщений</div>
+                </div>
+            </div>
+            <div style="font-size:14px; line-height:1.7; color:var(--text-secondary);">${formatSummary(s.summary)}</div>
+        </div>`
+    ).join('');
+
+    document.getElementById('detail-content').innerHTML =
+        `<div style="display:flex; flex-direction:column; gap:12px;">${chatsHtml || '<div style="color:var(--text-muted)">Нет данных</div>'}</div>`;
+
+    document.getElementById('themes-block').style.display = 'none';
+    document.getElementById('gen-posts-block').style.display = 'none';
+
+    // Загрузить уже сгенерированные посты
+    loadSavedPosts();
+
+    document.getElementById('view-list').style.display = 'none';
+    document.getElementById('view-detail').style.display = 'block';
+    window.scrollTo(0, 0);
+}
+
+async function loadSavedPosts() {
+    const res = await api('GET', `/api/digests/${currentDigestId}/posts`);
+    const posts = res.posts || [];
+    if (posts.length > 0) renderSavedPosts(posts);
+    // Обновляем глобальный кеш и счётчик вкладки
+    await refreshAllPostsCache();
+}
+
+async function refreshAllPostsCache() {
+    const res = await api('GET', '/api/digest-posts');
+    allSavedPosts = res.posts || [];
+    document.getElementById('tab-posts-count').textContent = allSavedPosts.length;
+    // Если сейчас открыта вкладка всех постов — перерисовываем
+    if (currentTab === 'posts') filterAllPosts();
+}
+
+function showList() {
+    document.getElementById('view-detail').style.display = 'none';
+    document.getElementById('view-list').style.display = 'block';
+    currentDigestId = null;
+}
+
+// ─── Извлечение тем ───────────────────────────────────────────────────────────
+
+async function extractThemes() {
+    const btn = document.getElementById('btn-extract');
+    btn.disabled = true;
+    btn.textContent = '⏳ Анализирую...';
+
+    const res = await api('POST', `/api/digests/${currentDigestId}/extract-themes`);
+    btn.disabled = false;
+    btn.textContent = '✍️ Сгенерировать посты';
+
+    if (!res.ok) { showToast(res.error || 'Ошибка', 'error'); return; }
+
+    allThemes = res.themes || [];
+    selectedThemeIdxs.clear();
+    renderThemes(allThemes);
+    document.getElementById('themes-block').style.display = 'block';
+    document.getElementById('themes-block').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+let currentHeatFilter = 'all';
+
+function filterThemes(heat, btn) {
+    currentHeatFilter = heat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const themes = heat === 'all' ? allThemes : allThemes.filter(t => t.heat === heat);
+    renderThemes(themes);
+}
+
+function renderThemes(themes) {
+    const container = document.getElementById('themes-list');
+    if (!themes.length) {
+        container.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:20px;">Нет тем</div>';
+        return;
+    }
+    container.innerHTML = themes.map((t, i) => {
+        const realIdx = allThemes.indexOf(t);
+        const sel = selectedThemeIdxs.has(realIdx);
+        return `
+        <div class="theme-card ${sel ? 'selected' : ''}" id="theme-card-${realIdx}" onclick="toggleTheme(${realIdx})">
+            <div style="display:flex; align-items:flex-start; gap:12px;">
+                <input type="checkbox" ${sel ? 'checked' : ''} id="theme-cb-${realIdx}"
+                    style="margin-top:3px; accent-color:var(--accent); width:16px; height:16px; flex-shrink:0; cursor:pointer;"
+                    onclick="event.stopPropagation(); toggleTheme(${realIdx})">
+                <div style="flex:1; min-width:0;">
+                    <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+                        <span class="heat-${t.heat}" style="font-size:12px; font-weight:600;">${HEAT_LABEL[t.heat]||''}</span>
+                        <span style="font-size:11px; color:var(--text-muted); background:var(--bg-main); padding:2px 7px; border-radius:10px;">${FORMAT_LABELS[t.format]||t.format}</span>
+                        <span style="font-size:11px; color:var(--text-muted); background:var(--bg-main); padding:2px 7px; border-radius:10px;">${CAT_LABELS[t.category]||t.category}</span>
+                    </div>
+                    <div style="font-size:14px; font-weight:600; color:var(--text-primary); margin-bottom:4px;">${escHtml(t.theme)}</div>
+                    <div style="font-size:13px; color:var(--text-muted); line-height:1.5;">${escHtml(t.description)}</div>
+                </div>
+                <button onclick="event.stopPropagation(); openGenModal(${realIdx})"
+                    class="btn btn-ghost btn-sm" style="flex-shrink:0; white-space:nowrap;">
+                    ✍️ Написать
+                </button>
+            </div>
+        </div>`;
+    }).join('');
+    updateSelectedCount();
+}
+
+function toggleTheme(idx) {
+    if (selectedThemeIdxs.has(idx)) {
+        selectedThemeIdxs.delete(idx);
+    } else {
+        selectedThemeIdxs.add(idx);
+    }
+    const card = document.getElementById(`theme-card-${idx}`);
+    const cb = document.getElementById(`theme-cb-${idx}`);
+    if (card) card.classList.toggle('selected', selectedThemeIdxs.has(idx));
+    if (cb) cb.checked = selectedThemeIdxs.has(idx);
+    updateSelectedCount();
+}
+
+function updateSelectedCount() {
+    const cnt = selectedThemeIdxs.size;
+    document.getElementById('selected-themes-count').textContent = cnt;
+    document.getElementById('btn-gen-selected').disabled = cnt === 0;
+}
+
+// ─── Генерация поста (один) ───────────────────────────────────────────────────
+
+let modalThemeIdx = null;
+
+function openGenModal(idx) {
+    modalThemeIdx = idx;
+    const t = allThemes[idx];
+    document.getElementById('modal-theme').textContent = t.theme;
+    document.getElementById('modal-format').value = t.format || 'report';
+    document.getElementById('modal-category').value = t.category || 'expert';
+    document.getElementById('modal-note').value = '';
+    document.getElementById('gen-modal').style.display = 'flex';
+}
+
+function closeGenModal() {
+    document.getElementById('gen-modal').style.display = 'none';
+}
+
+async function doGenerate() {
+    if (modalThemeIdx === null) return;
+    const t = allThemes[modalThemeIdx];
+    const btn = document.getElementById('btn-do-generate');
+    btn.disabled = true;
+    btn.textContent = '⏳ Генерирую...';
+
+    const res = await api('POST', `/api/digests/${currentDigestId}/generate-post`, {
+        theme: t.theme,
+        description: t.description,
+        format: document.getElementById('modal-format').value,
+        category: document.getElementById('modal-category').value,
+        user_note: document.getElementById('modal-note').value,
+    });
+
+    btn.disabled = false;
+    btn.textContent = '⚡ Сгенерировать';
+
+    if (!res.ok) { showToast(res.error || 'Ошибка генерации', 'error'); return; }
+
+    closeGenModal();
+    showToast('Пост сгенерирован!');
+    loadSavedPosts();
+    // Открываем сразу для просмотра
+    openPostModal(res.id, t.theme, document.getElementById('modal-format').value,
+                  document.getElementById('modal-category').value, res.text);
+}
+
+// ─── Батч-генерация ───────────────────────────────────────────────────────────
+
+async function generateSelected() {
+    const idxs = [...selectedThemeIdxs];
+    if (!idxs.length) return;
+
+    const btn = document.getElementById('btn-gen-selected');
+    btn.disabled = true;
+
+    let done = 0;
+    for (const idx of idxs) {
+        const t = allThemes[idx];
+        btn.textContent = `⏳ ${done+1}/${idxs.length}...`;
+        const res = await api('POST', `/api/digests/${currentDigestId}/generate-post`, {
+            theme: t.theme,
+            description: t.description,
+            format: t.format,
+            category: t.category,
+            user_note: '',
+        });
+        if (res.ok) done++;
+        else showToast(`Ошибка: ${t.theme}`, 'error');
+    }
+
+    btn.disabled = false;
+    btn.textContent = '⚡ Генерировать выбранные';
+    showToast(`Готово: ${done} постов сгенерировано`);
+    loadSavedPosts();
+    selectedThemeIdxs.clear();
+    renderThemes(currentHeatFilter === 'all' ? allThemes : allThemes.filter(t => t.heat === currentHeatFilter));
+}
+
+// ─── Сохранённые посты ────────────────────────────────────────────────────────
+
+function renderSavedPosts(posts) {
+    const block = document.getElementById('gen-posts-block');
+    const list = document.getElementById('gen-posts-list');
+    block.style.display = 'block';
+
+    list.innerHTML = posts.map(p => `
+        <div class="gen-post-card" onclick="openPostModal(${p.id}, '${escHtml(p.theme)}', '${p.format}', '${p.category}', null)">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
+                <span style="font-size:12px; background:var(--bg-hover); padding:2px 8px; border-radius:10px; color:var(--text-muted);">${FORMAT_LABELS[p.format]||p.format}</span>
+                <span style="font-size:12px; background:var(--bg-hover); padding:2px 8px; border-radius:10px; color:var(--text-muted);">${CAT_LABELS[p.category]||p.category}</span>
+                <span class="status-${p.status}" style="font-size:11px; margin-left:auto;">${p.status === 'queued' ? '✅ В очереди' : '📝 Черновик'}</span>
+            </div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px;">${escHtml(p.theme)}</div>
+            <div style="font-size:13px; color:var(--text-muted); line-height:1.5; white-space:pre-wrap; word-break:break-word;">${escHtml(p.text.slice(0, 200))}${p.text.length > 200 ? '...' : ''}</div>
+        </div>`
+    ).join('');
+}
+
+// ─── Модал поста ──────────────────────────────────────────────────────────────
+
+async function openPostModal(id, theme, format, category, textArg) {
+    currentPostId = id;
+    document.getElementById('post-modal-meta').textContent =
+        `${FORMAT_LABELS[format]||format} · ${CAT_LABELS[category]||category}`;
+
+    if (textArg !== null) {
+        document.getElementById('post-modal-text').value = textArg;
+    } else {
+        // Загружаем с сервера
+        const res = await api('GET', `/api/digests/${currentDigestId}/posts`);
+        const post = (res.posts || []).find(p => p.id === id);
+        if (post) document.getElementById('post-modal-text').value = post.text;
+    }
+    // Сбрасываем превью при открытии нового поста
+    document.getElementById('preview-result').style.display = 'none';
+    document.getElementById('preview-img').src = '';
+    document.getElementById('post-modal').style.display = 'flex';
+}
+
+function closePostModal() {
+    document.getElementById('post-modal').style.display = 'none';
+    currentPostId = null;
+}
+
+async function savePostText() {
+    const text = document.getElementById('post-modal-text').value.trim();
+    if (!text || !currentPostId) return;
+    const res = await api('PUT', `/api/digest-posts/${currentPostId}`, { text });
+    if (res.ok) showToast('Сохранено');
+    else showToast('Ошибка', 'error');
+}
+
+async function enqueuePost() {
+    const text = document.getElementById('post-modal-text').value.trim();
+    if (!text || !currentPostId) return;
+    await api('PUT', `/api/digest-posts/${currentPostId}`, { text });
+    const res = await api('POST', `/api/digest-posts/${currentPostId}/enqueue`, { text });
+    if (res.ok) {
+        const dt = new Date(res.scheduled_at);
+        const timeStr = dt.toLocaleString('ru-RU', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+        showToast(`Добавлено в очередь на ${timeStr}`);
+        closePostModal();
+        loadSavedPosts();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+function copyPost() {
+    const text = document.getElementById('post-modal-text').value;
+    navigator.clipboard.writeText(text).then(() => showToast('Скопировано!'));
+}
+
+async function deletePost() {
+    if (!currentPostId) return;
+    if (!confirm('Удалить пост?')) return;
+    const res = await api('DELETE', `/api/digest-posts/${currentPostId}`);
+    if (res.ok) {
+        closePostModal();
+        showToast('Удалено');
+        loadSavedPosts();
+    } else showToast('Ошибка', 'error');
+}
+
+// ─── Все посты ────────────────────────────────────────────────────────────────
+
+function filterAllPosts() {
+    const search = document.getElementById('posts-search').value.toLowerCase();
+    const status = document.getElementById('posts-status-filter').value;
+    const dtype  = document.getElementById('posts-type-filter').value;
+
+    const result = allSavedPosts.filter(p => {
+        if (status && p.status !== status) return false;
+        if (dtype  && p.digest_type !== dtype) return false;
+        if (search && !p.text.toLowerCase().includes(search) && !p.theme.toLowerCase().includes(search)) return false;
+        return true;
+    });
+    renderAllPosts(result);
+}
+
+const DTYPE_LABELS = { daily: '📅 Ежедневный', weekly: '📊 Еженедельный', monthly: '🗓 Ежемесячный' };
+
+function renderAllPosts(posts) {
+    const container = document.getElementById('all-posts-list');
+    document.getElementById('posts-shown-count').textContent = posts.length;
+    document.getElementById('posts-total-count').textContent = allSavedPosts.length;
+
+    if (!posts.length) {
+        container.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:40px;">Постов не найдено</div>';
+        return;
+    }
+
+    container.innerHTML = posts.map(p => {
+        const dt = new Date(p.created_at);
+        const dateStr = dt.toLocaleDateString('ru-RU', {day:'2-digit', month:'short', year:'numeric'});
+        const statusIcon = p.status === 'queued' ? '✅ В очереди' : '📝 Черновик';
+        const statusColor = p.status === 'queued' ? '#60c060' : 'var(--text-muted)';
+        const preview = p.text.slice(0, 220) + (p.text.length > 220 ? '...' : '');
+
+        return `
+        <div class="gen-post-card" onclick="openAllPostModal(${p.id})">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
+                <span style="font-size:11px; background:var(--bg-hover); padding:2px 8px; border-radius:10px; color:var(--text-muted);">${DTYPE_LABELS[p.digest_type]||p.digest_type}</span>
+                <span style="font-size:11px; background:var(--bg-hover); padding:2px 8px; border-radius:10px; color:var(--text-muted);">${FORMAT_LABELS[p.format]||p.format}</span>
+                <span style="font-size:11px; background:var(--bg-hover); padding:2px 8px; border-radius:10px; color:var(--text-muted);">${CAT_LABELS[p.category]||p.category}</span>
+                <span style="font-size:11px; color:${statusColor}; margin-left:auto;">${statusIcon}</span>
+                <span style="font-size:11px; color:var(--text-muted);">${dateStr}</span>
+            </div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-secondary); margin-bottom:6px;">${escHtml(p.theme)}</div>
+            <div style="font-size:13px; color:var(--text-muted); line-height:1.55; white-space:pre-wrap; word-break:break-word;">${escHtml(preview)}</div>
+        </div>`;
+    }).join('');
+}
+
+async function openAllPostModal(id) {
+    // Находим пост в кеше
+    const post = allSavedPosts.find(p => p.id === id);
+    if (!post) return;
+    currentPostId = id;
+    // currentDigestId нужен для enqueue — берём из поста
+    currentDigestId = post.digest_id;
+    document.getElementById('post-modal-meta').textContent =
+        `${DTYPE_LABELS[post.digest_type]||post.digest_type} · ${FORMAT_LABELS[post.format]||post.format} · ${CAT_LABELS[post.category]||post.category}`;
+    document.getElementById('post-modal-text').value = post.text;
+    document.getElementById('preview-result').style.display = 'none';
+    document.getElementById('preview-img').src = '';
+    document.getElementById('post-modal').style.display = 'flex';
+}
+
+// ─── Утилиты ──────────────────────────────────────────────────────────────────
+
+function formatSummary(text) {
+    if (!text) return '';
+    return escHtml(text)
+        .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+        .replace(/\*(.+?)\*/g, '<i>$1</i>')
+        .replace(/^(<b>📌.*?<\/b>|<b>❓.*?<\/b>|<b>💡.*?<\/b>|<b>🔗.*?<\/b>)/gm,
+            '<div style="color:#a090f0; font-weight:600; margin:14px 0 6px;">$1</div>')
+        .replace(/^• (.+)$/gm, '<div style="padding-left:14px; margin:3px 0;">• $1</div>')
+        .replace(/\n/g, '<br>');
+}
+
+function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Закрытие модалов по клику на фон
+document.getElementById('gen-modal').addEventListener('click', e => { if (e.target === document.getElementById('gen-modal')) closeGenModal(); });
+document.getElementById('post-modal').addEventListener('click', e => { if (e.target === document.getElementById('post-modal')) closePostModal(); });
+document.getElementById('preview-modal').addEventListener('click', e => { if (e.target === document.getElementById('preview-modal')) closePreviewModal(); });
+
+// ─── Превью изображений ───────────────────────────────────────────────────────
+
+let _faceMode = 'auto';   // auto | yes | no
+let _ratioMode = 'random'; // random | 1:1 | 4:5 | 16:9
+
+function setFaceMode(mode) {
+    _faceMode = mode;
+    ['face-auto','face-yes','face-no'].forEach(id => document.getElementById(id).classList.remove('active'));
+    document.getElementById(`face-${mode}`).classList.add('active');
+}
+
+function setRatio(ratio) {
+    _ratioMode = ratio;
+    ['ratio-random','ratio-1:1','ratio-4:5','ratio-16:9'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+    });
+    const key = `ratio-${ratio}`;
+    const el = document.getElementById(key);
+    if (el) el.classList.add('active');
+}
+
+function openPreviewModal() {
+    if (!currentPostId) return;
+    // Сброс состояния
+    document.getElementById('preview-gen-status').style.display = 'none';
+    document.getElementById('btn-gen-preview').disabled = false;
+    document.getElementById('preview-modal').style.display = 'flex';
+}
+
+function closePreviewModal() {
+    document.getElementById('preview-modal').style.display = 'none';
+}
+
+async function generatePreview() {
+    if (!currentPostId) return;
+
+    const btn = document.getElementById('btn-gen-preview');
+    const status = document.getElementById('preview-gen-status');
+    btn.disabled = true;
+    status.style.display = 'block';
+
+    const payload = {
+        use_face: _faceMode === 'auto' ? null : (_faceMode === 'yes'),
+        aspect_ratio: _ratioMode === 'random' ? null : _ratioMode,
+    };
+
+    try {
+        const res = await api('POST', `/api/digest-posts/${currentPostId}/generate-preview`, payload);
+        if (res.ok) {
+            closePreviewModal();
+            // Показываем результат в пост-модале
+            const img = document.getElementById('preview-img');
+            img.src = res.preview_url + '?t=' + Date.now();
+            document.getElementById('preview-meta').textContent =
+                `Формат: ${res.aspect_ratio} · ${res.used_face ? 'с фото автора' : 'без фото'}`;
+            document.getElementById('preview-result').style.display = 'block';
+            showToast('Превью готово!');
+        } else {
+            showToast(res.error || 'Ошибка генерации', 'error');
+        }
+    } catch (e) {
+        showToast('Ошибка соединения', 'error');
+    } finally {
+        btn.disabled = false;
+        status.style.display = 'none';
+    }
+}
+
+init();
+</script>
+{% endblock %}

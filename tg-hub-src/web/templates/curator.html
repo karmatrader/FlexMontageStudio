@@ -1,0 +1,707 @@
+{% extends "base.html" %}
+{% block title %}— Curator{% endblock %}
+
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px;">
+    <div class="page-title" style="margin-bottom:0;">✍️ Curator</div>
+    <div style="font-size:13px; color:var(--text-muted);">Постов в базе: {{ posts_count }}</div>
+</div>
+<p class="page-desc">Управляй каналами-источниками, настраивай голос и стиль, генерируй посты через AI, планируй очередь публикаций и тестируй варианты через A/B.</p>
+
+<!-- Вкладки -->
+<div style="display:flex; gap:4px; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:0; flex-wrap:wrap;">
+    <button class="tab-btn active" id="tab-sources" onclick="showTab('sources')">📡 Источники</button>
+    <button class="tab-btn" id="tab-voice" onclick="showTab('voice')">🎙 Стиль голоса</button>
+    <button class="tab-btn" id="tab-queue" onclick="showTab('queue')">📬 Очередь</button>
+    <button class="tab-btn" id="tab-analyze" onclick="showTab('analyze')">🔍 Анализ</button>
+    <button class="tab-btn" id="tab-ab" onclick="showTab('ab')">🔀 A/B тест</button>
+</div>
+
+<!-- ─── Вкладка: Источники ─── -->
+<div id="pane-sources">
+    <div class="card">
+        <div class="card-title">Добавить канал-источник</div>
+        <div class="form-row" style="flex-wrap:wrap; align-items:flex-end;">
+            <div class="form-group" style="flex:1; min-width:200px;">
+                <label>Username канала</label>
+                <input type="text" id="new-channel" placeholder="@channel_name или channel_name" style="width:100%;">
+            </div>
+            <div class="form-group" style="flex-shrink:0;">
+                <button class="btn btn-primary" onclick="addSource()">+ Добавить</button>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="section-header">
+            <div class="card-title" style="margin-bottom:0">Список источников (<span id="sources-count">загрузка...</span>)</div>
+        </div>
+        <div id="sources-list" style="display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px;">
+            <div style="color:var(--text-muted); font-size:13px">Загрузка...</div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── Вкладка: Стиль голоса ─── -->
+<div id="pane-voice" style="display:none;">
+    <div class="card">
+        <div class="card-title">Добавить пример стиля</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+            Вставь текст поста, который нравится по стилю — Claude будет писать похожим образом.
+        </p>
+        <div class="form-group">
+            <label>Метка (необязательно)</label>
+            <input type="text" id="voice-label" placeholder="например: юмор, экспертный, краткий" style="width:300px;">
+        </div>
+        <div class="form-group">
+            <label>Текст примера</label>
+            <textarea id="voice-text" rows="6" style="width:100%; resize:vertical;" placeholder="Вставь текст поста-образца..."></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="addVoiceExample()">+ Добавить пример</button>
+    </div>
+
+    <div class="card">
+        <div class="card-title">📥 Импорт из Telegram JSON</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+            Экспортируй свой канал через <b>Telegram Desktop</b> (Настройки → Экспорт данных → выбери канал → JSON).
+            Загрузи файл <code>result.json</code> — система автоматически извлечёт твои посты как примеры стиля.
+        </p>
+        <div style="display:flex; gap:16px; align-items:flex-end; flex-wrap:wrap; margin-bottom:12px;">
+            <div class="form-group" style="margin-bottom:0;">
+                <label>Минимальная длина поста (симв.)</label>
+                <input type="number" id="import-min-len" value="50" min="20" max="1000" style="width:100px;">
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+                <label>Максимум постов</label>
+                <input type="number" id="import-max-posts" value="50" min="5" max="200" style="width:100px;">
+            </div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <label style="display:inline-flex; align-items:center; gap:8px; padding:8px 16px; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; cursor:pointer; font-size:14px; color:var(--text-secondary); transition:all 0.15s;" onmouseover="this.style.borderColor='#7c6fe0';this.style.color='#ccc'" onmouseout="this.style.borderColor='#2a2a3a';this.style.color='#aaa'">
+                📂 Выбрать файл
+                <input type="file" id="import-json-file" accept=".json" style="display:none;" onchange="document.getElementById('import-file-name').textContent = this.files[0]?.name || ''">
+            </label>
+            <span id="import-file-name" style="font-size:13px; color:var(--text-muted);"></span>
+            <button class="btn btn-primary" onclick="importVoiceJson()">📥 Импортировать</button>
+            <span id="import-status" style="font-size:13px; color:var(--text-muted);"></span>
+        </div>
+    </div>
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div class="card-title" style="margin-bottom:0;">Примеры стиля (<span id="voice-count">0</span>)</div>
+            <button onclick="clearVoiceExamples()" class="btn btn-danger btn-sm">🗑 Очистить все</button>
+        </div>
+        <div id="voice-list" style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+            <div style="color:var(--text-muted); font-size:13px;">Загрузка...</div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── Вкладка: Анализ ─── -->
+<div id="pane-analyze" style="display:none;">
+    <div class="card">
+        <div class="card-title">🔍 Анализатор постов</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+            Claude оценивает посты из базы по релевантности каналу и выбирает лучшие кандидаты для публикации.
+            Настройки (количество и период) задаются в <a href="/settings" style="color:#7c6fe0;">Настройках</a>.
+        </p>
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="runAnalysis()" id="analyze-btn">🔍 Запустить анализ</button>
+            <span id="analyze-status" style="font-size:13px; color:var(--text-muted);"></span>
+        </div>
+    </div>
+    <div id="analyze-results" style="display:flex; flex-direction:column; gap:10px; margin-top:4px;"></div>
+</div>
+
+<!-- ─── Вкладка: A/B тест ─── -->
+<div id="pane-ab" style="display:none;">
+    <div class="card">
+        <div class="card-title">🔀 A/B тест контента</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+            Генерирует два варианта поста с разной подачей. Выбери лучший — он попадёт в очередь, а статистика выборов накапливается.
+        </p>
+        <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap;">
+            <div class="form-group" style="margin-bottom:0;">
+                <label>Категория</label>
+                <select id="ab-category" style="min-width:180px;">
+                    <option value="">Любая</option>
+                    <option value="expert">🎓 Экспертный</option>
+                    <option value="personal">🎭 Личный</option>
+                    <option value="entertaining">😄 Развлекательный</option>
+                    <option value="motivational">💡 Мотивационный</option>
+                    <option value="promotional">📢 Продающий</option>
+                    <option value="engaging">🔥 Вовлекающий</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="generateAB()" id="ab-gen-btn">🔀 Сгенерировать</button>
+            <span id="ab-status" style="font-size:13px; color:var(--text-muted);"></span>
+        </div>
+    </div>
+
+    <div id="ab-variants" style="display:none; margin-top:4px;">
+        <div id="ab-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <!-- Вариант A -->
+            <div class="card" style="padding:20px;">
+                <div style="font-size:13px; font-weight:600; color:var(--accent); margin-bottom:12px;">Вариант A — Факты и советы</div>
+                <div id="ab-text-a" style="font-size:14px; color:var(--text-primary); white-space:pre-wrap; line-height:1.6; min-height:120px;"></div>
+                <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <input type="datetime-local" id="ab-schedule-a" style="font-size:12px; padding:5px 8px; background:var(--bg-hover); border:1px solid var(--border); border-radius:6px; color:var(--text-primary);">
+                    <button onclick="chooseAB('a')" class="btn btn-primary btn-sm">✅ Выбрать A</button>
+                </div>
+            </div>
+            <!-- Вариант B -->
+            <div class="card" style="padding:20px;">
+                <div style="font-size:13px; font-weight:600; color:#e0a040; margin-bottom:12px;">Вариант B — История и опыт</div>
+                <div id="ab-text-b" style="font-size:14px; color:var(--text-primary); white-space:pre-wrap; line-height:1.6; min-height:120px;"></div>
+                <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <input type="datetime-local" id="ab-schedule-b" style="font-size:12px; padding:5px 8px; background:var(--bg-hover); border:1px solid var(--border); border-radius:6px; color:var(--text-primary);">
+                    <button onclick="chooseAB('b')" class="btn btn-primary btn-sm">✅ Выбрать B</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+        <div class="card-title">📊 Статистика выборов</div>
+        <div id="ab-stats-container">
+            <div style="color:var(--text-muted); font-size:13px;">Нет данных пока не сделан ни один выбор.</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:12px;" onclick="loadABStats()">⟳ Обновить</button>
+    </div>
+</div>
+
+<!-- ─── Вкладка: Очередь ─── -->
+<div id="pane-queue" style="display:none;">
+    <div class="card" style="padding:16px 24px;">
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:space-between;">
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>Статус</label>
+                    <select id="queue-status-filter" onchange="loadQueue()" style="width:160px;">
+                        <option value="">Все</option>
+                        <option value="pending" selected>Pending</option>
+                        <option value="published">Опубликованные</option>
+                        <option value="failed">Ошибки</option>
+                    </select>
+                </div>
+                <span id="queue-count" style="font-size:13px; color:var(--text-muted);"></span>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="loadQueue()">⟳ Обновить</button>
+        </div>
+    </div>
+    <div id="queue-list" style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+        <div style="color:var(--text-muted); font-size:13px; text-align:center; padding:20px;">Загрузка...</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #555;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-bottom: -1px;
+    transition: color 0.15s, border-color 0.15s;
+}
+.tab-btn.active {
+    color: #7c6fe0;
+    border-bottom-color: #7c6fe0;
+}
+.tab-btn:hover { color: var(--text-secondary); }
+
+@media (max-width: 768px) {
+    .tab-btn { font-size: 12px; padding: 7px 10px; }
+    #ab-grid { grid-template-columns: 1fr !important; }
+    #new-channel { width: 100% !important; }
+}
+</style>
+<script>
+let sources = [];
+let voiceExamples = [];
+let queueItems = [];
+let activeTab = 'sources';
+
+function showTab(tab) {
+    activeTab = tab;
+    ['sources', 'voice', 'queue', 'analyze', 'ab'].forEach(t => {
+        document.getElementById('pane-' + t).style.display = t === tab ? 'block' : 'none';
+        document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+    });
+    if (tab === 'voice') loadVoiceExamples();
+    if (tab === 'queue') loadQueue();
+    if (tab === 'ab') loadABStats();
+}
+
+// ─── Источники ───────────────────────────────────────────────────────────────
+
+async function loadSources() {
+    sources = await api('GET', '/api/curator/sources');
+    document.getElementById('sources-count').textContent = sources.length;
+    const container = document.getElementById('sources-list');
+    container.innerHTML = sources.map((ch, i) => `
+        <div style="display:inline-flex; align-items:center; gap:6px; background:var(--bg-hover); border:1px solid var(--border); border-radius:8px; padding:6px 12px;">
+            <span style="font-family:monospace; font-size:13px; color:#7c6fe0">${escHtml(ch)}</span>
+            <button onclick="deleteSource(${i})" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:14px; padding:0 2px;" title="Удалить">✕</button>
+        </div>
+    `).join('') || '<div style="color:var(--text-muted); font-size:13px">Список пуст</div>';
+}
+
+async function addSource() {
+    const channel = document.getElementById('new-channel').value.trim();
+    if (!channel) { showToast('Введи username канала', 'error'); return; }
+    const res = await api('POST', '/api/curator/sources', { channel });
+    if (res.ok) {
+        document.getElementById('new-channel').value = '';
+        showToast(`${res.channel} добавлен!`);
+        loadSources();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+async function deleteSource(idx) {
+    const res = await api('DELETE', `/api/curator/sources/${idx}`);
+    if (res.ok) {
+        showToast(`${res.removed} удалён`);
+        loadSources();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+// ─── Стиль голоса ────────────────────────────────────────────────────────────
+
+async function loadVoiceExamples() {
+    voiceExamples = await api('GET', '/api/curator/voice-examples');
+    document.getElementById('voice-count').textContent = voiceExamples.length;
+    const container = document.getElementById('voice-list');
+    if (!voiceExamples.length) {
+        container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center; padding:20px;">Нет примеров. Добавь текст поста выше.</div>';
+        return;
+    }
+    container.innerHTML = voiceExamples.map(ex => {
+        const date = new Date(ex.created_at).toLocaleDateString('ru-RU', {day:'2-digit', month:'2-digit', year:'numeric'});
+        const preview = ex.text.length > 300 ? ex.text.slice(0, 300) + '...' : ex.text;
+        return `
+        <div class="card" style="padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <div>
+                    ${ex.label ? `<span style="font-size:12px; color:#7c6fe0; background:var(--bg-hover); padding:2px 8px; border-radius:4px; margin-right:8px;">${escHtml(ex.label)}</span>` : ''}
+                    <span style="font-size:12px; color:var(--text-muted);">${date}</span>
+                </div>
+                <button onclick="deleteVoiceExample(${ex.id})" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:13px; padding:0;" title="Удалить">✕</button>
+            </div>
+            <div style="font-size:13px; color:var(--text-secondary); white-space:pre-wrap; line-height:1.5;">${escHtml(preview)}</div>
+        </div>`;
+    }).join('');
+}
+
+async function addVoiceExample() {
+    const text = document.getElementById('voice-text').value.trim();
+    const label = document.getElementById('voice-label').value.trim();
+    if (!text) { showToast('Введи текст примера', 'error'); return; }
+    const res = await api('POST', '/api/curator/voice-examples', { text, label });
+    if (res.ok) {
+        document.getElementById('voice-text').value = '';
+        document.getElementById('voice-label').value = '';
+        showToast('Пример добавлен!');
+        loadVoiceExamples();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+async function clearVoiceExamples() {
+    if (!confirm(`Удалить все примеры стиля? Это действие нельзя отменить.`)) return;
+    const res = await api('DELETE', '/api/curator/voice-examples/clear');
+    if (res.ok) {
+        showToast('Все примеры удалены');
+        loadVoiceExamples();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+async function deleteVoiceExample(id) {
+    const res = await api('DELETE', `/api/curator/voice-examples/${id}`);
+    if (res.ok) {
+        showToast('Удалён');
+        loadVoiceExamples();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+// ─── Очередь ─────────────────────────────────────────────────────────────────
+
+async function loadQueue() {
+    const status = document.getElementById('queue-status-filter').value;
+    const url = status ? `/api/curator/queue?status=${status}` : '/api/curator/queue';
+    queueItems = await api('GET', url);
+    document.getElementById('queue-count').textContent = `${queueItems.length} записей`;
+    const container = document.getElementById('queue-list');
+    if (!queueItems.length) {
+        container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center; padding:30px;">Очередь пуста</div>';
+        return;
+    }
+    container.innerHTML = queueItems.map(item => {
+        const scheduled = fmtDatetime(item.scheduled_at);
+        const published = item.published_at ? fmtDatetime(item.published_at) : null;
+        const statusBadge = {
+            pending: '<span style="color:#f0c040; font-size:12px;">⏳ Ожидает</span>',
+            published: '<span style="color:#60c060; font-size:12px;">✅ Опубликован</span>',
+            failed: '<span style="color:#e06060; font-size:12px;">❌ Ошибка</span>',
+        }[item.status] || item.status;
+        const isLong = item.text.length > 250;
+        const preview = isLong ? item.text.slice(0, 250) + '...' : item.text;
+        const pendingActions = item.status === 'pending' ? `
+            <div id="edit-block-${item.id}" style="display:none; margin-bottom:10px;">
+                <textarea id="edit-text-${item.id}" style="width:100%; min-height:140px; background:var(--bg-hover,#1e1e28); border:1px solid var(--border,#2a2a3a); border-radius:6px; padding:10px; color:var(--text-primary,#e0e0e0); font-size:13px; resize:vertical; line-height:1.5;">${escHtml(item.text)}</textarea>
+                <div style="display:flex; gap:8px; margin-top:6px;">
+                    <button onclick="saveEditText(${item.id})" class="btn btn-primary btn-sm">💾 Сохранить</button>
+                    <button onclick="cancelEdit(${item.id})" class="btn btn-ghost btn-sm">Отмена</button>
+                </div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                <input type="datetime-local" id="reschedule-${item.id}" style="font-size:12px; padding:4px 8px; background:var(--bg-hover,#1e1e28); border:1px solid var(--border,#2a2a3a); border-radius:4px; color:var(--text-secondary);">
+                <button onclick="rescheduleItem(${item.id})" class="btn btn-ghost btn-sm">Перенести</button>
+                <button onclick="toggleEdit(${item.id})" class="btn btn-ghost btn-sm">✏️ Редактировать</button>
+                <button onclick="deleteQueueItem(${item.id})" class="btn btn-sm" style="border-color:#553030; color:#e06060;">Удалить</button>
+            </div>` : '';
+        return `
+        <div class="card" style="padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                    ${statusBadge}
+                    <span style="font-size:12px; color:var(--text-muted);">Публикация: ${scheduled}</span>
+                    ${published ? `<span style="font-size:12px; color:var(--text-muted);">Опубликовано: ${published}</span>` : ''}
+                </div>
+                <span style="font-size:11px; color:var(--text-muted);">#${item.id}</span>
+            </div>
+            <div id="preview-${item.id}" style="font-size:13px; color:var(--text-secondary); white-space:pre-wrap; line-height:1.5; margin-bottom:${item.status === 'pending' ? '12' : '0'}px;">${escHtml(preview)}${isLong ? ` <button onclick="expandText(${item.id})" style="background:none;border:none;color:#7c6fe0;cursor:pointer;font-size:12px;">Показать всё</button>` : ''}</div>
+            ${pendingActions}
+        </div>`;
+    }).join('');
+}
+
+async function rescheduleItem(id) {
+    const input = document.getElementById('reschedule-' + id);
+    const val = input.value;
+    if (!val) { showToast('Выбери дату/время', 'error'); return; }
+    // Конвертируем local datetime в ISO UTC
+    const dt = new Date(val);
+    const iso = dt.toISOString();
+    const res = await api('PUT', `/api/curator/queue/${id}`, { scheduled_at: iso });
+    if (res.ok) {
+        showToast('Время обновлено');
+        loadQueue();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+async function deleteQueueItem(id) {
+    if (!confirm('Удалить пост из очереди?')) return;
+    const res = await api('DELETE', `/api/curator/queue/${id}`);
+    if (res.ok) {
+        showToast('Удалён');
+        loadQueue();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+function toggleEdit(id) {
+    const block = document.getElementById('edit-block-' + id);
+    block.style.display = block.style.display === 'none' ? 'block' : 'none';
+}
+
+function cancelEdit(id) {
+    document.getElementById('edit-block-' + id).style.display = 'none';
+}
+
+async function saveEditText(id) {
+    const text = document.getElementById('edit-text-' + id).value.trim();
+    if (!text) { showToast('Текст не может быть пустым', 'error'); return; }
+    const res = await api('PUT', `/api/curator/queue/${id}`, { text });
+    if (res.ok) {
+        showToast('Текст обновлён');
+        loadQueue();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+function expandText(id) {
+    const item = queueItems.find(i => i.id === id);
+    if (!item) return;
+    const el = document.getElementById('preview-' + id);
+    el.innerHTML = escHtml(item.text);
+}
+
+function fmtDatetime(iso) {
+    if (!iso) return '—';
+    const dt = new Date(iso);
+    return dt.toLocaleString('ru-RU', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'});
+}
+
+function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─── Импорт JSON ─────────────────────────────────────────────────────────────
+
+async function importVoiceJson() {
+    const file = document.getElementById('import-json-file').files[0];
+    if (!file) { showToast('Выбери файл', 'error'); return; }
+    const minLen = document.getElementById('import-min-len').value;
+    const maxPosts = document.getElementById('import-max-posts').value;
+    const status = document.getElementById('import-status');
+
+    status.textContent = 'Загружаю...';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('min_len', minLen);
+    formData.append('max_posts', maxPosts);
+
+    try {
+        const res = await fetch('/api/curator/voice-examples/import-json', {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await res.json();
+        if (data.ok) {
+            status.textContent = `Импортировано ${data.imported} постов из ${data.total} сообщений`;
+            showToast(`Импортировано ${data.imported} примеров!`);
+            loadVoiceExamples();
+        } else {
+            status.textContent = 'Ошибка: ' + (data.error || '');
+            showToast(data.error || 'Ошибка', 'error');
+        }
+    } catch(e) {
+        status.textContent = 'Ошибка';
+        showToast('Ошибка: ' + e.message, 'error');
+    }
+}
+
+// ─── Анализ постов ───────────────────────────────────────────────────────────
+
+async function runAnalysis() {
+    const btn = document.getElementById('analyze-btn');
+    const status = document.getElementById('analyze-status');
+    const container = document.getElementById('analyze-results');
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Анализирую...';
+    status.textContent = 'Отправляю посты в Claude...';
+    container.innerHTML = '';
+
+    try {
+        const res = await api('POST', '/api/curator/analyze-posts', {});
+        if (!res.ok) {
+            showToast(res.error || 'Ошибка анализа', 'error');
+            status.textContent = 'Ошибка';
+            return;
+        }
+        const results = res.results || [];
+        status.textContent = results.length ? `Найдено ${results.length} постов` : (res.message || 'Постов не найдено');
+        renderAnalysisResults(results);
+    } catch(e) {
+        showToast('Ошибка: ' + e.message, 'error');
+        status.textContent = 'Ошибка';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🔍 Запустить анализ';
+    }
+}
+
+function renderAnalysisResults(results) {
+    const container = document.getElementById('analyze-results');
+    if (!results.length) {
+        container.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center; padding:30px;">Нет подходящих постов за указанный период</div>';
+        return;
+    }
+    container.innerHTML = results.map(item => {
+        const score = item.score || 0;
+        const scoreColor = score >= 8 ? '#60c060' : score >= 6 ? '#f0c040' : '#e06060';
+        const date = item.date ? new Date(item.date).toLocaleDateString('ru-RU', {day:'2-digit', month:'2-digit', year:'numeric'}) : '';
+        const preview = (item.text || '').length > 300 ? item.text.slice(0, 300) + '...' : (item.text || '');
+        const postId = item.id;
+        return `
+        <div class="card" style="padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                    <span style="font-size:13px; font-weight:600; color:#7c6fe0;">${escHtml(item.channel || '')}</span>
+                    ${date ? `<span style="font-size:12px; color:var(--text-muted);">${date}</span>` : ''}
+                    ${item.views ? `<span style="font-size:12px; color:var(--text-muted);">👁 ${item.views.toLocaleString()}</span>` : ''}
+                </div>
+                <span style="font-size:18px; font-weight:700; color:${scoreColor};">${score}/10</span>
+            </div>
+            ${item.reason ? `<div style="font-size:12px; color:var(--text-muted); background:var(--bg-hover); border-radius:6px; padding:8px 12px; margin-bottom:10px; line-height:1.5;">${escHtml(item.reason)}</div>` : ''}
+            <div style="font-size:13px; color:var(--text-secondary); white-space:pre-wrap; line-height:1.5; margin-bottom:12px;">${escHtml(preview)}</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button onclick="generateFromAnalyzed(${postId})" class="btn btn-primary btn-sm">✍️ Написать на основе</button>
+                ${item.url ? `<a href="${escHtml(item.url)}" target="_blank" class="btn btn-ghost btn-sm">🔗 Оригинал</a>` : ''}
+            </div>
+        </div>`;
+    }).join('');
+}
+
+async function generateFromAnalyzed(postId) {
+    const btn = event.target;
+    btn.disabled = true;
+    btn.textContent = '⏳ Генерирую...';
+    try {
+        const res = await api('POST', '/api/curator/generate-from-posts', { post_ids: [postId] });
+        if (!res.ok) { showToast(res.error || 'Ошибка генерации', 'error'); return; }
+        openGeneratedModal(res.text);
+    } catch(e) {
+        showToast('Ошибка: ' + e.message, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '✍️ Написать на основе';
+    }
+}
+
+function openGeneratedModal(text) {
+    // Переиспользуем модал из posts.html если он есть, иначе alert
+    if (typeof showDraftModal === 'function') {
+        showDraftModal(text);
+        return;
+    }
+    // Простой инлайн-модал
+    const existing = document.getElementById('curator-draft-modal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'curator-draft-modal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;';
+    modal.innerHTML = `
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:680px;width:100%;max-height:80vh;display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="font-size:16px;font-weight:600;color:var(--text-primary);">✍️ Черновик поста</div>
+                <button onclick="document.getElementById('curator-draft-modal').remove()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;">✕</button>
+            </div>
+            <textarea id="curator-draft-text" style="flex:1;min-height:280px;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;padding:12px;color:var(--text-primary);font-size:14px;resize:vertical;line-height:1.6;">${escHtml(text)}</textarea>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button onclick="addDraftToQueue()" class="btn btn-primary">📬 В очередь</button>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('curator-draft-text').value).then(()=>showToast('Скопировано!'))" class="btn btn-ghost">📋 Скопировать</button>
+                <button onclick="document.getElementById('curator-draft-modal').remove()" class="btn btn-ghost">Закрыть</button>
+            </div>
+        </div>`;
+    document.body.appendChild(modal);
+}
+
+async function addDraftToQueue() {
+    const text = document.getElementById('curator-draft-text').value.trim();
+    if (!text) { showToast('Текст пустой', 'error'); return; }
+    const res = await api('POST', '/api/curator/queue', { text });
+    if (res.ok) {
+        showToast('Добавлено в очередь!');
+        document.getElementById('curator-draft-modal').remove();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+loadSources();
+
+// ─── A/B тест ─────────────────────────────────────────────────────────────────
+
+let abTestId = null;
+let abCategory = null;
+
+async function generateAB() {
+    const btn = document.getElementById('ab-gen-btn');
+    const status = document.getElementById('ab-status');
+    const category = document.getElementById('ab-category').value;
+    btn.disabled = true;
+    status.textContent = '⏳ Генерирую варианты...';
+    document.getElementById('ab-variants').style.display = 'none';
+
+    const res = await api('POST', '/api/curator/ab-generate', { category: category || null });
+    btn.disabled = false;
+    if (!res.ok) {
+        status.textContent = '';
+        showToast(res.error || 'Ошибка генерации', 'error');
+        return;
+    }
+
+    abTestId = res.test_id;
+    abCategory = res.category;
+    document.getElementById('ab-text-a').textContent = res.variant_a;
+    document.getElementById('ab-text-b').textContent = res.variant_b;
+
+    // Дефолтное время: ближайший час
+    const dt = new Date(Math.ceil(Date.now() / 3600000) * 3600000);
+    const local = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+    document.getElementById('ab-schedule-a').value = local;
+    document.getElementById('ab-schedule-b').value = local;
+
+    document.getElementById('ab-variants').style.display = 'block';
+    status.textContent = '';
+}
+
+async function chooseAB(winner) {
+    if (!abTestId) return;
+    const text = winner === 'a'
+        ? document.getElementById('ab-text-a').textContent
+        : document.getElementById('ab-text-b').textContent;
+    const schedInput = document.getElementById('ab-schedule-' + winner);
+    const scheduled_at = schedInput.value ? new Date(schedInput.value).toISOString() : null;
+
+    const res = await api('POST', '/api/curator/ab-choose', {
+        test_id: abTestId, winner, text, scheduled_at
+    });
+    if (res.ok) {
+        showToast(`✅ Вариант ${winner.toUpperCase()} добавлен в очередь`);
+        document.getElementById('ab-variants').style.display = 'none';
+        abTestId = null;
+        loadABStats();
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+async function loadABStats() {
+    const stats = await api('GET', '/api/curator/ab-stats');
+    const container = document.getElementById('ab-stats-container');
+    if (!stats.length) {
+        container.innerHTML = '<div style="color:var(--text-muted); font-size:13px;">Нет данных пока не сделан ни один выбор.</div>';
+        return;
+    }
+    const catLabels = {
+        expert: '🎓 Экспертный', personal: '🎭 Личный', entertaining: '😄 Развлекательный',
+        motivational: '💡 Мотивационный', promotional: '📢 Продающий', engaging: '🔥 Вовлекающий',
+        general: '📝 Общие'
+    };
+    container.innerHTML = `
+        <table class="table">
+            <thead><tr>
+                <th>Категория</th>
+                <th>A побед</th>
+                <th>B побед</th>
+                <th>Всего</th>
+                <th>Предпочтение</th>
+            </tr></thead>
+            <tbody>
+                ${stats.map(s => {
+                    const pref = s.a_wins > s.b_wins ? '→ A (факты)' : s.b_wins > s.a_wins ? '→ B (история)' : '= Равно';
+                    const prefColor = s.a_wins > s.b_wins ? 'var(--accent)' : s.b_wins > s.a_wins ? '#e0a040' : 'var(--text-muted)';
+                    return `<tr>
+                        <td>${catLabels[s.category] || s.category}</td>
+                        <td>${s.a_wins}</td>
+                        <td>${s.b_wins}</td>
+                        <td>${s.total}</td>
+                        <td style="color:${prefColor}; font-weight:600;">${pref}</td>
+                    </tr>`;
+                }).join('')}
+            </tbody>
+        </table>`;
+}
+</script>
+{% endblock %}

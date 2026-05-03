@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}— Администрирование{% endblock %}
+
+{% block content %}
+<div class="page-title">🛡 Администрирование</div>
+<p class="page-desc">Управление пользователями системы — просмотр аккаунтов, сброс паролей, назначение прав администратора и отзыв доступа.</p>
+
+<div class="card">
+    <div class="card-title">👥 Пользователи</div>
+    <div class="table-wrap">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Канал</th>
+                <th>2FA</th>
+                <th>Admin</th>
+                <th>Зарегистрирован</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr id="user-row-{{ u.id }}">
+                <td style="color:var(--text-muted); font-size:12px;">{{ u.id }}</td>
+                <td style="font-weight:500;">
+                    {{ u.username }}
+                    {% if u.id == session.get('user_id') %}
+                    <span style="font-size:11px; color:var(--accent); margin-left:4px;">(вы)</span>
+                    {% endif %}
+                </td>
+                <td style="font-size:13px; color:var(--text-secondary);">{{ u.target_channel or '—' }}</td>
+                <td>
+                    {% if u.totp_verified %}
+                    <span style="color:#60c060; font-size:12px;">✅</span>
+                    {% else %}
+                    <span style="color:var(--text-muted); font-size:12px;">—</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if u.is_admin %}
+                    <span style="color:var(--accent); font-size:12px;">★</span>
+                    {% endif %}
+                </td>
+                <td style="font-size:12px; color:var(--text-muted);">{{ u.created_at[:10] if u.created_at else '—' }}</td>
+                <td>
+                    {% if u.id != session.get('user_id') %}
+                    <button class="btn btn-danger btn-sm" onclick="deleteUser({{ u.id }}, '{{ u.username }}')">Удалить</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function deleteUser(uid, name) {
+    if (!confirm(`Удалить пользователя "${name}" и все его данные?`)) return;
+    const r = await api('DELETE', `/api/admin/users/${uid}`);
+    if (r.ok) {
+        document.getElementById(`user-row-${uid}`).remove();
+        showToast(`Пользователь ${name} удалён`);
+    } else {
+        showToast(r.error || 'Ошибка', 'error');
+    }
+}
+</script>
+{% endblock %}
