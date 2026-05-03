@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TG Hub — Настройка 2FA</title>
+    <style>
+        :root { --bg-main:#0f0f13; --bg-card:#17171f; --border:#2a2a3a; --accent:#7c6fe0; --accent-hover:#6a5ecf; --text-primary:#e0e0e0; --text-muted:#666; --text-secondary:#aaa; --input-bg:#0f0f13; }
+        [data-theme="light"] { --bg-main:#f0f2f5; --bg-card:#ffffff; --border:#d0d5e0; --text-primary:#1a1a2e; --text-muted:#777; --text-secondary:#444; --input-bg:#f8f9fc; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg-main); color:var(--text-primary); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .box { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:40px; width:min(480px,100%); }
+        h1 { font-size:20px; font-weight:700; color:var(--accent); margin-bottom:8px; }
+        p.sub { font-size:13px; color:var(--text-muted); margin-bottom:28px; line-height:1.5; }
+        .qr-block { text-align:center; margin-bottom:24px; }
+        .qr-block img { border-radius:8px; border:4px solid #fff; }
+        .secret-block { background:rgba(124,111,224,0.08); border:1px solid rgba(124,111,224,0.25); border-radius:8px; padding:12px 16px; margin-bottom:24px; }
+        .secret-label { font-size:11px; color:var(--text-muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px; }
+        .secret-code { font-family:monospace; font-size:15px; color:var(--accent); letter-spacing:2px; word-break:break-all; }
+        .steps { font-size:13px; color:var(--text-secondary); margin-bottom:24px; line-height:1.7; }
+        .steps b { color:var(--text-primary); }
+        label { font-size:12px; color:var(--text-muted); font-weight:500; display:block; margin-bottom:6px; }
+        input { width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:12px 14px; color:var(--text-primary); font-size:20px; outline:none; text-align:center; letter-spacing:6px; margin-bottom:16px; }
+        input:focus { border-color:var(--accent); }
+        .btn { width:100%; padding:11px; background:var(--accent); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; }
+        .btn:hover { background:var(--accent-hover); }
+        .btn-skip { width:100%; padding:9px; background:transparent; color:var(--text-muted); border:1px solid var(--border); border-radius:8px; font-size:13px; cursor:pointer; margin-top:10px; }
+        .btn-skip:hover { background:rgba(255,255,255,0.04); }
+        .error { background:rgba(224,96,96,0.1); border:1px solid rgba(224,96,96,0.4); border-radius:8px; padding:10px 14px; font-size:13px; color:#e06060; margin-bottom:16px; }
+    </style>
+    <script>(function(){const t=localStorage.getItem('tghub_theme')||'dark';document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+<div class="box">
+    <h1>🔐 Настройка двухфакторной аутентификации</h1>
+    <p class="sub">Отсканируйте QR-код в Google Authenticator, Authy или другом TOTP-приложении. После настройки вы будете вводить 6-значный код при каждом входе.</p>
+
+    {% if qr_b64 %}
+    <div class="qr-block">
+        <img src="data:image/png;base64,{{ qr_b64 }}" width="180" height="180" alt="QR код">
+    </div>
+    {% endif %}
+
+    <div class="secret-block">
+        <div class="secret-label">Ручной ввод (если QR не работает)</div>
+        <div class="secret-code">{{ secret }}</div>
+    </div>
+
+    <div class="steps">
+        <b>Шаги:</b><br>
+        1. Откройте приложение-аутентификатор<br>
+        2. Добавьте новый аккаунт → отсканируйте QR или введите ключ вручную<br>
+        3. Введите 6-значный код ниже для подтверждения
+    </div>
+
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <label>Код подтверждения</label>
+        <input type="text" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autofocus required placeholder="000000">
+        <button type="submit" class="btn">Подтвердить и активировать 2FA</button>
+    </form>
+    <form method="GET" action="/">
+        <button type="submit" class="btn-skip">Пропустить (настроить позже)</button>
+    </form>
+</div>
+</body>
+</html>

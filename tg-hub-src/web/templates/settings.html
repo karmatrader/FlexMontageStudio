@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% block title %}— Настройки{% endblock %}
+
+{% block content %}
+<div class="page-title">⚙️ Настройки</div>
+<p class="page-desc">Расписание дайджестов, лимиты сообщений, параметры куратора и модель Claude — всё глобальное управление системой в одном месте.</p>
+
+<div class="card">
+    <div class="card-title">📰 Digest — расписание</div>
+    {% set s = config.digest.schedule %}
+    <div class="table-wrap">
+    <table class="table" style="max-width: 600px;">
+        <tr>
+            <td style="width:160px">Ежедневный</td>
+            <td>
+                <input type="time" id="daily-time" value="{{ s.daily.time }}" style="background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:6px 10px; color:var(--text-primary);">
+            </td>
+            <td>
+                <label class="toggle">
+                    <input type="checkbox" id="daily-enabled" {{ 'checked' if s.daily.enabled }}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>Еженедельный</td>
+            <td>
+                <input type="time" id="weekly-time" value="{{ s.weekly.time }}" style="background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:6px 10px; color:var(--text-primary);">
+            </td>
+            <td>
+                <label class="toggle">
+                    <input type="checkbox" id="weekly-enabled" {{ 'checked' if s.weekly.enabled }}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>Ежемесячный</td>
+            <td>
+                <input type="time" id="monthly-time" value="{{ s.monthly.time }}" style="background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:6px 10px; color:var(--text-primary);">
+            </td>
+            <td>
+                <label class="toggle">
+                    <input type="checkbox" id="monthly-enabled" {{ 'checked' if s.monthly.enabled }}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">📰 Digest — лимиты сообщений</div>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Максимум сообщений на один чат при каждом типе дайджеста. Больше = точнее, но дольше.</p>
+    {% set lim = config.digest.messages_limits if config.digest.messages_limits is defined else {} %}
+    <div class="table-wrap">
+    <table class="table" style="max-width:500px;">
+        <tr>
+            <td style="width:180px;">Ежедневный</td>
+            <td><input type="number" id="limit-daily" min="100" max="50000" step="100"
+                value="{{ lim.daily if lim.daily is defined else 2000 }}"
+                style="width:120px; background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:6px 10px; color:var(--text-primary);"></td>
+            <td style="font-size:12px; color:var(--text-muted);">сообщений</td>
+        </tr>
+        <tr>
+            <td>Еженедельный</td>
+            <td><input type="number" id="limit-weekly" min="100" max="50000" step="500"
+                value="{{ lim.weekly if lim.weekly is defined else 5000 }}"
+                style="width:120px; background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:6px 10px; color:var(--text-primary);"></td>
+            <td style="font-size:12px; color:var(--text-muted);">сообщений</td>
+        </tr>
+        <tr>
+            <td>Ежемесячный</td>
+            <td><input type="number" id="limit-monthly" min="100" max="100000" step="1000"
+                value="{{ lim.monthly if lim.monthly is defined else 10000 }}"
+                style="width:120px; background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:6px 10px; color:var(--text-primary);"></td>
+            <td style="font-size:12px; color:var(--text-muted);">сообщений</td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">✍️ Curator — расписание</div>
+    <div class="form-group" style="max-width:300px">
+        <label>Часы автозапуска (МСК, через запятую)</label>
+        <input type="text" id="curator-hours" value="{{ config.curator.schedule.hours | join(', ') }}" placeholder="12, 18">
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">📬 Curator — очередь публикаций</div>
+    <div class="form-group" style="max-width:300px">
+        <label>Интервал между публикациями (часы)</label>
+        <input type="number" id="queue-interval" min="1" max="72"
+               value="{{ config.curator.queue.interval_hours if config.curator.queue is defined and config.curator.queue.interval_hours is defined else 4 }}"
+               style="width:120px;">
+        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">Минимальный промежуток между постами в канале</div>
+    </div>
+    <div class="form-group" style="margin-top:16px;">
+        <label>Постов из дайджеста в день <span class="tooltip-btn" data-tip="Сколько постов Claude предложит сгенерировать из одного дайджеста. Влияет на отбор горячих тем при батч-генерации.">?</span></label>
+        <select id="digest-posts-per-day" style="width:160px; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:8px 12px; color:var(--text-primary);">
+            <option value="1" {{ 'selected' if (config.curator.digest_posts_per_day | default(2)) == 1 }}>1 пост</option>
+            <option value="2" {{ 'selected' if (config.curator.digest_posts_per_day | default(2)) == 2 }}>2 поста</option>
+            <option value="3" {{ 'selected' if (config.curator.digest_posts_per_day | default(2)) == 3 }}>3 поста</option>
+            <option value="4" {{ 'selected' if (config.curator.digest_posts_per_day | default(2)) == 4 }}>4 поста</option>
+            <option value="5" {{ 'selected' if (config.curator.digest_posts_per_day | default(2)) == 5 }}>5 постов</option>
+            <option value="6" {{ 'selected' if (config.curator.digest_posts_per_day | default(2)) == 6 }}>6 постов</option>
+        </select>
+        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">Рекомендуемое кол-во при батч-генерации из дайджеста</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">🔍 Curator — анализатор постов</div>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Параметры автоматического анализа постов через Claude.</p>
+    {% set az = config.curator.analyzer if config.curator.analyzer is defined else {} %}
+    <div class="table-wrap">
+    <table class="table" style="max-width:450px;">
+        <tr>
+            <td style="width:200px;">Количество результатов</td>
+            <td>
+                <select id="analyzer-count" style="background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:6px 10px; color:var(--text-primary);">
+                    <option value="3" {{ 'selected' if (az.count | default(5)) == 3 }}>3 поста</option>
+                    <option value="5" {{ 'selected' if (az.count | default(5)) == 5 }}>5 постов</option>
+                    <option value="10" {{ 'selected' if (az.count | default(5)) == 10 }}>10 постов</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Период анализа (дней)</td>
+            <td>
+                <input type="number" id="analyzer-days" min="1" max="90"
+                    value="{{ az.days if az.days is defined else 14 }}"
+                    style="width:100px; background:var(--input-bg); border:1px solid var(--border); border-radius:6px; padding:6px 10px; color:var(--text-primary);">
+                <span style="font-size:12px; color:var(--text-muted); margin-left:8px;">дней назад</span>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">✍️ Подпись к постам</div>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Текст, который можно добавить в конец поста при публикации через планер. Включается чекбоксом при создании/редактировании поста.</p>
+    <textarea id="post-signature" rows="4" placeholder="Например:&#10;&#10;✉️ Связаться | 📢 Подписаться | ⚡️ Буст"
+        style="width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:10px 14px; color:var(--text-primary); font-size:13px; line-height:1.6; resize:vertical; outline:none; font-family:inherit;"></textarea>
+    <div style="margin-top:8px; display:flex; gap:8px;">
+        <button class="btn btn-ghost btn-sm" onclick="saveSignature()">💾 Сохранить подпись</button>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">🔔 Уведомления в бот</div>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Выбери, о каких событиях бот должен присылать сообщения.</p>
+    <div class="table-wrap">
+    <table class="table" style="max-width:500px;">
+        <tr>
+            <td style="width:260px;">Пост опубликован из очереди</td>
+            <td>
+                <label class="toggle">
+                    <input type="checkbox" id="notify-queue-published" {{ 'checked' if notifications.queue_published }}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>Ошибка публикации из очереди</td>
+            <td>
+                <label class="toggle">
+                    <input type="checkbox" id="notify-queue-failed" {{ 'checked' if notifications.queue_failed }}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>Дайджест готов</td>
+            <td>
+                <label class="toggle">
+                    <input type="checkbox" id="notify-digest-ready" {{ 'checked' if notifications.digest_ready }}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>Автогенерация постов <span style="font-size:11px;color:var(--text-muted)">(и ошибки)</span></td>
+            <td>
+                <label class="toggle">
+                    <input type="checkbox" id="notify-auto-generation" {{ 'checked' if notifications.auto_generation }}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>Парсинг каналов завершён</td>
+            <td>
+                <label class="toggle">
+                    <input type="checkbox" id="notify-parse-complete" {{ 'checked' if notifications.parse_complete }}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">🤖 Claude API</div>
+    <div class="form-group" style="max-width:300px">
+        <label>Модель</label>
+        <select id="anthropic-model">
+            <option value="claude-opus-4-6" {{ 'selected' if config.anthropic.model == 'claude-opus-4-6' }}>claude-opus-4-6</option>
+            <option value="claude-sonnet-4-6" {{ 'selected' if config.anthropic.model == 'claude-sonnet-4-6' }}>claude-sonnet-4-6</option>
+            <option value="claude-haiku-4-5-20251001" {{ 'selected' if config.anthropic.model == 'claude-haiku-4-5-20251001' }}>claude-haiku-4-5</option>
+        </select>
+    </div>
+</div>
+
+<button class="btn btn-primary" onclick="saveSettings()">💾 Сохранить настройки</button>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Загружаем подпись при открытии страницы
+(async () => {
+    try {
+        const r = await api('GET', '/api/curator/signature');
+        if (r.ok) document.getElementById('post-signature').value = r.signature || '';
+    } catch(e) {}
+})();
+
+async function saveSignature() {
+    const sig = document.getElementById('post-signature').value;
+    const r = await api('POST', '/api/curator/signature', { signature: sig });
+    if (r.ok) showToast('Подпись сохранена!');
+    else showToast('Ошибка сохранения', 'error');
+}
+
+async function saveSettings() {
+    const data = {
+        digest_schedule: {
+            daily_time: document.getElementById('daily-time').value,
+            daily_enabled: document.getElementById('daily-enabled').checked,
+            weekly_time: document.getElementById('weekly-time').value,
+            weekly_enabled: document.getElementById('weekly-enabled').checked,
+            monthly_time: document.getElementById('monthly-time').value,
+            monthly_enabled: document.getElementById('monthly-enabled').checked,
+        },
+        curator_schedule: {
+            hours: document.getElementById('curator-hours').value.split(',').map(h => parseInt(h.trim())).filter(h => !isNaN(h)),
+        },
+        anthropic_model: document.getElementById('anthropic-model').value,
+        queue_interval_hours: parseInt(document.getElementById('queue-interval').value) || 4,
+        digest_posts_per_day: parseInt(document.getElementById('digest-posts-per-day').value) || 2,
+        messages_limits: {
+            daily: parseInt(document.getElementById('limit-daily').value) || 2000,
+            weekly: parseInt(document.getElementById('limit-weekly').value) || 5000,
+            monthly: parseInt(document.getElementById('limit-monthly').value) || 10000,
+        },
+        analyzer: {
+            count: parseInt(document.getElementById('analyzer-count').value) || 5,
+            days: parseInt(document.getElementById('analyzer-days').value) || 14,
+        },
+        notifications: {
+            queue_published:  document.getElementById('notify-queue-published').checked,
+            queue_failed:     document.getElementById('notify-queue-failed').checked,
+            digest_ready:     document.getElementById('notify-digest-ready').checked,
+            auto_generation:  document.getElementById('notify-auto-generation').checked,
+            parse_complete:   document.getElementById('notify-parse-complete').checked,
+        },
+    };
+
+    const res = await api('POST', '/api/settings', data);
+    if (res.ok) {
+        showToast('Настройки сохранены!');
+    } else {
+        showToast('Ошибка сохранения', 'error');
+    }
+}
+</script>
+{% endblock %}

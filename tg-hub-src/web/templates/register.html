@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TG Hub — Регистрация</title>
+    <style>
+        :root { --bg-main:#0f0f13; --bg-card:#17171f; --border:#2a2a3a; --accent:#7c6fe0; --accent-hover:#6a5ecf; --text-primary:#e0e0e0; --text-muted:#666; --text-secondary:#aaa; --input-bg:#0f0f13; }
+        [data-theme="light"] { --bg-main:#f0f2f5; --bg-card:#ffffff; --border:#d0d5e0; --text-primary:#1a1a2e; --text-muted:#777; --text-secondary:#444; --input-bg:#f8f9fc; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg-main); color:var(--text-primary); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .box { background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:40px; width:min(460px,100%); }
+        h1 { font-size:22px; font-weight:700; color:var(--accent); margin-bottom:8px; }
+        p.sub { font-size:13px; color:var(--text-muted); margin-bottom:28px; }
+        .group { margin-bottom:16px; }
+        label { font-size:12px; color:var(--text-muted); font-weight:500; display:block; margin-bottom:6px; }
+        .hint { font-size:11px; color:var(--text-muted); margin-top:4px; }
+        input, select { width:100%; background:var(--input-bg); border:1px solid var(--border); border-radius:8px; padding:10px 14px; color:var(--text-primary); font-size:14px; outline:none; }
+        input:focus, select:focus { border-color:var(--accent); }
+        .btn { width:100%; padding:11px; background:var(--accent); color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; margin-top:8px; }
+        .btn:hover { background:var(--accent-hover); }
+        .error { background:rgba(224,96,96,0.1); border:1px solid rgba(224,96,96,0.4); border-radius:8px; padding:10px 14px; font-size:13px; color:#e06060; margin-bottom:16px; }
+        .divider { border-top:1px solid var(--border); margin:20px 0; }
+        .section-title { font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:16px; }
+        .links { text-align:center; margin-top:20px; font-size:13px; color:var(--text-muted); }
+        .links a { color:var(--accent); text-decoration:none; }
+    </style>
+    <script>(function(){const t=localStorage.getItem('tghub_theme')||'dark';document.documentElement.setAttribute('data-theme',t);})()</script>
+</head>
+<body>
+<div class="box">
+    <h1>Создать аккаунт</h1>
+    <p class="sub">TG Hub — автоматизация Telegram-канала</p>
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+    <form method="POST">
+        <div class="section-title">Данные для входа</div>
+        <div class="group">
+            <label>Имя пользователя</label>
+            <input type="text" name="username" autocomplete="username" autofocus required minlength="3">
+        </div>
+        <div class="group">
+            <label>Пароль</label>
+            <input type="password" name="password" autocomplete="new-password" required minlength="8">
+            <div class="hint">Минимум 8 символов</div>
+        </div>
+        <div class="group">
+            <label>Повторите пароль</label>
+            <input type="password" name="password2" autocomplete="new-password" required>
+        </div>
+        <div class="divider"></div>
+        <div class="section-title">Настройки канала</div>
+        <div class="group">
+            <label>Anthropic API Key</label>
+            <input type="password" name="anthropic_api_key" placeholder="sk-ant-...">
+            <div class="hint">Можно добавить позже в профиле</div>
+        </div>
+        <div class="group">
+            <label>Telegram-канал (username)</label>
+            <input type="text" name="target_channel" placeholder="@mychannel">
+            <div class="hint">Канал куда будут публиковаться посты</div>
+        </div>
+        <button type="submit" class="btn">Создать аккаунт</button>
+    </form>
+    <div class="links">
+        Уже есть аккаунт? <a href="/login">Войти</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}— Digest{% endblock %}
+
+{% block content %}
+<div class="page-title">📰 Digest — Чаты для мониторинга</div>
+<p class="page-desc">Добавляй Telegram-чаты, группы и топики, которые хочешь отслеживать. Бот будет собирать из них сообщения и регулярно присылать тебе краткое AI-резюме.</p>
+
+<div class="card">
+    <div class="card-title">Добавить чат / группу / топик</div>
+    <div class="form-row">
+        <div class="form-group">
+            <label>Название</label>
+            <input type="text" id="new-name" placeholder="Название чата" style="width: 220px;">
+        </div>
+        <div class="form-group">
+            <label>ID чата</label>
+            <input type="text" id="new-id" placeholder="-1001234567890" style="width: 180px;">
+        </div>
+        <div class="form-group">
+            <label>Тип</label>
+            <select id="new-type">
+                <option value="group">group — группа</option>
+                <option value="channel">channel — канал</option>
+                <option value="topic">topic — топик</option>
+            </select>
+        </div>
+        <div class="form-group" id="topic-id-group" style="display:none">
+            <label>Topic ID</label>
+            <input type="text" id="new-topic-id" placeholder="92549" style="width: 120px;">
+        </div>
+        <div class="form-group">
+            <label>Приоритет</label>
+            <select id="new-priority">
+                <option value="normal">normal</option>
+                <option value="high">high</option>
+                <option value="low">low</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="btn btn-primary" onclick="addChat()">+ Добавить</button>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="section-header">
+        <div class="card-title" style="margin-bottom:0">Список чатов ({{ chats | length }})</div>
+        <div style="font-size:13px; color:var(--text-muted);">Изменения сохраняются автоматически</div>
+    </div>
+    <table class="table" id="chats-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>ID</th>
+                <th>Тип</th>
+                <th>Topic ID</th>
+                <th>Приоритет</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="chats-body">
+        {% for chat in chats %}
+            {% set i = loop.index0 %}
+            <tr id="row-{{ i }}">
+                <td style="color:var(--text-muted)">{{ loop.index }}</td>
+                <td>{{ chat.name }}</td>
+                <td style="font-family:monospace; font-size:12px; color:#7c6fe0">{{ chat.id }}</td>
+                <td><span class="badge badge-{{ chat.type }}">{{ chat.type }}</span></td>
+                <td style="color:var(--text-muted)">{{ chat.topic_id if chat.topic_id else '—' }}</td>
+                <td><span class="badge badge-{{ chat.priority }}">{{ chat.priority }}</span></td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="deleteChat({{ i }})">✕</button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('new-type').addEventListener('change', function() {
+    document.getElementById('topic-id-group').style.display = this.value === 'topic' ? 'flex' : 'none';
+});
+
+async function addChat() {
+    const name = document.getElementById('new-name').value.trim();
+    const id = document.getElementById('new-id').value.trim();
+    const type = document.getElementById('new-type').value;
+    const priority = document.getElementById('new-priority').value;
+    const topicId = document.getElementById('new-topic-id').value.trim();
+
+    if (!name || !id) { showToast('Заполни название и ID', 'error'); return; }
+
+    const data = { name, id, type, priority };
+    if (type === 'topic' && topicId) data.topic_id = topicId;
+
+    const res = await api('POST', '/api/digest/chats', data);
+    if (res.ok) {
+        showToast('Чат добавлен!');
+        setTimeout(() => location.reload(), 800);
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+
+async function deleteChat(idx) {
+    if (!confirm('Удалить этот чат?')) return;
+    const res = await api('DELETE', `/api/digest/chats/${idx}`);
+    if (res.ok) {
+        document.getElementById(`row-${idx}`).remove();
+        showToast('Удалено');
+    } else {
+        showToast(res.error || 'Ошибка', 'error');
+    }
+}
+</script>
+{% endblock %}
